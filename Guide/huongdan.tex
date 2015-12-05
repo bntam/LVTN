@@ -1,0 +1,804 @@
+% This is the documentation file of
+% the LaTeX2e class for HCMUT assignment
+% hcmutarticle, version 1.0
+% Author: Tran Vinh Tan, 3/2012
+\documentclass{hcmutarticle}
+\usepackage{enumerate} % need for customized enumerate
+\usepackage[colorlinks=true]{hyperref}
+\def\sectionautorefname{Phần}
+\def\subsectionautorefname{Mục}
+
+% create AmS style
+\def\AmS{{\protect\usefont{OMS}{cmsy}{m}{n}%
+  A\kern-.1667em\lower.5ex\hbox{M}\kern-.125emS}}
+\def\AmSTeX{{\protect\AmS-\protect\TeX}}
+
+% create the header for this file
+\fancyhead[RO, LE]{\bf Hướng dẫn Quy chuẩn báo cáo \LaTeXe{} -- Khoa Máy tính}
+
+\begin{document}
+
+\thispagestyle{empty}
+\begin{center}
+\LARGE\bfseries ĐẠI HỌC QUỐC GIA TP HỒ CHÍ MINH \\
+TRƯỜNG ĐẠI HỌC BÁCH KHOA
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.2]{hcmut.pdf}\\[2cm]
+\end{center}
+
+\noindent
+\rule{\textwidth}{1pt}
+\vspace{2pt}
+\begin{flushright}
+	\Huge
+	\begin{tabular}{@{}l}
+		Quy chuẩn báo cáo \LaTeXe{} của\\
+		Khoa Khoa học \& Kỹ thuật Máy tính\\[6pt]
+		{\Large Phiên bản 1.0}
+	\end{tabular}
+\end{flushright}
+\rule{\textwidth}{1pt}\\[1cm]
+\begin{flushright}
+	\LARGE\bfseries Hướng dẫn sử dụng \\dành cho Tác giả\\
+	muốn sử dụng \LaTeX
+\end{flushright}
+\vfill
+\begin{center}
+{\Large \today}
+\end{center}
+
+%
+\newpage
+\tableofcontents
+\newpage
+%
+
+
+\section{Giới thiệu}
+%
+
+Những tác giả nào muốn viết báo cáo của mình bằng \LaTeX{} hoặc đã viết bằng \LaTeX{} rồi nhưng muốn định dạng lại cho khớp với quy chuẩn Báo cáo CSE, sẽ được cung cấp một class bằng \LaTeX{}. Cần lưu ý làm theo hướng dẫn và {\em không được thay đổi file class}.
+
+Báo cáo đã định dạng canh lề theo hướng dẫn về Luận văn tốt nghiệp của Trường Đại học Bách khoa, tức là vùng văn bản cách lề trái 3\,cm, lề phải 2\,cm, lề trên và dưới là 2\,cm. Ngoài ra, báo cáo được thiết kế để {\em in hai mặt}, vì vậy nguyên tắc cách lề như vậy được áp dụng cho trang lẻ. Trong trường hợp trang chẵn, vùng văn bản sẽ cách lề trái 2\,cm và lề phải là 3\,cm.
+
+Nếu bạn đã quen với \LaTeX{} rồi, thì lớp hcmutarticle này sẽ không khó dùng đối với bạn. Lớp này có tác dụng chuyển bố cục của báo cáo của bạn sang chuẩn thống nhất do các giảng viên Khoa Khoa học và Kỹ thuật máy tính quy định (ví dụ, định nghĩa lại bố cục của \verb|\section|).
+
+Trong phần nội dung chính (phần văn bản) của báo cáo, bạn nên sử dụng các lệnh chuẩn trong lớp ``article'' của \LaTeX{}. Cho dù bạn đã quen với các lệnh này, chúng tôi khuyên bạn nên đọc toàn bộ tài liệu này một cách kỹ càng. Tài liệu này có nhiều đề nghị về cách sử dụng các câu lệnh sao cho hợp lý; giúp bạn định dạng theo đúng quy chuẩn của Khoa. Để xem cách sử dụng nguồn tham khảo của báo cáo, hãy xem các hướng dẫn trong \autoref{refer} Nguồn tham khảo.
+
+Phần lớn những đề xuất ở đây không chỉ là quy chuẩn của Khoa Máy tính, chúng còn giúp bạn nâng cao khả năng sử dụng \LaTeX{}. Ngoài ra, tài liệu còn có những lời khuyên để chỉnh sửa hợp lý và cách định dạng văn bản (viết hoa, viết tắt,...) (Xem \autoref{refedit} Cách sửa đổi file nguồn).
+
+Nội dung file cls và tài liệu hướng dẫn này được soạn dựa một phần trên định dạng mẫu của Lecture Notes in Computer Science của Springer-Verlag.
+
+%
+\section{Tiếp theo}
+%
+Gói này bao gồm các file sau:
+\begin{flushleft}
+\begin{tabular}{@{}p{3.5cm}l}
+{\tt hcmutarticle.cls}  & tập tin class cho \LaTeX{},\\[2pt]
+{\tt huongdan.pdf}& tài liệu hướng dẫn cho lớp (phiên bản PDF),\\
+{\tt huongdan.tex}  & hướng dẫn chung (mã nguồn của tài liệu này),\\[2pt]
+{\tt baocao.tex}  & báo cáo mẫu viết bằng lớp hcmutarticle\\
+\end{tabular}
+\end{flushleft}
+%
+\subsection{Cách gọi lớp tài liệu hcmutarticle}
+%
+Lớp hcmutarticle là phần mở rộng từ lớp ``article'' của \LaTeX{}, được Việt hóa và chuẩn hóa, trong đó có sử dụng lại một số định dạng của lớp LLNCS của Springer. Vì vậy, bạn có thể dùng tất cả các lệnh sẵn có trong ``article'' để viết bản báo cáo.
+Gọi lớp hcmutarticle bằng cách thay ``article'' bằng ``hcmutarticle'' ở dòng đầu tiên của báo cáo:
+\begin{verbatim}
+\documentclass{hcmutarticle}
+%
+\begin{document}
+  <Nội dung>
+\end{document}
+\end{verbatim}
+%
+\subsection{Nội dung đã viết bằng \protect\LaTeX{} nhưng chưa dùng hcmutarticle}
+%
+Nếu bạn đã viết sẵn báo cáo bằng \LaTeX{}, bạn có thể dễ dàng định dạng nó bằng lớp tài liệu hcmutarticle.
+
+Hãy nhớ đừng sử dụng các lệnh \LaTeX{} hay \TeX{} có ảnh hưởng đến bố cục hoặc cách định dạng tài liệu (các lệnh như \verb|\textheight|, \verb|\vspace|, \verb|\headsep|...).
+Tất nhiên sẽ có khi bạn cần dùng một vài lệnh trong số đó.
+
+Lớp hcmutarticle được thiết kế để cho báo cáo của bạn có bố cục hợp quy chuẩn. Nếu có điều gì cụ thể bạn muốn sử dụng mà lớp này chưa định nghĩa, {\em hãy liên hệ với chúng tôi}.
+%
+\section{Luật chung để viết công thức}
+%
+Để viết công thức toán học, bạn có thể xem hướng dẫn ở Chương~3 trong cuốn {\em The Not So Short Introduction to \LaTeXe{} \/} của Tobias Oetiker et. al. (bản 5.01, 2011) (có bản dịch tiếng Việt).
+
+Các phương trình sẽ được tự động đánh số một cách tuần tự trong báo cáo, bằng cách dùng số ả rập đặt trong cặp dấu ngoặc đơn ở phía phải phương trình.
+
+Khi bạn làm việc trong chế độ toán, mọi thứ sẽ được viết in nghiêng. 
+Thỉnh thoảng bạn có thể chèn một vài thành phần không phải toán vào (ví dụ như một vài cụm từ). Để làm được điều đó, bạn nên viết bằng kiểu chữ thường (dùng \verb|\mbox|) như trong ví dụ dưới đây:
+\begin{flushleft}
+{\itshape Nội dung nhập}
+\end{flushleft}
+\begin{verbatim}
+\begin{equation}
+  \left(\frac{a^{2} + b^{2}}{c^{3}} \right) = 1 \quad
+  \mbox{ if } c\neq 0 \mbox{ and if } a,b,c\in \R \enspace .
+\end{equation}
+\end{verbatim}
+{\itshape Nội dung xuất}
+\begin{equation}
+  \left(\frac{a^{2} + b^{2}}{c^{3}} \right) = 1 \quad
+  \mbox{ nếu } c\neq 0 \mbox{ và nếu } a,b,c\in \R \enspace .
+\end{equation}
+
+Nếu bạn muốn viết một đoạn văn mới ngay sau một phương trình, hãy đặt một dòng trống phía sau phương trình để văn bản được thụt đầu dòng chính xác. Nếu đó không phải là đoạn văn mới, bạn chèn dòng trống hoặc viết \verb|\noindent| ngay phía trước phần văn bản tiếp theo.
+
+Hãy đặt dấu chấm câu vào công thức giống như trong văn bản bình thường nhưng cần có \verb|\enspace| phía trước dấu chấm đó.
+
+Bạn cần chú ý rằng kích thước của dấu hoặc đơn hay các ký hiệu phân tách nào khác trong phương trình cần phải phù hợp với chiều cao của công thức đặt bên trong nó. Việc này có thể tự động thực hiện bằng các lệnh \LaTeX{} sau:\\[2mm]
+\verb|\left(| hoặc \verb|\left[| và 
+\verb|\right)| hoặc \verb|\right]|.
+%
+\subsection{Kiểu in nghiêng và chữ thường trong chế độ viết toán}
+%
+\begin{enumerate}[a)]
+\item Trong chế độ viết toán, \LaTeX{} sẽ xem tất cả các ký tự đều là biến toán học hoặc vật lý, vì vậy từng ký tự sẽ được viết rời ra và in nghiêng. Tuy nhiên, với một số thành phần trong công thức, như đoạn văn bản ngắn chẳng bạn, điều này không còn đúng và chúng ta cần phải viết theo dạng chữ thường (không nghiêng, không đậm). 
+Kiểu viết thường còn được dùng để viết chữ nhỏ phía dưới hoặc phía trên {\em trong các công thức\/} mà những chữ viết nhỏ chỉ có nghĩa là một cách đánh dấu chứ không phải biến,
+ví dụ $T_{\mathrm{eff}}$ \emph{chứ không phải} $T_{eff}$,
+$T_{\mathrm K}$ \emph{chứ không phải} $T_K$ (K = Kelvin),
+$m_{\mathrm e}$ \emph{chứ không phải} $m_e$ (e = electron).
+Tuy nhiên, đừng viết ở dạng viết thường nếu chữ viết nhỏ phía trên/dưới này đại diện cho biến số,
+ví dụ\ $\sum_{i=1}^{n} a_{i}$.
+\item Hãy đảm bảo rằng {\em các đơn vị vật lý\/} (ví dụ\ pc, erg s$^{-1}$
+K, cm$^{-3}$, W m$^{-2}$ Hz$^{-1}$, m kg s$^{-2}$ A$^{-2}$) và
+{\em chữ viết tắt\/} như Ord, Var, GL, SL, sgn, const.\
+đều được viết ở dạng viết thường. Để đảm bảo điều này, hãy dùng lệnh \verb|\mathrm|: ví dụ, \verb|\mathrm{Hz}|.
+Tại trang 58 của {\em The Not So Short Introduction to \LaTeXe{} \/} của Tobias Oetiker et. al. bạn sẽ tìm thấy tên của các hàm toán học phổ biến, như log, sin, exp, max và sup.
+Những hàm này nên được viết thành \verb|\log|,
+\verb|\sin|, \verb|\exp|, \verb|\max|, \verb|\sup|
+và tự động chúng sẽ được viết ở dạng thường.
+\item Các ký hiệu và công thức hóa học nên được viết ở dạng viết thường, ví dụ\ Fe chứ không phải $Fe$, H$_2$O chứ không phải {\em H$_2$O}.
+\item Những cụm từ nước ngoài quen thuộc, ví dụ như \ et al.,
+a priori, in situ, brems\-strah\-lung, eigenvalues nên được in nghiêng.
+\end{enumerate}
+%
+\section{Làm sao để sửa file nguồn của bạn}
+\label{refedit}
+%
+\subsection{Phần đầu tài liệu}\label{headings}
+%
+Tất cả những từ trong tiêu đề nên được viết thường ngoại trừ chữ cái xuất hiện đầu tiên và tên riêng. Chữ nằm trong công thức cũng phải được viết giống như trong nội dung.
+%
+\subsection{Viết hoa và không viết hoa}
+%
+\begin{enumerate}[a)]
+\item
+Những chỗ sau cần phải viết hoa:
+\begin{itemize}
+\item
+Viết tắt và các từ biểu diễn 
+trong văn bản như Định lý, Hệ quả, Định nghĩa... đi kèm với số, ví dụ\
+Định nghĩa\,3, Bảng\,1, Định lý 2.
+\end{itemize}
+Hãy tuân thủ các quy tắc đặc biệt trong \autoref{abbrev} khi dùng công thức.
+\item
+Những chỗ sau {\em không được\/} viết hoa:
+\begin{itemize}
+\item
+Những từ hình, bảng, phương trình, định lý mà được dùng bình thường trong văn bản, không có số kèm theo.
+\item
+Các tiêu đề (xem \autoref{headings} phía trước), chú thích hình và chú thích bảng trừ chữ đầu tiên, tên riêng và từ viết tắt.
+\end{itemize}
+\end{enumerate}
+%
+\subsection{Viết tắt các từ}\label{abbrev}
+%
+\begin{enumerate}[a)]
+\item
+Phương trình thường được nhắc lại bằng cách chỉ dùng số trong ngoặc đơn: ví dụ\ (14). Tuy vậy, khi bạn nhắc đến phương trình ở đầu câu, bạn phải viết đầy đủ ``Phương trình'': ví dụ\ Phương trình (14) rất quan trọng.
+Tuy nhiên, (15) cho thấy rằng \dots .
+\item
+Nếu bạn viết tắt tên gọi hoặc khái niệm nào đó trong suốt báo cáo, bạn cần phải định nghĩa tại lần đầu tiên xuất hiện cụm từ đó,
+ví dụ\ Hàm Plurisubharmonic (PSH), bài toán Strong Optimization (SOPT).
+\end{enumerate}
+%
+\section{Cách viết phần đầu báo cáo}
+\label{contbegin}
+%
+Tựa đề của một báo cáo (phần bắt buộc) phải được viết như sau:
+\begin{verbatim}
+\title{<Tên báo cáo ở đây>}
+\end{verbatim}
+Theo nguyên tắc tiếng Việt, bạn không nên viết hoa toàn bộ chữ cái, hoặc toàn bộ các từ. Bạn nên viết hoa chữ đầu tiên và các tên riêng mà thôi. Những chữ trong công thức cũng phải được định dạng giống như trong nội dung văn bản. Tựa đề không có dấu chấm cuối câu.
+
+Nếu \verb|\title| của bạn quá dài cần phải phân tách, hãy dùng mã \verb|\\|
+(để xuống dòng mới).
+
+Nếu tựa đề của bạn quá dài, không đủ để viết trên phần heading của mỗi trang, một cảnh báo sẽ xuất hiện. Khi đó, bạn có thể muốn viết tắt một số chữ trong tựa đề để hiện trên phần heading của các trang lẻ bằng lệnh
+\begin{verbatim}
+\titlerunning{<Tựa đề viết tắt>}
+\end{verbatim}
+
+Cũng có khả năng bạn muốn thay đổi nội dung tựa đề trong phần mục lục. Để làm điều này, hãy dùng lệnh 
+\begin{verbatim}
+\toctitle{<Tựa đề thay đổi cho phần mục lục>}
+\end{verbatim}
+
+Bạn có thể ghi thêm tựa đề phụ (subtitle) phía sau bằng:
+\begin{verbatim}
+\subtitle{<tựa đề phụ cho báo cáo>}
+\end{verbatim}
+
+Sau đó đến phiên tên của (các) tác giả:
+\begin{verbatim}
+\author{<tên của (các) tác giả>}
+\end{verbatim}
+Những con số dùng để tham chiếu đến địa chỉ và nơi làm việc khác nhau sẽ được gắn vào từng tác giả bằng lệnh \verb|\inst{<no>}|.
+Nếu có nhiều hơn một tác giả, bạn hãy quyết định thứ tự xuất hiện; sau đó sử dụng lệnh \verb|\and| để phân tách.
+
+Nếu bạn thực hiện đúng những điều ở trên, mục này có thể thành:
+\begin{verbatim}
+\author{Ivar Ekeland\inst{1} \and Roger Temam\inst{2}}
+\end{verbatim}
+Nếu là tên người Anh, ghi tên riêng\footnote{Các chữ viết tắt khác của tên có thể viết hoặc không và có thể đưa vào nếu đó là cách thường dùng, ví dụ\ Alfred J.~Holmes, E.~Henry Green.}
+trước rồi đến họ. Đối với tên người Việt, hiện nay chưa có một quy chuẩn nào cụ thể cho các báo cáo cũng như bài báo khoa học. Bạn có thể viết tên họ đầy đủ có dấu theo thứ tự thông thường của tiếng Việt, hoặc có một số người muốn viết tên trước họ sau, với họ được viết in toàn bộ. Đối với các bài tập lớn trong môi trường đại học, bạn \textit{nên} viết theo quy luật thông thường của người Việt.
+
+
+Tiếp theo là địa chỉ của trường học, công ty... Nếu có nhiều hơn một địa chỉ, các mục sẽ được đánh số tự động bằng \verb|\and|, theo thứ tự mà bạn gõ. Hãy đảm bảo rằng số thứ tự này trùng với con số bạn đặt sau tên của tác giả để ghi đúng nơi làm việc của tác giả.
+\begin{verbatim}
+\institute{<tên trường>
+\and <tên trường>
+\and <tên trường>}
+\end{verbatim}
+
+Ngoài ra, bạn có thể dùng
+\begin{verbatim}
+\email{<địa chỉ email>}
+\end{verbatim}
+để cung cấp địa chỉ email trong phần \verb|\institute|. Nếu bạn cần ghi dấu ngã -- ví dụ khi muốn viết trang web cá nhân trong hệ thống thư mục của hệ thống unix -- lệnh \verb|\homedir| sẽ rất vui vẻ làm chuyện đó cho bạn.
+\enlargethispage*{6mm}
+
+\medskip
+Nếu tại phần tựa đề báo cáo có những thứ muốn chú thích, hãy viết 
+(ngay sau từ cần chú thích):
+\begin{verbatim}
+\thanks{<văn bản>}
+\end{verbatim}
+\verb|\thanks| chỉ nên xuất hiện trong \verb|\title|, \verb|\author|
+và \verb|\institute| để ghi chú dưới chân trang. Nếu có hai hoặc nhiều ghi chú hơn cho một mục, hãy phân tách chúng bằng 
+\verb|\fnmsep| (i.e. {\itshape f}oot\emph note \emph mark
+\emph{sep}arator).
+
+\medskip\noindent
+Lệnh
+\begin{verbatim}
+\maketitle
+\end{verbatim}
+sẽ định dạng một tựa đề hoàn chỉnh cho báo cáo của bạn. Nếu không có dòng này, những gì bạn làm sẽ \emph{không bao giờ} hiện ra.
+
+Tiếp theo sẽ là phần tóm tắt nội dung. Chỉ cần viết
+\begin{verbatim}
+\begin{abstract}
+<Nội dung tóm tắt của báo cáo>
+\end{abstract}
+\end{verbatim}
+hoặc xem phần minh họa bên dưới ở trang~\pageref{samppage}.
+
+%
+\section{Lệnh tạo mục lục}
+Phần heading của báo cáo sẽ được tự động đưa vào dựa vào tên đề mục và tên đề tài theo từng trang chẵn và lẻ (vì báo cáo nên in 2 mặt)
+
+Bạn có thể tạo ra một báo cáo hoàn chỉnh bằng cách đưa vào mục lục, trang bìa, phần chỉ mục hoặc bảng thuật ngữ.
+
+Mục lục của báo cáo sẽ được in ra tại nơi đặt câu lệnh 
+\verb|\tableofcontents|.
+
+
+%
+\section{Cách viết nội dung}
+%
+Các tên đề mục nên được viết thường toàn bộ trừ từ đầu tiên và tên riêng. Các chữ cái dạng công thức phải được định dạng như trong nội dung văn bản.
+
+Tên đề mục sẽ được tự động đánh số thứ tự bằng đoạn code sau.\\[2mm]
+{\itshape Nội dung nhập}
+\begin{verbatim}
+\section{Đây là tiêu đề bậc 1}
+\subsection{Đây là tiêu đề bậc 2}
+\subsubsection{Đây là tiêu đề bậc 3.}
+\paragraph{Đây là tiêu đề bậc 4.}
+\end{verbatim}
+\verb|\section| và \verb|\subsection| không có dấu chấm ở cuối.\\
+\verb|\subsubsection| và \verb|\paragraph|
+cần phải có dấu chấm câu phía cuối.
+
+Ngoài phần tiêu đề như đã nói ở trên, báo cáo của bạn có thể được cấu trúc theo các phần nhỏ có nội dung viết ngay bên cạnh tiêu đề (dạng định lý). Mọi môi trường định lý đều được đánh số tự động trong tất cả các mục của tài liệu -- mỗi đề mục trong văn bản có một bộ đếm riêng. Nếu bạn muốn môi trường định lý sử dụng cùng bộ đếm, chỉ cần chỉ ra tùy chọn trong documentclass \verb|envcountsame|:
+\begin{verbatim}
+\documentclass[envcountsame]{hcmutarticle}
+\end{verbatim}
+Nếu lần đầu tiên bạn gọi môi trường định lý bằng, ví dụ như
+\verb|\begin{lemma}|, nó sẽ được đánh số 1; nếu sau đó là hệ quả (corollary), nó sẽ được đánh số 2; nếu sau đó bạn lại gọi bổ đề (lemma) lại, nó sẽ được đánh số 3.
+
+Nhưng trong trường hợp bạn muốn thiết lập lại bộ đếm thành 1 trong mỗi mục, chỉ cần ghi cái này trong tùy chọn documentclass \verb|envcountreset|:
+\begin{verbatim}
+\documentclass[envcountreset]{hcmutarticle}
+\end{verbatim}
+
+Thậm chí bạn có thể ghi cả số thứ tự ở mức độ mục (gồm cả bộ đếm mục) với tùy chọn documentclass \verb|envcountsect|.
+
+\section{Môi trường định lý đã được định nghĩa sẵn}\label{builtintheo}
+Các biến thể của tiêu đề có nội dung viết ngay trên dòng để sử dụng gồm có:
+\begin{enumerate}[a)]
+\item
+{\bfseries Viết đậm} với nội dung được in nghiêng
+như trong các môi trường:
+\begin{verbatim}
+\begin{corollary} <text> \end{corollary}
+\begin{lemma} <text> \end{lemma}
+\begin{proposition} <text> \end{proposition}
+\begin{theorem} <text> \end{theorem}
+\end{verbatim}
+\item
+Phần sau đây sẽ được {\itshape in nghiêng}:
+\begin{verbatim}
+\begin{proof} <text>    \qed    \end{proof}
+\end{verbatim}
+Phần này không đánh số và có thể chứa hình vuông dễ thấy (gọi nó bằng \verb|\qed|) trước khi ra khỏi môi trường.
+\item
+Các tiêu đề {\itshape in nghiêng} hoặc {\bfseries in đậm} khác có nội dung bình thường là:
+\begin{verbatim}
+\begin{definition} <text> \end{definition}
+\begin{example} <text> \end{example}
+\begin{exercise} <text> \end{exercise}
+\begin{note} <text> \end{note}
+\begin{problem} <text> \end{problem}
+\begin{question} <text> \end{question}
+\begin{remark} <text> \end{remark}
+\begin{solution} <text> \end{solution}
+\end{verbatim}
+\end{enumerate}
+
+\section{Định nghĩa môi trường định lý của bạn}
+Chúng tôi đã mở rộng câu lệnh \verb|\newtheorem| chuẩn và có thay đổi cú pháp một ít để có được hai câu lệnh mới \verb|\spnewtheorem| và
+\verb|\spnewtheorem*| để có thể dùng để định nghĩa thêm môi trường. Chúng còn có thêm hai thông số là kiểu mà từ khóa môi trường xuất hiện và thứ hai là kiểu cho văn bản bên trong môi trường mới.
+
+\verb|\spnewtheorem| có thể dùng theo hai cách.
+\subsection{Phương pháp 1 {\itshape (nên dùng)}}
+Bạn có thể muốn tạo một môi trường có cùng bộ đếm với môi trường khác, ví dụ như {\em định lý chính\/} để được đánh số giống như 
+ {\em định lý\/} có sẵn. Trong trường hợp này, dùng cú pháp
+\begin{verbatim}
+\spnewtheorem{<env_nam>}[<num_like>]{<caption>}
+{<cap_font>}{<body_font>}
+\end{verbatim}
+
+\noindent
+Ở đây môi trường sẵn có mà môi trường mới muốn dùng chung bộ đêm được chỉ ra trong thông số tùy chọn \verb|[<num_like>]|.
+
+\paragraph{Nội dung nhập}
+\begin{verbatim}
+\spnewtheorem{mainth}[theorem]{Định lý chính}{\bfseries}{\itshape}
+\begin{theorem} Chim ăn sâu. \end{theorem}
+\begin{mainth} Sâu ăn chim. \end{mainth}
+\end{verbatim}
+\medskip\noindent
+{\em Nội dung xuất}
+
+\medskip\noindent
+{\bfseries Định lý 3.}\enspace {\em Chim ăn sâu.}
+
+\medskip\noindent
+{\bfseries Định lý chính 4.} Sâu ăn chim.
+
+\bigskip
+Chúng ta muốn chia sẻ bộ đếm mặc định (\verb|[theorem]|). Nếu bạn bỏ đi thông số thứ hai của \verb|\spnewtheorem| nó sẽ tạo ra bộ đếm riêng cho môi trường mới để dùng trong suốt tài liệu.
+
+\subsection[Phương pháp 2]{Phương pháp 2 {\itshape (giả sử tùy chọn documentstyle là {\tt[envcountsect]})}}
+\begin{verbatim}
+\spnewtheorem{<env_nam>}{<caption>}[<within>]
+{<cap_font>}{<body_font>}
+\end{verbatim}
+
+\noindent
+Dòng trên định nghĩa môi trường mới \verb|<env_nam>| sẽ in ra chú thích
+\verb|<caption>| viết bằng font \verb|<cap_font>| và nội dung văn bản bằng font \verb|<body_font>|. Môi trường được đánh số lại từ đầu sau mỗi đề mục bạn chỉ ra trong thông số tùy chọn \verb|<within>|.
+
+\medskip\noindent
+\paragraph{Ví dụ} \leavevmode
+
+\medskip\noindent
+\verb|\spnewtheorem{noidua}{Nói đùa}[subsection]{\bfseries}{\rmfamily}|
+
+\medskip
+\noindent định nghĩa một môi trường mới có tên là \verb|noidua| sẽ in ra tựa {\bfseries Nói đùa} in đậm và chữ ở dạng viết thường (chữ không nghiêng, không đậm). Các câu nói đùa này sẽ được đánh số từ 1 ở đầu mỗi mục nhỏ kèm với số đề mục đặt phía trước số câu nói đùa, ví dụ 7.2.1 cho câu nói đùa đầu tiên trong mục nhỏ 7.2.
+
+\subsection{Môi trường không đánh số}
+Nếu bạn muốn có một môi trường không đánh số, hãy dùng cú pháp
+\begin{verbatim}
+\spnewtheorem*{<env_nam>}{<caption>}{<cap_font>}{<body_font>}
+\end{verbatim}
+
+\section{Mã nguồn chương trình}
+Trong trường hợp bạn muốn viết một đoạn mã nguồn chương trình trong báo cáo, hãy dùng môi trường
+\verb|verbatim| hoặc gói \verb|verbatim| của \LaTeX.
+(Các gói như vậy có thể tô sáng các từ khóa của một số ngôn ngữ lập trình.)
+%
+\noindent
+\subsection*{Nội dung nhập {\rmfamily(của một báo cáo đơn giản)}}\label{samppage}
+\begin{verbatim}
+\title{Cơ học Hamilton}
+
+\author{Ivar Ekeland\inst{1} \and Roger Temam\inst{2}}
+
+\institute{Princeton University, Princeton NJ 08544, USA
+\and
+Universit\'{e} de Paris-Sud,
+Laboratoire d'Analyse Num\'{e}rique, B\^{a}timent 425,\\
+F-91405 Orsay Cedex, France}
+
+\maketitle
+%
+\begin{abstract}
+Đoạn này dùng để tóm tắt nội dung báo cáo một cách ngắn gọn.
+\end{abstract}
+%
+\section{Bài toán Điểm cố đinh: một trường hợp nhỏ}
+%
+Với chương này, những kiến thức cơ bản đã kết thúc, và chúng ta bắt đầu tìm lời giải tuần hoàn \dots
+%
+\subsection{Hệ thống tự hành}
+%
+Trong phần này chúng ta sẽ xét trường hợp khi 
+$H(x)$ \dots
+%
+\subsubsection*{Trường hợp tổng quát: không hề dễ.}
+%
+Chúng ta giả sử rằng $H$ là có dạng
+$\left(A_{\infty}, B_{\infty}\right)$ ở vô cùng, với hằng số \dots
+%
+\paragraph{Ghi chú và Nhận xét.}
+Kết quả đầu tiên trông có vẻ \dots
+%
+\begin{proposition}
+Giả sử $H'(0)=0$ và $ H(0)=0$. Cho \dots
+\end{proposition}
+\begin{proof}[của phát biểu]
+Điều kiện (8) có nghĩa là, với mọi $\delta'>\delta$, tồn tại
+$\varepsilon>0$ nào đó sao cho \dots \qed
+\end{proof}
+%
+\begin{example}[\rmfamily (Ngoại lực)]
+Xét hệ thống \dots
+\end{example}
+\begin{corollary}
+Giả sử $H$ là $C^{2}$ và cũng là
+$\left(a_{\infty}, b_{\infty}\right)$ ở vô cùng. Gọi \dots
+\end{corollary}
+\begin{lemma}
+Giả sử rằng $H$ là $C^{2}$ trên $\R^{2n}\backslash \{0\}$
+và $H''(x)$ là \dots
+\end{lemma}
+\begin{theorem}[(Ghoussoub-Preiss)]
+Gọi $X$ là Không gian Banach và $\Phi:X\to\R$ \dots
+\end{theorem}
+\begin{definition}
+Chúng ta sẽ nói rằng một hàm $C^{1}$ $\Phi:X\to\R$
+thỏa mãn \dots
+\end{definition}
+\end{verbatim}
+{\itshape Nội dung xuất\/} (ở trang kế tiếp cùng với các ví dụ về các môi trường định lý ở trên)
+\newcounter{save}\setcounter{save}{\value{section}}
+{\def\addtocontents#1#2{}%
+\def\addcontentsline#1#2#3{}%
+\def\markboth#1#2{}%
+%
+\title{Cơ học Hamilton}
+
+\author{Ivar Ekeland\inst{1} \and Roger Temam\inst{2}}
+
+\institute{Princeton University, Princeton NJ 08544, USA
+\and
+Universit\'{e} de Paris-Sud,
+Laboratoire d'Analyse Num\'{e}rique, B\^{a}timent 425,\\
+F-91405 Orsay Cedex, France}
+
+\maketitle
+%
+\begin{abstract}
+Đoạn này dùng để tóm tắt nội dung báo cáo một cách ngắn gọn.
+\end{abstract}
+%
+\section{Bài toán Điểm cố đinh: một trường hợp nhỏ}
+%
+Với chương này, những kiến thức cơ bản đã kết thúc, và chúng ta bắt đầu tìm lời giải tuần hoàn \dots
+%
+\subsection{Hệ thống tự hành}
+%
+Trong phần này chúng ta sẽ xét trường hợp khi 
+$H(x)$ \dots
+%
+\subsubsection*{Trường hợp tổng quát: không hề dễ.}
+%
+Chúng ta giả sử rằng $H$ là có dạng
+$\left(A_{\infty}, B_{\infty}\right)$ ở vô cùng, với hằng số \dots
+%
+\paragraph{Ghi chú và Nhận xét.}
+Kết quả đầu tiên trông có vẻ \dots
+%
+\begin{proposition}
+Giả sử $H'(0)=0$ và $ H(0)=0$. Cho \dots
+\end{proposition}
+\begin{proof}[của phát biểu]
+Điều kiện (8) có nghĩa là, với mọi $\delta'>\delta$, tồn tại
+$\varepsilon>0$ nào đó sao cho \dots \qed
+\end{proof}
+%
+\begin{example}[\rmfamily (Ngoại lực)]
+Xét hệ thống \dots
+\end{example}
+\begin{corollary}
+Giả sử $H$ là $C^{2}$ và cũng là
+$\left(a_{\infty}, b_{\infty}\right)$ ở vô cùng. Gọi \dots
+\end{corollary}
+\begin{lemma}
+Giả sử rằng $H$ là $C^{2}$ trên $\R^{2n}\backslash \{0\}$
+và $H''(x)$ là \dots
+\end{lemma}
+\begin{theorem}[(Ghoussoub-Preiss)]
+Gọi $X$ là Không gian Banach và $\Phi:X\to\R$ \dots
+\end{theorem}
+\begin{definition}
+Chúng ta sẽ nói rằng một hàm $C^{1}$ $\Phi:X\to\R$
+thỏa mãn \dots
+\end{definition}
+%
+}\setcounter{section}{\value{save}}
+\section{Chỉnh văn bản cho đẹp}
+%
+Bạn nên thực hiện những quy tắc sau để nội dung báo cáo của bạn dễ đọc hơn:
+\begin{flushleft}
+\begin{tabular}{@{}p{.19\textwidth}p{.79\textwidth}}
+\verb|\,|   & khoảng cách nhỏ, ví dụ\ giữa các con số hoặc giữa đơn vị đo và con số; \LaTeX{} sẽ không tách dòng sau khoảng cách này\\
+\verb|--|   & dấu gạch ngang; hai gạch, không có khoảng trắng ở hai đầu\\
+\verb*| -- |& dấu gạch ngang; hai gạch, có khoảng trắng ở một trong hai đầu\\
+\verb|-|    & dấu nối từ; một gạch, không có khoảng trắng ở hai đầu\\
+\verb|$-$|  & dấu trừ, {\em chỉ} dùng trong văn bản\\[8mm]
+{\em Nhập} & \verb|21\,$^{\circ}$C etc.,|\\
+            &  \verb|Dr h.\,c.\,Rockefellar-Smith \dots|\\
+            & \verb|20,000\,km and  Prof.\,Dr Mallory \dots|\\
+            & \verb|1950--1985 \dots|\\
+            & \verb|this -- written on a computer -- is now printed|\\
+            & \verb|$-30$\,K \dots|\\[3mm]
+{\em Xuất}& 21\,$^{\circ}$C etc., Dr h.\,c.\,Rockefellar-Smith \dots\\
+            & 20,000\,km and  Prof.\,Dr Mallory \dots\\
+            & 1950--1985 \dots\\
+            & this -- written on a computer -- is now printed\\
+            & $-30$\,K \dots
+\end{tabular}
+\end{flushleft}
+%
+\section {Kiểu văn bản đặc biệt}
+%
+Loại thông thường (văn bản viết thường) không cần phải ghi mã đặc biệt. {\itshape Chữ nghiêng}
+(dùng \verb|{\em <text>}| tốt hơn là dùng \verb|\emph{<text>}|) hoặc, nếu cần thiết, {\bfseries chữ đậm} nên được dùng để nhấn mạnh.\\[6pt]
+\begin{minipage}[t]{\textwidth}
+\begin{flushleft}
+\begin{tabular}{@{}p{.25\textwidth}@{\hskip6pt}p{.73\textwidth}@{}}
+\verb|{\itshape Text}|   & {\itshape Văn bản in nghiêng}\\[2pt]
+\verb|{\em Text}|   & {\em Văn bản nhấn mạnh --
+   nếu bạn muốn nhấn mạnh một {\em định nghĩa} trong một văn bản in nghiêng (ví dụ\ như trong một {\em định lý)} bạn nên đặt đoạn đó vào} \verb|\em|.\\[2pt]
+\verb|{\bfseries Text}|& {\bfseries Văn bản quan trọng}\\[2pt]
+\verb|\vec{Symbol}| & Vector chỉ được xuất hiện trong chế độ viết toán. Ký hiệu vector mặc định của
+   \LaTeX{} đã được chuyển sang\footnotemark\ quy ước của LLNCS.\\[2pt]
+ & \verb|$\vec{A \times B\cdot C}| cho ra $\vec{A\times B\cdot C}$\\
+ & \verb|$\vec{A}^{T} \otimes \vec{B} \otimes|\\
+ & \verb|\vec{\hat{D}}$| cho ra $\vec{A}^{T} \otimes \vec{B} \otimes
+\vec{\hat{D}}$
+\end{tabular}
+\end{flushleft}
+\end{minipage}
+
+\footnotetext{Nếu bạn nhất định phải dùng thiết kế gốc của ký hiệu vector trong \LaTeX{} (có dấu mũi tên ở đầu), hãy ghi tùy chọn \texttt{[orivec]} trong dòng \texttt{documentclass}.}
+\newpage
+%
+\section {Chú thích chân trang}
+%
+Chú thích ở chân trang trong văn bản có thể viết như sau:
+\begin{verbatim}
+\footnote{Text}
+\end{verbatim}
+{\itshape Nội dung nhập}
+\begin{flushleft}
+Văn bản có chú thích chân trang \verb|\footnote{|{\tt Chú thích sẽ được tự động đánh số.}\verb|}| và văn bản vẫn tiếp tục \dots
+\end{flushleft}
+{\itshape Nội dung xuất}
+\begin{flushleft}
+Văn bản có chú thích chân trang\footnote{Chú thích sẽ được tự động đánh số.}
+và văn bản vẫn tiếp tục \dots
+\end{flushleft}
+%
+\section {Lists}
+%
+Hãy viết danh sách như mô tả bên dưới:\\[2mm]
+{\itshape Nội dung nhập}
+\begin{verbatim}
+\begin{enumerate}
+  \item Mục đầu tiên
+  \item Mục thứ hai
+  \begin{enumerate}
+    \item Mục con đầu tiên
+    \item Mục con thứ hai
+  \end{enumerate}
+  \item Mục thứ ba
+\end{enumerate}
+\end{verbatim}
+{\itshape Nội dung xuất}
+ \begin{enumerate}
+  \item Mục đầu tiên
+  \item Mục thứ hai
+  \begin{enumerate}
+    \item Mục con đầu tiên
+    \item Mục con thứ hai
+  \end{enumerate}
+  \item Mục thứ ba
+\end{enumerate}
+%
+\section {Hình ảnh}
+%
+Môi trường hình ảnh (figure) nên được chèn sau (chứ không phải ở giữa) đoạn văn bản nhắc tới hình đó lần đầu tiên. Chúng sẽ được đánh số tự động.
+
+Có hai cách để đưa hình vào \LaTeX{}. Ta có thể đưa hình thành file PostSript -- tốt nhất là file EPS bằng gói epsfig rồi dịch bằng lệnh latex. Một cách khác ta có thể sử dụng trực tiếp file PDF, PNG, JPG hoặc GIF và sử dụng pdftex để dịch.
+%
+\section{Bảng biểu}
+%
+Chú thích bảng cũng được xử lý giống như chú thích hình, ngoại trừ chú thích bảng sẽ xuất hiện {\itshape phía trên} bảng. Số thứ tự bảng sẽ được đánh số tự động.
+%
+\subsection{Bảng vẽ bằng \protect\LaTeX{}}
+%
+Hãy dùng đoạn mã sau:\\[2mm]
+{\itshape Nội dung nhập}
+\begin{verbatim}
+\begin{table}
+\caption{Giá trị $N$ quan trọng}
+\begin{tabular}{llllll}
+\hline\noalign{\smallskip}
+${\mathrm M}_\odot$ & $\beta_{0}$ & $T_{\mathrm c6}$ & $\gamma$
+  & $N_{\mathrm{crit}}^{\mathrm L}$
+  & $N_{\mathrm{crit}}^{\mathrm{Te}}$\\
+\noalign{\smallskip}
+\hline
+\noalign{\smallskip}
+ 30 & 0.82 & 38.4 & 35.7 & 154 & 320 \\
+ 60 & 0.67 & 42.1 & 34.7 & 138 & 340 \\
+120 & 0.52 & 45.1 & 34.0 & 124 & 370 \\
+\hline
+\end{tabular}
+\end{table}
+\end{verbatim}
+
+\medskip\noindent{\itshape Nội dung xuất}
+\begin{table}
+\caption{Giá trị $N$ quan trọng}
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\setlength\tabcolsep{3pt}
+\begin{tabular}{llllll}
+\hline\noalign{\smallskip}
+${\mathrm M}_\odot$ & $\beta_{0}$ & $T_{\mathrm c6}$ & $\gamma$
+  & $N_{\mathrm{crit}}^{\mathrm L}$
+  & $N_{\mathrm{crit}}^{\mathrm{Te}}$\\
+\noalign{\smallskip}
+\hline
+\noalign{\smallskip}
+ 30 & 0.82 & 38.4 & 35.7 & 154 & 320 \\
+ 60 & 0.67 & 42.1 & 34.7 & 138 & 340 \\
+120 & 0.52 & 45.1 & 34.0 & 124 & 370 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Trước khi tiếp tục văn bản bạn cần để một dòng trống. \dots
+
+\vspace{3mm}
+Để biết thêm thông tin về môi trường tabular, xem trang~46 trong {\em The Not So Short Introduction to \LaTeXe{} \/} của Tobias Oetiker et. al.
+%
+\subsection{Bảng không vẽ bằng \protect\LaTeX{}}
+%
+Nếu bạn không muốn vẽ bảng bằng \LaTeX{}
+mà muốn tạo riêng, hãy chuyển nó thành hình ảnh rồi sử dụng đoạn mã sau:\\[2mm]
+{\itshape Nội dung nhập}
+\begin{verbatim}
+\begin{table}
+\caption{text of your caption}
+\vspace{x cm}     % the actual height needed for your table
+\end{table}
+\end{verbatim}
+%
+\subsection{Ký hiệu và ký tự}
+%
+\subsubsection*{Ký hiệu đặc biệt.}
+%
+Bạn có thể cần sử dụng các ký hiệu đặc biệt. Các ký hiệu có sẵn được liệt kê trong 
+{\em The Not So Short Introduction to \LaTeXe{} \/} của Tobias Oetiker et. al.,
+trang~75\,về sau.
+%
+\subsubsection*{Gô-tíc (Fraktur).}
+%
+Nếu bạn cần dùng ký tự gô-tíc, hãy dùng ký tự \AmSTeX{} tương ứng có sẵn trong gói amstex
+của American Mathematical Society.
+
+Trong \LaTeX{} chỉ có các ký tự gô-tíc sau là dùng được:
+\verb|$\Re$| cho ra $\Re$ và \verb|$\Im$| cho ra $\Im$. Những ký tự này
+{\itshape không nên\/} sử dụng khi bạn cần ghi ký tự gô-tíc trong báo cáo.
+Hãy dùng gô-tíc \AmSTeX{} như đã hướng dẫn ở trên. Với phần thực và phần ảo của số phức trong chế độ viết toán bạn nên dùng cái này thay thế:
+\verb|$\mathrm{Re}$| (cho ra Re) hoặc \verb|$\mathrm{Im}$| (cho ra Im).
+%
+\subsubsection*{Script.}
+%
+Đối với các chữ hoa dạng viết tay (script) hãy dùng
+\begin{center}
+\begin{tabular}{l@{\hspace{1em}cho ra\hspace{1em}}c}
+\verb|$\mathcal{AB}$| & $\mathcal{AB}$
+\end{tabular}
+\end{center}
+(xem trang~75 sách \LaTeX{}).
+%
+\subsubsection*{Ký tự viết thường đặc biệt.}
+%
+Nếu bạn cần các ký hiệu khác ngoài các ký hiệu dưới đây, bạn có thể dùng ký tự đậm bảng đen của \AmSTeX{} (blackboard bold) bằng lệnh, ví dụ như \verb|$mathbb{R}$| chẳng hạn. Ngoài ra, để tiện cho việc viết các ký tự đặc biệt hay dùng, chúng tôi tạo ra một số lệnh viết tắt như sau.
+\begin{flushleft}
+\begin{tabular}{@{}ll@{ cho ra }
+c@{\hspace{1.em}}ll@{ cho ra }c}
+\verb|\C| & (số phức)   & $\C$
+  & \verb|\N| & (số tự nhiên N) & $\N$\\
+\verb|\R| & (số thực)      & $\R$
+  & \verb|\Q| & (số hữu tỷ)  & $\Q$\\
+\verb|\NP| & (lớp NP)      & $\NP$
+  & \verb|\Z| & (số nguyên)     & $\Z$
+\end{tabular}
+\end{flushleft}
+
+%
+\section{Tài liệu tham khảo}
+\label{refer}
+%
+Hiện nay trong quy chuẩn viết báo cáo khoa học có ba dạng trình bày nguồn tham khảo chính: chỉ có số, chữ-số hoặc theo dạng tên tác giả-năm. Báo cáo theo chuẩn của Khoa đề nghị sử dụng thống nhất quy cách trình bày nguồn tham khảo theo số. Danh sách các chú thích trong văn bản cần được ghi ở cuối báo cáo đặt trong môi trường \verb|thebibliography| của \LaTeX{}.
+Để biết thông tin chung về môi trường này
+xem {\em The Not So Short Introduction to \LaTeXe{} \/} của Tobias Oetiker et. al., trang~43.
+
+Có một kiểu {\sc Bib}\TeX{} đặc biệt dành cho LLNCS (cũng là quy chuẩn của Khoa) hoạt động với lớp: \verb|splncs.bst|
+-- chỉ cần gọi nó bằng dòng 
+\verb|\bibliographystyle{splncs}|.
+Nếu bạn định dùng một kiểu {\sc Bib}\TeX{} khác mà bạn đã quen thuộc, hãy ghi tùy chọn \verb|[oribibl]| trong dòng
+\verb|documentclass|, giống như:
+\begin{verbatim}
+\documentclass[oribibl]{hcmutarticle}
+\end{verbatim}
+Nó sẽ giữ được mã \LaTeX{} gốc cho môi trường tham khảo và cơ chế \verb|\cite| mà nhiều ứng dụng {\sc Bib}\TeX{}
+đang sử dụng.
+%
+\subsection*{Tham khảo theo Số}
+%
+Nguồn tham khảo được chú thích ở dạng văn bản -- sử dụng lệnh \verb|\cite|
+của \LaTeX{} -- sẽ hiện ra số đặt trong ngoặc vuông, ví dụ\ [1], tương ứng với khi ta sử dụng lệnh 
+\verb|\bibitem| trong môi trường \verb|thebibliography|.
+
+Đối với hệ thống này, ta chỉ cần không sử dụng thông số tùy chọn của lệnh \verb|\bibitem| thì chỉ có số xuất hiện trong chú thích văn bản (đặt trong ngoặc vuông)
+cũng như đánh dấu trong tài liệu tham khảo (ở đây con số không được đặt trong ngoặc vuông mà có dấu chấm kèm theo).
+
+Nếu ta chú thích các số kế tiếp nhau trong văn bản, chúng sẽ được thu gọn thành khoảng số. Các nhãn không phải là số hoặc chưa được định nghĩa sẽ được xử lý chính xác nhưng sẽ không có sự sắp xếp.
+
+Ví dụ, \verb|\cite{n1,n3,n2,n3,n4,n5,foo,n1,n2,n3,?,n4,n5}| -- trong đó
+\verb|n|$x$ là khóa của câu lệnh \verb|\bibitem| thứ $x$ 
+trong dãy, \verb|foo| là khóa của một \verb|\bibitem| có tham số tùy chọn, và \verb|?| là một tham khảo chưa định nghĩa -- sẽ cho ra chú thích tham khảo là
+1,3,2-5,foo,1-3,?,4,5.
+
+Cách dùng ở danh sách nguồn tham khảo cuối tài liệu:
+
+\begin{verbatim}
+\begin{thebibliography}{1}
+\bibitem {clar:eke}
+Clarke, F., Ekeland, I.:
+Nonlinear oscillations and boundary-value problems for
+Hamiltonian systems.
+Arch. Rat. Mech. Anal. {\bfseries 78} (1982) 315--333
+\end{thebibliography}
+\end{verbatim}
+%
+\end{document}

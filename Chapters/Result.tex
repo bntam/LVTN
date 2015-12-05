@@ -1,0 +1,37 @@
+\section*{Kết quả}
+	Trên cơ sở nghiên cứu, phân tích mã nguồn mở Jakstab, đề tài đã hoàn thành các mục tiêu đề ra ban đầu bao gồm:
+	\begin{itemize}
+		\item Tìm hiểu về hệ thống, kiến trúc phần mềm và giải thuật của Jakstab, đồng thời hiểu được cơ chế hoạt động của phần mềm.
+		\item Xác định các thành phần phụ thuộc và không phụ thuộc vào kiến trúc bộ xử lý/vi xử lý.
+		\item Chuyển đổi thủ công trên mô hình Jakstab cũ.
+		\item Hoàn tất công việc cấu hình, giúp cho việc tích hợp khả năng chuyển đổi một kiến trúc khác vào Jakstab được thực hiện linh động và hiệu quả hơn.
+	\end{itemize}
+	Qua quá trình nghiên cứu, kết quả cho thấy Jakstab là một hệ thống lớn, được chia thành rất nhiều khối, mỗi khối đảm nhận một nhiệm vụ chuyên biệt, tương tác với nhau đảm bảo khả năng vận hành đúng đắn của chương trình. Các khối chức năng bao gồm: khối tiền xử lý, khối đọc dữ liệu, khối phân rã hợp ngữ, khối hợp ngữ, khối phân tích và khối xuất. Ngoài ra còn một số thành phần phụ khác như: các lớp tiện ích, lớp chuyển đổi,\ldots phục vụ quá trình tương tác giữa các khối. Cơ chế hoạt động của Jakstab cũng khá phức tạp, bao gồm các bước chính:
+	\begin{itemize}
+		\item Tập tin mô tả ngữ nghĩa các lệnh của bộ xử lý sẽ được đọc vào và phân tích bởi các bộ phân tích (parser), lexer trong khối tiền xử lý, sau đó chuyển các câu lệnh hợp ngữ thành tập hợp các cạnh \acrshort{rtl} áp dụng cho phân tích dòng.
+		\item Tiếp theo, khối nạp (loader) sẽ đọc nội dung của tập tin đầu vào (input). Tùy vào cấu trúc của tập tin dữ liệu nhập (PE, ELF, raw,\ldots), mà khối này sẽ xác định vị trí bắt đầu phân tích cho phù hợp. Sau quá trình đọc, dữ liệu thô từ tập tin đầu vào sẽ chuyển thành chuỗi nhị phân để phân tích.
+		\item Dữ liệu nhị phân từ khối đọc sau đó sẽ được chuyển cho khối phân giải hợp ngữ. Khối này thực hiện nhiệm vụ phân tích những byte dữ liệu tiếp theo và dựa vào bảng mã thao tác (opcode), tiền tố (prefix) để tra ra tên lệnh cũng như chiều dài lệnh. Từ chiều dài lệnh tìm được, bộ phân rã hợp ngữ sẽ xuất ra các toán hạng để xử lý.
+		\item Khối phân rã dựa vào các thông tin lệnh sẵn có để tạo ra các câu lệnh giả lập trong khối hợp ngữ. Các câu lệnh này sau đó được đưa vào bộ phân tích để tạo lập các cạnh \acrshort{cfa} từ các cạnh \acrshort{rtl} (từ khối tiền xử lý). Bộ phân tích dựa vào cạnh \acrshort{cfa} để xác định vị trí kế tiếp của lệnh cần phân tích. Sau đó, bộ phân rã sẽ tiến hành đọc câu lệnh tiếp theo và lặp lại quá trình này cho đến hết chuỗi dữ liệu hoặc nhận được tín hiệu kết thúc.
+		\item Cuối cùng, kết quả của việc phân tích sẽ được ghi vào các tập tin kết quả nhờ khối ghi dữ liệu.
+	\end{itemize}
+
+	Từ những kết quả phân tích hệ thống Jakstab, đề tài đã xác định được những thành phần dùng chung cho kiến trúc hệ thống Jakstab và những thành phần đặc thù của một bộ xử lý (cụ thể ở đây là CPU x86). Cụ thể, trong số những khối chức năng chính của Jakstab, chỉ có các khối chức năng sau là phụ thuộc vào kiến trúc bộ xử lý/ vi xử lý nhất định:
+	\begin{itemize}
+		\item Khối nạp được thay đổi để đọc được thông tin chính xác từ tập tin đầu vào vì mỗi kiến trúc có một định dạng tập tin thực thi khác nhau.
+		\item Khối phân giải hợp ngữ được thay đổi vì cần phải phân tách các thành phần chuyên biệt cho từng bộ xử lý/vi xử lý với nhau. Từ đó, điều chuyển bộ đọc để gắn bộ phân giải hợp ngữ mới vào hệ thống.
+		\item Khối hợp ngữ cũng được thay đổi vì nó mô tả những tập lệnh của kiến trúc bộ xử lý hiện tại.
+		\item Tập tin mô tả ngữ nghĩa tập lệnh của kiến trúc hiện tại được thay đổi.
+	\end{itemize}
+
+	Sau khi thực hiện chuyển đổi trên mô hình hiện tại của Jakstab, việc chuyển đổi khá phức tạp vì phải sửa đổi mã nguồn tại nhiều vị trí khác nhau, đòi hỏi người thực hiện chuyển đổi phải có sự am hiểu về kiến trúc phần mềm, kiến thức về phần mềm và cách vận hành của Jakstab để đưa ra chỉnh sửa ở vị trí thích hợp. Chính vì thế, đề tài đề xuất ý tưởng thiết kế mô hình chuyển đổi mới cho Jakstab, trong đó tập trung vào hai tập tin quan trọng là tập tin cấu hình và tập tin mô tả ngữ nghĩa của kiến trúc bộ xử lý mới. Mục tiêu chính của ý tưởng này là nhằm tập trung những thành phần khác nhau cần sửa đổi tạo điều kiện dễ dàng cho việc bổ sung kiến trúc bộ xử lý mới vào Jakstab. Sau khi hoàn tất quá trình mô tả, hai tập tin trên được đặt trong cùng thư mục ssl của Jakstab. Đề tài cũng hiện thực xong bộ tạo lập lớp có chức năng đọc thông tin chứa trong tập tin cấu hình để tạo ra các lớp mới cần thiết phải bổ sung vào hệ thống, sau đó toàn bộ hệ thống bao gồm các thành phần không phụ thuộc được giữ nguyên và các lớp mới sẽ được dịch lại để tạo ra mô hình Jakstab mới.
+
+	Để trả lời câu hỏi liệu mô hình Jakstab mới này có hoạt động chính xác hay không, đề tài giới thiệu mô hình thiết kế thử nghiệm testsuite. Công cụ hỗ trợ việc kiểm thử là phần mềm MCU8051IDE, một phần mềm miễn phí hỗ trợ lập trình vi xử lý 8051. Với vi xử lý 8051, thì đối tượng làm việc chính là tập tin thực thi dạng hex, dạng tập tin có được sau khi dịch tập tin hợp ngữ bằng phần mềm hỗ trợ lập trình 8051. Do đó mô hình thử nghiệm đã thiết kế bộ mẫu kiểm thử là các tập tin dạng asm, tập hợp tất cả các lệnh tương tác trên các thanh ghi của vi xử lý 8051. Thao tác kiểm tra là sự tổ hợp quá trình tương tác trên hai phần mềm chính: MCU8051IDE và Jakstab, quá trình này được thực hiện một cách tự động bằng các tập tin thực thi dòng lệnh trong bộ testsuite. Cụ thể, phần mềm MCU8051IDE phải được kích hoạt chạy hai lần (phase 1 và phase 2). Lần thứ nhất khi chương trình được kích hoạt chạy sẽ nhận đầu vào là một tập tin hợp ngữ, tiến hành dịch mã từ tập tin hợp ngữ sang tập tin thực thi (dạng hex). Đây là chức năng mặc định của phần mềm, tập tin thực thi sau khi tạo ra sẽ là đầu vào cho chương trình Jakstab. Bên cạnh tập tin thực thi, sau khi kết thúc quá trình biên dịch, chương trình cần tiến hành lưu lại giá trị của các thanh ghi, trạng thái của các cờ được định nghĩa trong vi xử lý 8051. Những thông tin này sẽ được trích xuất vào một tập tin được gọi là tập tin trạng thái. Tập tin hợp ngữ do Jakstab tạo ra sẽ được chuẩn hóa bởi chương trình Normalizer. Lần thứ hai, MCU8051IDE được kích hoạt chạy, chương trình nhận đầu vào là tập tin hợp ngữ đã được chuẩn hóa và tiến hành dịch. Tập tin trạng thái được sinh ra cùng với tập tin trạng thái lần thứ nhất được tiến hành so sánh. Sản phẩm đề tài được xem là đúng đắn nếu hai tập tin trạng thái sau hai lần dịch bởi MCU8051IDE hoàn toàn giống nhau
+
+
+\section*{Kiến nghị}
+	Ngoài kết quả thử nghiệm thành công trên vi xử lý 8051, đề tài có thể được mở rộng theo một số hướng như sau:
+	\begin{itemize}
+		\item Phát triển Jakstab để có thể hỗ trợ các kiến trúc trên mô hình khác.
+		\item Tích hợp tập tin cấu hình và tập tin mô tả ngữ nghĩa lại thành một tập tin duy nhất.
+		\item Nghiên cứu sâu hơn về cơ chế hoạt động của giải thuật mà chương trình sử dụng, các bộ phân tích trong bộ phân tích khả cấu hình nhằm tìm ra các điểm yếu và tiến hành cải thiện.
+	\end{itemize}
