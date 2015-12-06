@@ -68,9 +68,6 @@ toc          %show listings as entries in table of contents
 
 \renewcommand{\baselinestretch}{1.5} 
 
-
-
-
 \begin{document} %Bắt đầu văn bản
 
 % Format page number
@@ -126,177 +123,29 @@ toc          %show listings as entries in table of contents
 
 \newpage
 \chapter{Giới Thiệu}
-
-\section{Giới thiệu về BE-PUM}
-
-BE-PUM tên đầy đủ là Binary Emulation for Pushdown Model generation, là một công cụ dùng để phân tích động mã nhị phân của một chương trình bất kỳ chạy trên kiến trúc X86 của hệ điều hành Microsoft Windows nền tảng 32-bit. Sau khi phân tích, BE-PUM sẽ sinh ra hợp ngữ – mã assembly và đồ thị luồng điều khiển (control flow graph – CFG) của chương trình đầu vào.\\
-
-BE-PUM được xây dựng chính trên mã nguồn của JakStab nhưng không hạn hẹp ở việc chỉ phân tích tĩnh, BE-PUM có thể phân tích động và chỉ ra lại mỗi dòng lệnh của mã assembly môi trường làm việc của nó là như thế nào. Việc này sẽ giải quyết được những trường hợp phân tính vào những nhánh không cần thiết – không bao giờ được thực thi hoặc khi chương trình đang cố gắng thay đổi chính nội dung của mình.\\
-
-Với việc phân tích mã nhị phân đó, BE-PUM đang được phát triển để tập trung vào phân tích những phần mềm bị nghi ngờ để rồi sau đó sẽ phát hiện được những kỹ thuật tấn công, và cuối cùng là xác định xem đây có thực là phần mềm gây hại đến máy tính hay không?!\\
-
-\section{Mục tiêu đề tài}
-
-Trong phạm vi của đề tài thực tập tốt nghiệp, mục tiêu nhắm tới là phát triển hệ thống xử lý các Windows API cho BE-PUM. Với số lượng các API rất lớn hiện có trong hệ điều hành Windows, hiện tại đề tài đang tập trung vào xử lý các API ở phiên bản Win32 API, do hầu hết các phần mềm độc hại mà BE-PUM hướng tới vẫn đang dùng bộ API này; với sự ưu tiên từng bước xây dựng cho các API được dùng phổ biến trước.\\
-
-Bên cạnh việc nhận thông tin đầu vào từ vùng nhớ đã được xây dựng của BE-PUM và trả về kết quả sau khi gọi API vào đúng địa chỉ cần thiết, điều quan trọng là phải đảm bảo không gây ngắt quãng cũng như tránh nguy hại hệ thống đang chạy.
-Và như vậy với những tương tác vật lý từ lời gọi API (bộ lưu trữ máy tính, cơ sở dữ liệu registry…) hay tương tác người dùng (API tạo cửa sổ message box, lệnh cho một thread “ngủ đông” trong một khoảng thời gian,…) cần được kiểm soát để không làm ảnh hưởng tới kết quả thực thi của BE-PUM.\\
-
-Lưu ý: do nội dung đề tài tập trung vào xử lý cho Win32 API, nên kể từ đây, khi báo cáo nhắc đến Windows API tức là nói đến Win32 API.\\
-
-\section{Cấu trúc của báo cáo}
-
-Bài báo cáo này bao gồm những đề mục sau đây:
-
-\begin{description}
-  	\item[Chương 1] \hfill \\
-	Giới thiệu tổng quan về BE-PUM, yếu tố quyết  định để cho ra đề tài này; dẫn nhập về Windows API, thành phần sẽ được áp dụng để phát triển cho BE-PUM; và cuối cùng nêu ra được mục đính chính của đề tài sẽ cần làm gì\\.
- 	\item[Chương 2] \hfill \\
-	Đem đến những cái nhìn về những vấn đề đã và đang được lưu tâm khi thực hiện đề tài này; sự phổ biến của Windows API trong những phần mềm độc hại để thấy sự cần thiết của việc xây dựng một bộ xử lý Windows API cho BE-PUM; những khó khăn khi thực hiện điều đó và giải pháp cho vấn đề.\\
-	\item[Chương 3] \hfill \\
-	Trình bày những kiến thức cần thiết cho quá trình thực hiện đề tài; từ những kiến thức phải nắm được về hệ thống BE-PUM do đây là một đề tài làm việc dựa trên đó; và mỗi khi làm việc với một thư viện bất kỳ, đòi hỏi ta phải tìm hiểu cách thức làm việc với thư viện đó và cả những kiến thức cần thiết do bộ thư viện ấy yêu cầu. \\
-	\item[Chương 4] \hfill \\
-	Mỗi chương trình bất kỳ đều cần một thiết kế tốt để giúp cho việc xây dựng dễ dàng và quy chuẩn hơn. Mục này sẽ trình bày cách mà bộ xử lý Windows API đã được hiện thực để tương tai sau này có thể dễ dàng sửa chữa, bảo trì và bổ sung thêm vào kiến trúc đó.\\
-	\item[Chương 5] \hfill \\
-	 Trình bày về kết quả mà bộ xử Windows API đã đạt được với những Windows API đã được hỗ trợ cho hệ thống BE-PUM.\\
-	\item[Chương 6] \hfill \\
-	 Liệt kê về những tài liệu và nguồn tham khảo có liên quan đến đề tài này.\\
-\end{description}
-
+\input{Chapters/Intruction}
 
 \chapter{Phân Tích Vấn Đề}
-
-
-\section{Những điểm cần nhắc đến trong BE-PUM}
-
-
-
-\section{Các câu lệnh hợp ngữ}
-
-
-
-\section{Windows API trong những phần mềm độc hại}
-
-Để cung cấp sức mạnh và sự tiện lợi cho lập trình viên trong việc viết ứng dụng chạy trên hệ điều hành Windows, các API trong bộ Windows API mở ra nhiều cách thức nhanh chóng và mạnh mẽ cho lập trình viên trong việc tương tác với hệ thống.\\
-
-Và vấn đề gì cũng có hai mặt của nó, sự hỗ trợ mạnh mẽ đó cũng là con đường đơn giản để các tin tặc áp dụng vào việc xây dựng nên các phương pháp tấn công, cũng như cho ra đời những phần mềm nguy hại (malware), để lại bao hậu quả xấu cho hệ thống máy vi tính trên toàn cầu.\\
-
-Trong quá trình xây dựng BE-PUM và qua việc phân tích hàng ngàn mẫu malware chạy trên môi trường Windows được phát tán ở khắp nơi trên thế giới, hầu hết những mẫu malware trên đều áp dụng lời gọi Windows API vào cách thức tấn công của chúng. Những phương pháp tấn công phổ biến như SEH hay phương pháp chống phát hiện đều có sự tồn tại của Windows API trong đó.\\
-
-Do đó, việc xây dựng một bộ công cụ xử lý những thông tin trả về từ Windows API là rất cần thiết cho việc phát triển hệ thống BE-PUM, một hệ thống tập trung vào phân tích mã nhị phân của malware.\\
-
-
-
-
-\section{BE-PUM và Windows API}
-
-Mã nguồn của những API trong bộ Windows API được tập đoàn Microsoft giữ kín và không hề công bố. Chỉ có những đặc tả và hướng dẫn sử dụng được Microsoft phổ biến rộng rãi cho lập trình viên. Nghĩa rằng ta chỉ có thể biết được đầu vào của lời gọi và mong muốn đầu ra sẽ như ý, chứ không thể nắm rõ lô-gíc xử lý bên trong của chúng. Điều đó khiến cho việc xử lý đúng đắn một cách tổng quát đối với mọi đầu vào của mỗi API bằng cách viết lại bộ mã xử lý tương ứng của chúng vào trong BE-PUM dường như trở nên không thể.\\
-
-Hướng tiếp cận hiện tại là tiến hành lấy nội dung bộ nhớ, nội dung các đối số nằm trên stack bên trong BE-PUM và tiến hành gọi thực sự với Windows API, nhận kết quả trả về và nạp lại vào trong BE-PUM để tiếp tục tiến hành phân tích các câu lệnh tiếp theo.\\
-
-BE-PUM là một dự án được phát triển lên từ nhân của dự án JakStab và được viết hoàn toàn trên ngôn ngữ lập trình Java. Với Windows API thì lại là một câu chuyện hoàn toàn khác, Windows API được phát triển chủ yếu tập trung vào ngôn ngữ lập trình C kèm với các mô tả và cấu trúc dữ liệu được viết trên đó. Thêm lần nữa, việc hiện thực ý tưởng gọi để lấy kết quả Windows API từ trong lòng BE-PUM gặp nhiều khó khăn. Đặc biệt là việc ánh xạ các dữ liệu kiểu cấu trúc giữa hai thành phần trên cũng là một trăn trở.\\
-
-Vì những lý do trên, cần tìm hiểu một cách thức giải quyết vấn đề nhanh chóng và đơn giản hơn bằng một bộ công cụ nào đó để xử lý rào cản ngôn ngữ giữa Java và C. Thêm vào đó, bộ công cụ này cũng cần có tính linh hoạt và mềm dẻo để cho việc phát triển về sau được dễ dàng.\\
-
-
-
-\section{Truy xuất Windows API bên trong BE-PUM thông qua JNA}
-
-Vấn đề trên được giải quyết thông qua bộ thư viện Java Native Access (JNA).\\
-
-Java Native Access là một thư viện được cộng đồng phát triển, nhằm giúp cho các chương trình được viết bằng ngôn ngữ lập trình Java dễ dàng truy cập vào các thư viện native shared mà không cần thông qua Java Native Interface. Thiết kế của JNA cũng cung cấp khả năng này mà không cần bỏ ra nhiều công sức.\\
-
-Với khả năng ánh xạ dễ dàng giao diện lập trình giữa hai ngôn ngữ Java và C; bao gồm ánh xạ tên hàm, kiểu dữ liệu trả về, kiểu dữ liệu của các thông số đầu vào; từ những kiểu dữ liệu cơ bản đến những kiểu dữ liệu cấu trúc và kể cả con trỏ; đó là những ưu điểm để lựa chọn JNA áp dụng vào trong việc giải quyết yêu cầu của đề tài nêu trên.
-
-
+\input{Chapters/AnalyzeProblems}
 
 \chapter{Kiến Thức Nền}
-
-\section{Các câu lệnh hợp ngữ}
-\section{Windows API}
+\input{Chapters/Knowledge}
 
 \chapter{Thiết Kế Và Xây Dựng}
-
-\section{Các câu lệnh hợp ngữ}
-\section{Windows API}
+\input{Chapters/DesignAndBuildProgram}
 
 \chapter{Kết Quả}
+\input{Chapters/Result}
 
 \chapter{Hướng Phát Triển Trong Tương Lai}
-
+\input{Chapters/FutureDevelopment}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\begin{thebibliography}{}
-\bibitem{}
-Kenneth H. Rosen, Chapter 3, Discrete Mathematics and Its Applications, 6th edition, McGraw-Hill, 2007.
+\thispagestyle{empty}
 
-\bibitem{}
-S. Avora and B. Barak, Computational Complexity: A Modern Approach, Cambridge University Press, 2007.
+\input{Chapters/References}
 
-\bibitem{}
-Big O notation - Wikipedia, the free encyclopedia.
-http://en.wikipedia.org/wiki/Big\_O\_notation
-
-\bibitem{}
-Computational complexity theory - Wikipedia, the free encyclopedia
-http://en.wikipedia.org/wiki/Computational\_complexity\_theory
-
-\bibitem{}
-Phân tích thời gian thực hiện giải thuật.
-http://thanhcuong.wordpress.com/2011/01/14/phn-tch-thời-gian-thực-hiện-giải-thuật/
-
-Phân tích thiết kế thuật toán và đánh giá độ phức tạp giải thuật. - Trường đại học Sư Phạm Hà Nội.
-
-\bibitem{}
-Bài giảng điện tử trường đại học công nghiệp TP.HCM.
-
-\bibitem{PD-2008}
-Bài giảng môn học phân tích và thiết kế thuật toán - Trường đại học Phương Đông. - Hà Nội - 2008.
-
-\bibitem{}
-Lý thuyết ngôn ngữ hình thức và Ôtômat. - Trường đại học Khoa Học - Huế - 2004.
-
-\bibitem{}
-Bài giảng điện tử chương 7: Vấn đề NP-đầy đủ. - Đại học Bách Khoa TP.HCM.
-
-\bibitem{}
-Giáo trình Lý thuyết thuật toán. - 
-Thai Nguyen University of Information and Communiction Technology, 2010.
-
-\bibitem{}
-Lý thuyết độ phức tạp tính toán - Bách khoa toàn thư mở Wikipedia tiếng việt.
-http://vi.wikipedia.org/wiki/Lý\_thuyết\_độ\_phức\_tạp\_tính\_toán
-
-\bibitem{}
-Luận văn của Phạm Thái Sơn - Sinh viên đại học Bách Khoa Hà Nội - 2009
-
-\bibitem{}
-P (độ phức tạp) - Bách khoa toàn thư mở Wikipedia tiếng việt.
-http://vi.wikipedia.org/wiki/P\_(độ\_phức\_tạp)
-
-\bibitem{}
-NP (độ phức tạp) - Bách khoa toàn thư mở Wikipedia tiếng việt.
-http://vi.wikipedia.org/wiki/NP\_(độ\_phức\_tạp)
-
-\bibitem{}
-NP-đầy đủ - Bách khoa toàn thư mở Wikipedia tiếng việt.
-http://vi.wikipedia.org/wiki/NP-đầy\_đủ
-
-\bibitem{}
-NP-khó - Bách khoa toàn thư mở Wikipedia tiếng việt.
-http://vi.wikipedia.org/wiki/NP-khó
-
-\bibitem{xep-ba-lo}
-Bài toán xếp ba lô - Bách khoa toàn thư mở Wikipedia tiếng việt.
-http://vi.wikipedia.org/wiki/Bài\_toán\_xếp\_ba\_lô
-
-\bibitem{ng-ban-hang}
-Bài toán người bán hàng - Bách khoa toàn thư mở Wikipedia tiếng việt.
-http://vi.wikipedia.org/wiki/Bài\_toán\_người\_bán\_hàng
-
-
-\end{thebibliography}
 \end{document}
 
 
