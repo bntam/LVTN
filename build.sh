@@ -2,11 +2,11 @@
 
 pdflatex --output-directory=build report.tex 
 
-file="report.pdf"
+file="build/report.pdf"
 if [ -f "$file" ]
 then 
 	echo "SUCCESS !!!"
-	#open "$file"
+	open "$file"
 else 
 	echo "FAILED !!!"
 fi
