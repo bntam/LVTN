@@ -1,0 +1,118 @@
+\documentclass[14pt]{hcmutarticle}
+\usepackage{enumerate} 
+\usepackage[hidelinks]{hyperref}
+\usepackage{setspace}
+	
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\newcommand\HRule{\rule{\textwidth}{1pt}}
+\usetikzlibrary{arrows,snakes,backgrounds}
+
+\usepackage{afterpage}
+\newcommand\blankpage{
+    \null
+    \thispagestyle{empty}
+    \addtocounter{page}{-1}
+    \newpage}
+
+\usepackage[
+nomain,		
+nonumberlist, 
+acronym,     
+toc          
+]
+{glossaries}
+
+\input{Glossaries/glossary}
+\makeglossaries	
+
+\usepackage[]{algorithm2e}
+\renewcommand{\algorithmcfname}{Giải thuật}
+\renewcommand{\listalgorithmcfname}{Danh sách \algorithmcfname}
+
+\usepackage{abstract}
+
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Mã}
+\renewcommand{\lstlistlistingname}{Danh sách \lstlistingname}
+
+\def\sectionautorefname{Phần}
+\def\subsectionautorefname{Mục}
+
+\graphicspath{{Figures/}}
+
+\def\AmS{{\protect\usefont{OMS}{cmsy}{m}{n}%
+  A\kern-.1667em\lower.5ex\hbox{M}\kern-.125emS}}
+\def\AmSTeX{{\protect\AmS-\protect\TeX}}
+
+\renewcommand{\baselinestretch}{1.5} 
+
+\begin{document}
+
+\pagenumbering{roman}
+%\fancyhead[L]{}
+%\fancyhead[R]{}
+
+\input{Chapters/A_Cover}
+
+\afterpage{\blankpage}
+
+\setcounter{secnumdepth}{-2}
+
+\newpage
+\chapter{LỜI CAM KẾT}
+\input{Chapters/B_Commitment}
+
+\newpage
+\chapter{LỜI CẢM ƠN}
+\input{Chapters/C_Acknowledgements}
+
+\newpage
+\chapter{TÓM TẮT LUẬN VĂN}
+\input{Chapters/D_Abstract}
+
+\newpage
+\tableofcontents
+\setcounter{secnumdepth}{5}
+
+\newpage
+\listoffigures
+
+\newpage
+\listoftables
+
+\newpage
+\printglossary[title=Danh mục các từ viết tắt,toctitle=Danh mục các từ viết tắt]
+
+\pagenumbering{arabic}
+
+\newpage
+\chapter{Giới Thiệu}
+\input{Chapters/E_Introduction}
+
+\chapter{Phân Tích Vấn Đề}
+\input{Chapters/F_Problems}
+
+\chapter{Kiến Thức Nền}
+\input{Chapters/G_BaseKnowledges}
+
+\chapter{Thiết Kế Và Xây Dựng}
+\input{Chapters/H_Design}
+
+\chapter{Kết Quả}
+\input{Chapters/I_Result}
+
+\chapter{Hướng Phát Triển Trong Tương Lai}
+\input{Chapters/J_FutureWorks}
+
+\newpage
+\begin{thebibliography}{}
+
+\bibitem{google}
+http://www.google.com
+
+\end{thebibliography}
+\end{document}
+
+
+
