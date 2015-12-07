@@ -50,8 +50,6 @@ toc
 \begin{document}
 
 \pagenumbering{roman}
-%\fancyhead[L]{}
-%\fancyhead[R]{}
 
 \input{Chapters/A_Cover}
 
@@ -60,16 +58,20 @@ toc
 \setcounter{secnumdepth}{-2}
 
 \newpage
-\chapter{LỜI CAM KẾT}
-\input{Chapters/B_Commitment}
+\chapter{LỜI CẢM ƠN}
+\input{Chapters/B_Acknowledgements}
 
 \newpage
-\chapter{LỜI CẢM ƠN}
-\input{Chapters/C_Acknowledgements}
+\chapter{LỜI CAM KẾT}
+\input{Chapters/C_Commitment}
 
 \newpage
 \chapter{TÓM TẮT LUẬN VĂN}
-\input{Chapters/D_Abstract}
+\input{Chapters/D_Brief}
+
+\newpage
+\chapter{ABSTRACT}
+\input{Chapters/E_Abstract}
 
 \newpage
 \tableofcontents
@@ -82,37 +84,33 @@ toc
 \listoftables
 
 \newpage
-\printglossary[title=Danh mục các từ viết tắt,toctitle=Danh mục các từ viết tắt]
-
 \pagenumbering{arabic}
+\chapter{GIỚI THIỆU}
+\input{Chapters/F_Introduction}
 
 \newpage
-\chapter{Giới Thiệu}
-\input{Chapters/E_Introduction}
-
-\chapter{Phân Tích Vấn Đề}
-\input{Chapters/F_Problems}
-
-\chapter{Kiến Thức Nền}
-\input{Chapters/G_BaseKnowledges}
-
-\chapter{Thiết Kế Và Xây Dựng}
-\input{Chapters/H_Design}
-
-\chapter{Kết Quả}
-\input{Chapters/I_Result}
-
-\chapter{Hướng Phát Triển Trong Tương Lai}
-\input{Chapters/J_FutureWorks}
+\chapter{PHÂN TÍCH VẤN ĐỀ}
+\input{Chapters/G_Problems}
 
 \newpage
-\begin{thebibliography}{}
+\chapter{KIẾN THỨC NỀN}
+\input{Chapters/H_BaseKnowledges}
 
-\bibitem{google}
-http://www.google.com
+\newpage
+\chapter{THIẾT KẾ VÀ XÂY DỰNG}
+\input{Chapters/I_Design}
 
-\end{thebibliography}
+\newpage
+\chapter{THÍ NGHIỆM, ĐÁNH GIÁ VÀ KẾT LUẬN}
+\input{Chapters/J_Result}
+
+\newpage
+\chapter{HƯỚNG PHÁT TRIỂN TRONG TƯƠNG LAI}
+\input{Chapters/K_FutureWorks}
+
+\newpage
+\chapter{PHỤ LỤC}
+\input{Chapters/L_Appendix}
+
 \end{document}
-
-
 
