@@ -1,0 +1,123 @@
+\section{Làm việc với BE-PUM}
+
+\section{Các câu lệnh hợp ngữ}
+
+\section{Windows API}
+
+	\subsection{Một vài bộ thư viện cần hỗ trợ}
+
+Ở những bước xây dựng đầu của đề tài, cần ưu tiên tiến hành cho những bộ thư viện phổ biến và được dùng rộng rãi trước tiên. Bảng 2 sau đây sẽ mô tả thông tin những bộ thư viện đã được hỗ trợ bởi BE-PUM:
+
+
+%\begin{center}
+\begin{longtable}{ | m{3cm} | m{11cm} | }
+	\hline
+Tên & Chức năng\\
+	\hline
+	\hline
+Dịch vụ nền & Cho phép truy cập vào các nguồn tài nguyên cơ bản có sẵn trong hệ thống của Windows. Bao gồm những thứ như hệ thống tập tin, thiết bị, tiến trình (process), luồng (thread), xử lý lỗi (error handing).
+Các chức năng này nằm trong tập tin kernel32.dll trên hệ điều hành Windows 32-bit.\\
+	\hline
+Dịch vụ nâng cao & Cho phép truy cập vào các chức năng bổ sung. Bao gồm những thứ như Windows registry, tắt/khởi động lại hệ thống (hoặc bãi bỏ - abort), bắt đầu/dừng/tạo ra một dịch vụ, quản lý tài khoản người dùng.
+Các chức năng này nằm trong tập tin advapi32.dll trên hệ điều hành Windows 32-bit.\\
+	\hline
+Giao diện người dùng & Cung cấp các chức năng để tạo và quản lý cửa sổ màn hình và hầu hết những điều khiển cơ bản, chẳng hạn như nút và thanh cuộn, nhận chuột và bàn phím, cũng như các chức năng khác liên quan đến phần giao diện đồ họa người dùng của Windows.\\
+	\hline
+Các chức năng này nằm trong tập tin user32.dll trên hệ điều hành Windows 32-bit.
+Windows shell & Cho phép các ứng dụng truy cập các chức năng được cung cấp bởi các shell của hệ điều hành, cũng như thay đổi nó.
+Windows shell ở đây được hiểu là những thành phần cấu tạo nên giao diện đồ họa người dùng của hệ điều hành Windows (bao gồm những thứ như: màn hình desktop, thanh làm việc taskbar và các thành phần con trên nó,…).
+Các chức năng này nằm trong tập tin shell32.dll trên hệ điều hành Windows 32-bit.\\
+	\hline
+
+\caption[Những bộ thư viện được hỗ trợ bởi BE-PUM]{Những bộ thư viện được hỗ trợ bởi BE-PUM}
+\label{table:tblwapilib}
+\end{longtable}
+%\end{center}
+
+
+	\subsection{Trình tự các bước để ứng dụng JNA vào BE-PUM}
+
+Để  tiến hành áp dụng những khả năng mang lại từ JNA và hệ thống BE-PUM, ta cần trải qua những bước sau đây:
+\begin{enumerate}
+	\item Ánh xạ tương ứng tên thư viện sẽ được gọi
+	\item Ánh xạ tên hàm của API và những kiểu dữ liệu sẽ được dùng (bao gồm kiểu dữ liệu trả về và kiểu dữ liệu của các thông số đầu vào) từ ngôn ngữ lập trình C sang Java
+	\item Tiến hành lấy giá trị bộ nhớ của các thông số đầu vào có trong BE-PUM
+	\item Truyền các giá trị đó vào những kiểu tương ứng đã được ánh xạ trong Java, gọi API và lấy kết quả trả về.
+	\item Lưu giá trị nhận được đó về lại bộ nhớ của BE-PUM
+\end{enumerate}
+
+
+	\subsection{Những kiểu dữ liệu và ánh xạ của chúng vào JNA}
+
+Việc ánh xạ kiểu dữ liệu từ ngôn ngữ lập trình C sang Java được hỗ trợ sẵn bởi JNA cho một số kiểu cơ bản thường dùng như sau:\\
+
+\begin{longtable}{ | m{3cm} | m{5cm} | m{5cm} | }
+	\hline
+STT & Kiểu dữ liệu trong C & Kiểu dữ liệu trong Java\\
+	\hline
+	\hline
+1 & char & byte\\
+	\hline
+2 & wchar\_t & char\\
+	\hline
+3 & short & short\\
+	\hline
+4 & int & int\\
+	\hline
+5 & int & boolean\\
+	\hline
+6 & enum & int (thông thường)\\
+	\hline
+7  & long long, \_\_int64 & long\\
+	\hline
+8 & float & float\\
+	\hline
+9 & double & double\\
+	\hline
+10 & Con trỏ (VD: void*) & \specialcell{Buffer \\ Pointer}\\
+	\hline
+11 & \specialcell{Con trỏ (VD: void*, char*) \\ Mảng} & <P>[] (mảng của những kiểu nguyên thủy)\\
+	\hline
+12 & long & NativeLong\\
+	\hline
+13 & const char* & String\\
+	\hline
+14 & const wchar\_t* & WString\\
+	\hline
+15 & char** & String[]\\
+	\hline
+16 & wchar\_t** & WString[]\\
+	\hline
+17 & void** & Pointer[]\\
+	\hline
+18 & \specialcell{struct* \\ struct} & Structure\\
+	\hline
+19 & union & Union\\
+	\hline
+20 & struct[] & Structure[]\\
+	\hline
+21 & void (*FP)() & Callback\\
+	\hline
+22 & pointer (<T> *) & PointerType\\
+	\hline
+
+\caption[Một số ánh xạ kiểu dữ liệu cơ bản]{Một số ánh xạ kiểu dữ liệu cơ bản}
+\label{table:tblwapi_type_mapping}
+\end{longtable}
+%\end{center}
+
+Căn bản việc ánh xạ kiểu dữ liệu trong JNA được đáp ứng bằng việc kích thước dữ liệu được sử dụng giữa hai ngôn ngữ C và Java có kích thước bằng nhau. JNA hỗ trợ cho việc nạp một mảng các kí tự trong C bằng cách cho vào một đối tượng kiểu String.\\
+ 
+Điểm hỗ trợ mạnh trong JNA đó là sử dụng và truy cập con trỏ của C thông qua đối tượng kiểu Pointer, dù rằng đang làm việc trong ngôn ngữ Java. Và nếu muốn lấy giá trị của một vùng nhớ thay vì chỉ một giá trị ô nhớ như Pointer, ta có thể sử dụng đối tượng kiểu Buffer để JNA đưa giá trị vùng nhớ đó vào trong đối tượng.
+
+
+	\subsection{Dữ liệu kiểu cấu trúc (structure)}
+
+Một trong những lợi thế to lớn nhất mà JNA mang lại đó là nạp dữ liệu kiểu cấu trúc (structure) vào trong C mà ngôn ngữ Java không có. Điều này được hỗ trợ qua việc tạo ra một lớp mới, kế thừa từ lớp Structure của JNA.\\
+
+Để tạo ra chính xác kiểu cấu trúc để nạp vào JNA, ta cũng phải tìm hiểu và nắm rõ các quy tắc xây dựng và làm việc với kiểu cấu trúc trong ngôn ngữ lập trình C.\\
+
+Một struct trong ngôn ngữ lập trình C là một khai báo dữ liệu kiểu phức hợp, trong đó nó định nghĩa một danh sách các biến được đặt bên trong một khối bộ nhớ. Nó cho phép các biến khác nhau được truy xuất thông qua một con trỏ duy nhất (con trỏ của structure). Một structure có khả năng chứa nhiều kiểu dữ liệu khác nhau từ kiểu dữ liệu nguyên thủy đến kiểu dữ liệu phức tạp khác (enum, structure).\\
+
+Định nghĩa struct khá giống với định nghĩa lớp trong Java, nhưng struct không hề có khả năng khai báo phương thức, cũng như các từ khóa public, private,… như Java. Thêm vào đó, cơ chế cấp phát bộ nhớ của struct chỉ đơn thuần là sự sắp xếp liên tục của các vùng nhớ chứa giá trị của các biến đã được khai báo bên trong. Cách sắp xếp này hoàn toàn tương ứng với ngôn ngữ assembly; do đó ta cần đảm bảo việc lấy ra và gán trở lại bộ nhớ BE-PUM một cách chính xác theo trình tự như vậy.
+

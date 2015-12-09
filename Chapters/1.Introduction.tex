@@ -1,0 +1,60 @@
+
+
+\section{Giới thiệu sơ lược về BE-PUM}
+
+BE-PUM tên đầy đủ là Binary Emulation for Pushdown Model generation, là một công cụ dùng để phân tích động mã nhị phân của một chương trình bất kỳ chạy trên kiến trúc X86 của hệ điều hành Microsoft Windows nền tảng 32-bit. Sau khi phân tích, BE-PUM sẽ sinh ra hợp ngữ – mã assembly và đồ thị luồng điều khiển (control flow graph – CFG) của chương trình đầu vào.\\
+
+BE-PUM được xây dựng chính trên mã nguồn của JakStab nhưng không hạn hẹp ở việc chỉ phân tích tĩnh, BE-PUM có thể phân tích động và chỉ ra lại mỗi dòng lệnh của mã assembly môi trường làm việc của nó là như thế nào. Việc này sẽ giải quyết được những trường hợp phân tính vào những nhánh không cần thiết – không bao giờ được thực thi hoặc khi chương trình đang cố gắng thay đổi chính nội dung của mình.\\
+
+Với việc phân tích mã nhị phân đó, BE-PUM đang được phát triển để tập trung vào phân tích những phần mềm bị nghi ngờ để rồi sau đó sẽ phát hiện được những kỹ thuật tấn công, và cuối cùng là xác định xem đây có thực là phần mềm gây hại đến máy tính hay không?!\\
+
+\section {Tổng quan về Windows API}
+
+Với tên gọi đầy đủ là Microsoft Windows application programming interface, đôi lúc được gọi một cách ngắn gọn là WinAPI, đây là một bộ giao diện lập trình ứng dụng (API) lõi có sẵn trong hệ điều hành Microsoft Windows (hay thường được gọi ngắn gọn là Windows).\\
+
+Windows API là tên gọi chung của những dự án được triển khai cho những nền tảng khác nhau được áp dụng trong hệ điều hành Windows; mà thông thường chúng có những tên gọi riêng. Một số tên gọi và mô tả cho những phiên bản xin được trình bày trong Bảng \ref{table:tblwapiver}.
+
+
+\begin{longtable}{ | m{3cm} | m{11cm} | }
+	\hline
+Tên của phiên bản Windows API & Mô tả \\
+	\hline
+	\hline
+Win16 & Đây là tên gọi bộ API đầu tiên có trong phiên bản Microsoft Windows 16-bit. Thuở ban đầu bộ API này có tên gọi là “Windows API”, nhưng sau khi phiên bản kế tiếp là Win32 ra đời, nó được đổi tên thành Win16. Lúc này các chức năng của Win16 API chủ yếu nằm trong các tập tin lõi của hệ điều hành như kernel.exe (hoặc krnl286.exe hoặc krnl386.exe), user.exe và gdi.exe. Dù rằng phần mở rộng là exe, nhưng thực tế đây là các thư viện liên kết động. \\
+	\hline
+Win32 & Đây là tên gọi cho bộ Windows API trong phiên bản Windows 32-bit, được giới thiệu lần đầu cùng hệ điều hành Windows NT. Các chức năng của Win32 API cũng bao gồm cả những chức năng của Win16 API, nhưng khác với phiên bản trước, chúng được đóng gói trong các tập tin DLL; trong đó có thể kể đến những tập tin DLL cốt lõi của Win32 API như: kernel32.dll, user32.dll, và gdi32.dll. \\
+	\hline
+Win64 & Đây là một biến thể sau đó của bộ API được hiện thực trong nền tảng Windows 64-bit. Cả chương trình 32-bit hoặc 64-bit đều có thể được biên dịch với cùng một mã nền duy nhất, dù rằng một số API trong Win32 đã được thay thế và loại bỏ. Tất cả con trỏ trong phiên bản này mặc định là 64-bit, do đó cần kiểm tra khả năng tương thích trong mã nguồn và viết lại nếu cần thiết. \\
+	\hline
+
+\caption[Một số phiên bản chính của Windows API]{Một số phiên bản chính của Windows API}
+\label{table:tblwapiver}
+\end{longtable}
+
+\section{Mục tiêu đề tài}
+
+Trong phạm vi của đề tài thực tập tốt nghiệp, mục tiêu nhắm tới là phát triển hệ thống xử lý các Windows API cho BE-PUM. Với số lượng các API rất lớn hiện có trong hệ điều hành Windows, hiện tại đề tài đang tập trung vào xử lý các API ở phiên bản Win32 API, do hầu hết các phần mềm độc hại mà BE-PUM hướng tới vẫn đang dùng bộ API này; với sự ưu tiên từng bước xây dựng cho các API được dùng phổ biến trước.\\
+
+Bên cạnh việc nhận thông tin đầu vào từ vùng nhớ đã được xây dựng của BE-PUM và trả về kết quả sau khi gọi API vào đúng địa chỉ cần thiết, điều quan trọng là phải đảm bảo không gây ngắt quãng cũng như tránh nguy hại hệ thống đang chạy.
+Và như vậy với những tương tác vật lý từ lời gọi API (bộ lưu trữ máy tính, cơ sở dữ liệu registry…) hay tương tác người dùng (API tạo cửa sổ message box, lệnh cho một thread “ngủ đông” trong một khoảng thời gian,…) cần được kiểm soát để không làm ảnh hưởng tới kết quả thực thi của BE-PUM.\\
+
+Lưu ý: do nội dung đề tài tập trung vào xử lý cho Win32 API, nên kể từ đây, khi báo cáo nhắc đến Windows API tức là nói đến Win32 API.\\
+
+\section{Cấu trúc của báo cáo}
+
+Bài báo cáo này bao gồm những đề mục sau đây:
+
+\begin{description}
+  	\item[Chương 1] \hfill \\
+	Giới thiệu tổng quan về BE-PUM, yếu tố quyết  định để cho ra đề tài này; dẫn nhập về Windows API, thành phần sẽ được áp dụng để phát triển cho BE-PUM; và cuối cùng nêu ra được mục đính chính của đề tài sẽ cần làm gì\\.
+ 	\item[Chương 2] \hfill \\
+	Đem đến những cái nhìn về những vấn đề đã và đang được lưu tâm khi thực hiện đề tài này; sự phổ biến của Windows API trong những phần mềm độc hại để thấy sự cần thiết của việc xây dựng một bộ xử lý Windows API cho BE-PUM; những khó khăn khi thực hiện điều đó và giải pháp cho vấn đề.\\
+	\item[Chương 3] \hfill \\
+	Trình bày những kiến thức cần thiết cho quá trình thực hiện đề tài; từ những kiến thức phải nắm được về hệ thống BE-PUM do đây là một đề tài làm việc dựa trên đó; và mỗi khi làm việc với một thư viện bất kỳ, đòi hỏi ta phải tìm hiểu cách thức làm việc với thư viện đó và cả những kiến thức cần thiết do bộ thư viện ấy yêu cầu. \\
+	\item[Chương 4] \hfill \\
+	Mỗi chương trình bất kỳ đều cần một thiết kế tốt để giúp cho việc xây dựng dễ dàng và quy chuẩn hơn. Mục này sẽ trình bày cách mà bộ xử lý Windows API đã được hiện thực để tương tai sau này có thể dễ dàng sửa chữa, bảo trì và bổ sung thêm vào kiến trúc đó.\\
+	\item[Chương 5] \hfill \\
+	 Trình bày về kết quả mà bộ xử Windows API đã đạt được với những Windows API đã được hỗ trợ cho hệ thống BE-PUM.\\
+	\item[Chương 6] \hfill \\
+	 Liệt kê về những tài liệu và nguồn tham khảo có liên quan đến đề tài này.\\
+\end{description}
