@@ -2,20 +2,46 @@
 \BOOKMARK [0][-]{chapter*.2}{LI CAM N}{}% 2
 \BOOKMARK [0][-]{chapter*.3}{T\323M TT LUN VAN}{}% 3
 \BOOKMARK [0][-]{chapter.1}{Gii Thiu}{}% 4
-\BOOKMARK [1][-]{section.1.1}{Gii thiu v BE-PUM}{chapter.1}% 5
-\BOOKMARK [1][-]{section.1.2}{Muc ti\352u \040t\340i}{chapter.1}% 6
-\BOOKMARK [1][-]{section.1.3}{Cu tr\372c cua b\341o c\341o}{chapter.1}% 7
-\BOOKMARK [0][-]{chapter.2}{Ph\342n T\355ch Vn \320}{}% 8
-\BOOKMARK [1][-]{section.2.1}{Nhng im cn nhc n trong BE-PUM}{chapter.2}% 9
-\BOOKMARK [1][-]{section.2.2}{C\341c c\342u lnh hp ng}{chapter.2}% 10
-\BOOKMARK [1][-]{section.2.3}{Windows API trong nhng phn mm c hai}{chapter.2}% 11
-\BOOKMARK [1][-]{section.2.4}{BE-PUM v\340 Windows API}{chapter.2}% 12
-\BOOKMARK [1][-]{section.2.5}{Truy xut Windows API b\352n trong BE-PUM th\364ng qua JNA}{chapter.2}% 13
-\BOOKMARK [0][-]{chapter.3}{Kin Thc Nn}{}% 14
-\BOOKMARK [1][-]{section.3.1}{C\341c c\342u lnh hp ng}{chapter.3}% 15
-\BOOKMARK [1][-]{section.3.2}{Windows API}{chapter.3}% 16
-\BOOKMARK [0][-]{chapter.4}{Thit K V\340 X\342y Dng}{}% 17
-\BOOKMARK [1][-]{section.4.1}{C\341c c\342u lnh hp ng}{chapter.4}% 18
-\BOOKMARK [1][-]{section.4.2}{Windows API}{chapter.4}% 19
-\BOOKMARK [0][-]{chapter.5}{Kt Qua}{}% 20
-\BOOKMARK [0][-]{chapter.6}{Hng Ph\341t Trin Trong Tng Lai}{}% 21
+\BOOKMARK [1][-]{section.1.1}{Gii thiu s lc v BE-PUM}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.2}{Tng quan v Windows API}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.3}{Tng quan v assembly}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.4}{Muc ti\352u \040t\340i}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.5}{Cu tr\372c cua b\341o c\341o}{chapter.1}% 9
+\BOOKMARK [0][-]{chapter.2}{Ph\342n T\355ch Vn \320}{}% 10
+\BOOKMARK [1][-]{section.2.1}{BE-PUM v\340 nhng kh\363 khan}{chapter.2}% 11
+\BOOKMARK [2][-]{subsection.2.1.1}{Muc ti\352u hng n cua BE-PUM}{section.2.1}% 12
+\BOOKMARK [2][-]{subsection.2.1.2}{C\341c hng tip cn}{section.2.1}% 13
+\BOOKMARK [2][-]{subsection.2.1.3}{M\364 h\354nh lung iu khin}{section.2.1}% 14
+\BOOKMARK [2][-]{subsection.2.1.4}{Nhng \362i hoi trong qu\341 tr\354nh hin thc}{section.2.1}% 15
+\BOOKMARK [1][-]{section.2.2}{C\341c c\342u lnh hp ng}{chapter.2}% 16
+\BOOKMARK [2][-]{subsection.2.2.1}{Assembly ng\364n ng d\371ng \040ph\342n t\355ch }{section.2.2}% 17
+\BOOKMARK [2][-]{subsection.2.2.2}{BE-PUM v\340 Assembly}{section.2.2}% 18
+\BOOKMARK [2][-]{subsection.2.2.3}{Ph\342n t\355ch Assembly trong BE-PUM}{section.2.2}% 19
+\BOOKMARK [1][-]{section.2.3}{Windows API}{chapter.2}% 20
+\BOOKMARK [2][-]{subsection.2.3.1}{Windows API trong nhng phn mm c hai}{section.2.3}% 21
+\BOOKMARK [2][-]{subsection.2.3.2}{BE-PUM v\340 Windows API}{section.2.3}% 22
+\BOOKMARK [2][-]{subsection.2.3.3}{Truy xut Windows API b\352n trong BE-PUM th\364ng qua JNA}{section.2.3}% 23
+\BOOKMARK [0][-]{chapter.3}{Kin Thc Nn}{}% 24
+\BOOKMARK [1][-]{section.3.1}{L\340m vic vi BE-PUM}{chapter.3}% 25
+\BOOKMARK [1][-]{section.3.2}{C\341c c\342u lnh hp ng}{chapter.3}% 26
+\BOOKMARK [2][-]{subsection.3.2.1}{Assembly}{section.3.2}% 27
+\BOOKMARK [2][-]{subsection.3.2.2}{Floating-Point Unit \(FPU\)}{section.3.2}% 28
+\BOOKMARK [1][-]{section.3.3}{Windows API}{chapter.3}% 29
+\BOOKMARK [2][-]{subsection.3.3.1}{Mt v\340i b th vin cn h tr}{section.3.3}% 30
+\BOOKMARK [2][-]{subsection.3.3.2}{Tr\354nh t c\341c bc \040ng dung JNA v\340o BE-PUM}{section.3.3}% 31
+\BOOKMARK [2][-]{subsection.3.3.3}{Nhng kiu d liu v\340 \341nh xa cua ch\372ng v\340o JNA}{section.3.3}% 32
+\BOOKMARK [2][-]{subsection.3.3.4}{D liu kiu cu tr\372c \(structure\)}{section.3.3}% 33
+\BOOKMARK [0][-]{chapter.4}{Thit K V\340 X\342y Dng}{}% 34
+\BOOKMARK [1][-]{section.4.1}{C\341c c\342u lnh hp ng}{chapter.4}% 35
+\BOOKMARK [2][-]{subsection.4.1.1}{S \040chng tr\354nh BE-PUM}{section.4.1}% 36
+\BOOKMARK [2][-]{subsection.4.1.2}{Ph\342n t\355ch class}{section.4.1}% 37
+\BOOKMARK [1][-]{section.4.2}{Windows API}{chapter.4}% 38
+\BOOKMARK [2][-]{subsection.4.2.1}{C\341c th\340nh phn ch\355nh cua b x l\375 Windows API}{section.4.2}% 39
+\BOOKMARK [2][-]{subsection.4.2.2}{Nhng khai b\341o \341nh xa cua b x l\375 Windows API}{section.4.2}% 40
+\BOOKMARK [2][-]{subsection.4.2.3}{Kin tr\372c x\342y dng v\340 l\340m vic}{section.4.2}% 41
+\BOOKMARK [2][-]{subsection.4.2.4}{Quan l\375 m\364i trng tng t\341c vt l\375}{section.4.2}% 42
+\BOOKMARK [0][-]{chapter.5}{Kt Qua}{}% 43
+\BOOKMARK [1][-]{section.5.1}{Th\355 nghim v\340 \341nh gi\341 kt qua}{chapter.5}% 44
+\BOOKMARK [1][-]{section.5.2}{C\341c c\342u lnh hp ng \343 c h tr}{chapter.5}% 45
+\BOOKMARK [1][-]{section.5.3}{C\341c Windows API \343 c h tr}{chapter.5}% 46
+\BOOKMARK [0][-]{chapter.6}{Hng Ph\341t Trin Trong Tng Lai}{}% 47

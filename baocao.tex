@@ -45,6 +45,16 @@ toc          %show listings as entries in table of contents
 % Package abstract
 \usepackage{abstract}
 
+% Package table
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{subfig}
+\captionsetup{belowskip=0pt,aboveskip=8pt}
+%\renewcommand{\arraystretch}{1.5}
+\setlength\tabcolsep{10pt}
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
 % Package listing to insert code
 \usepackage{listings}
 \renewcommand{\lstlistingname}{Mã}
@@ -65,8 +75,18 @@ toc          %show listings as entries in table of contents
 \fancyhead[RO, LE]{\bf Phát triển hệ thống BE-PUM.}
 
 
-
+% Line spacing
 \renewcommand{\baselinestretch}{1.5} 
+
+% Chapter align
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\Huge\bfseries}
+  {\filright\chaptertitlename\ \thechapter}
+  {14pt}{\Huge\filcenter}
+
+
+
 
 \begin{document} %Bắt đầu văn bản
 
@@ -75,7 +95,7 @@ toc          %show listings as entries in table of contents
 \fancyhead[L]{}
 \fancyhead[R]{}
 
-\input{Chapters/Cover}
+\input{Chapters/i.Cover}
 
 % Indent chapter
 
@@ -85,15 +105,15 @@ toc          %show listings as entries in table of contents
 
 \newpage
 \chapter{LỜI CAM KẾT}
-\input{Chapters/Commitment}
+\input{Chapters/ii.Commitment}
 
 \newpage
 \chapter{LỜI CẢM ƠN}
-\input{Chapters/Acknowledgements}
+\input{Chapters/iii.Acknowledgements}
 
 \newpage
 \chapter{TÓM TẮT LUẬN VĂN}
-\input{Chapters/Abstract}
+\input{Chapters/iv.Abstract}
 
 
 \newpage
@@ -117,35 +137,40 @@ toc          %show listings as entries in table of contents
 \pagenumbering{arabic}
 %\fancyhead[LE,RO]{\slshape \rightmark}
 %\fancyhead[LO,RE]{\slshape \leftmark}
-\fancyhead[L]{}
-\fancyhead[R]{\leftmark}
+\fancyhead[L]{\bf PHÁT TRIỂN HỆ THỐNG BE-PUM}
+\fancyhead[R]{\slshape \leftmark}
 
 
 \newpage
 \chapter{Giới Thiệu}
-\input{Chapters/Intruction}
+\input{Chapters/1.Introduction}
 
 \chapter{Phân Tích Vấn Đề}
-\input{Chapters/AnalyzeProblems}
+\input{Chapters/2.Problems}
 
 \chapter{Kiến Thức Nền}
-\input{Chapters/Knowledge}
+\input{Chapters/3.BaseKnowledges}
 
 \chapter{Thiết Kế Và Xây Dựng}
-\input{Chapters/DesignAndBuildProgram}
+\input{Chapters/4.Design}
 
 \chapter{Kết Quả}
-\input{Chapters/Result}
+\input{Chapters/5.Result}
 
 \chapter{Hướng Phát Triển Trong Tương Lai}
-\input{Chapters/FutureDevelopment}
+\input{Chapters/6.FutureWorks}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\thispagestyle{empty}
+\fancyhead[R]{\slshape TÀI LIỆU THAM KHẢO}
+\begin{thebibliography}{}
 
-\input{Chapters/References}
+\bibitem{}
+Example
 
+
+\end{thebibliography}
 \end{document}
 
 
