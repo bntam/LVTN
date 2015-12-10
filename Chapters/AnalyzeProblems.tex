@@ -1,30 +1,6 @@
-\section{BE-PUM và những khó khăn}
-
-	\subsection{Mục tiêu hướng đến của BE-PUM}
-
-	\subsection{Các hướng tiếp cận}
-
-	\subsection{Mô hình luồng điều khiển}
-
-	\subsection{Những đòi hỏi trong quá trình hiện thực}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\section{Những điểm cần nhắc đến trong BE-PUM}
 \section{Các câu lệnh hợp ngữ}
-  \subsection{Assembly ngôn ngữ dùng để phân tích }
-  
-  \subsection{BE-PUM và Assembly}
-  
-  \subsection{Phân tích Assembly trong BE-PUM}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Windows API}
-	\subsection{Windows API trong những phần mềm độc hại}
-
+\section{Windows API trong những phần mềm độc hại}
 Để cung cấp sức mạnh và sự tiện lợi cho lập trình viên trong việc viết ứng dụng chạy trên hệ điều hành Windows, các API trong bộ Windows API mở ra nhiều cách thức nhanh chóng và mạnh mẽ cho lập trình viên trong việc tương tác với hệ thống.\\
 
 Và vấn đề gì cũng có hai mặt của nó, sự hỗ trợ mạnh mẽ đó cũng là con đường đơn giản để các tin tặc áp dụng vào việc xây dựng nên các phương pháp tấn công, cũng như cho ra đời những phần mềm nguy hại (malware), để lại bao hậu quả xấu cho hệ thống máy vi tính trên toàn cầu.\\
@@ -33,11 +9,7 @@ Trong quá trình xây dựng BE-PUM và qua việc phân tích hàng ngàn mẫ
 
 Do đó, việc xây dựng một bộ công cụ xử lý những thông tin trả về từ Windows API là rất cần thiết cho việc phát triển hệ thống BE-PUM, một hệ thống tập trung vào phân tích mã nhị phân của malware.\\
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-	\subsection{BE-PUM và Windows API}
+\section{BE-PUM và Windows API}
 
 Mã nguồn của những API trong bộ Windows API được tập đoàn Microsoft giữ kín và không hề công bố. Chỉ có những đặc tả và hướng dẫn sử dụng được Microsoft phổ biến rộng rãi cho lập trình viên. Nghĩa rằng ta chỉ có thể biết được đầu vào của lời gọi và mong muốn đầu ra sẽ như ý, chứ không thể nắm rõ lô-gíc xử lý bên trong của chúng. Điều đó khiến cho việc xử lý đúng đắn một cách tổng quát đối với mọi đầu vào của mỗi API bằng cách viết lại bộ mã xử lý tương ứng của chúng vào trong BE-PUM dường như trở nên không thể.\\
 
@@ -48,10 +20,8 @@ BE-PUM là một dự án được phát triển lên từ nhân của dự án 
 Vì những lý do trên, cần tìm hiểu một cách thức giải quyết vấn đề nhanh chóng và đơn giản hơn bằng một bộ công cụ nào đó để xử lý rào cản ngôn ngữ giữa Java và C. Thêm vào đó, bộ công cụ này cũng cần có tính linh hoạt và mềm dẻo để cho việc phát triển về sau được dễ dàng.\\
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-	\subsection{Truy xuất Windows API bên trong BE-PUM thông qua JNA}
+\section{Truy xuất Windows API bên trong BE-PUM thông qua JNA}
 
 Vấn đề trên được giải quyết thông qua bộ thư viện Java Native Access (JNA).\\
 

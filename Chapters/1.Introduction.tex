@@ -6,7 +6,7 @@ BE-PUM tên đầy đủ là Binary Emulation for Pushdown Model generation, là
 
 BE-PUM được xây dựng chính trên mã nguồn của JakStab nhưng không hạn hẹp ở việc chỉ phân tích tĩnh, BE-PUM có thể phân tích động và chỉ ra lại mỗi dòng lệnh của mã assembly môi trường làm việc của nó là như thế nào. Việc này sẽ giải quyết được những trường hợp phân tính vào những nhánh không cần thiết – không bao giờ được thực thi hoặc khi chương trình đang cố gắng thay đổi chính nội dung của mình.\\
 
-Với việc phân tích mã nhị phân đó, BE-PUM đang được phát triển để tập trung vào phân tích những phần mềm bị nghi ngờ để rồi sau đó sẽ phát hiện được những kỹ thuật tấn công, và cuối cùng là xác định xem đây có thực là phần mềm gây hại đến máy tính hay không?!\\
+Với việc phân tích mã nhị phân đó, BE-PUM đang được phát triển để tập trung vào phân tích những phần mềm bị nghi ngờ để rồi sau đó sẽ phát hiện được những kỹ thuật tấn công, và cuối cùng là xác định xem đây có thực là phần mềm gây hại đến máy tính hay không?\\
 
 \section {Tổng quan về Windows API}
 
@@ -31,6 +31,11 @@ Win64 & Đây là một biến thể sau đó của bộ API được hiện th�
 \label{table:tblwapiver}
 \end{longtable}
 
+\section{Tổng quan về assembly}
+Ngôn ngữ assembly (hay hợp ngữ) là ngôn ngữ cấp thấp được biên dịch để thực thi một chương trình nào đó. Ngôn ngữ asseambly có tính gợi nhớ, mỗi câu lệnh thực thi một chức năng, hay nhiệm vụ riêng biệt tưng ứng với một lệnh yêu cầu máy thực thi. \\
+
+Các chương trình sau khi biên dịch ra thành nhiều dạng file khác nhau để thực thi. Mỗi chương trình được biên dịch thành ngôn ngữ asembly trước khi biên dịch qua ngôn ngữ máy để máy hiểu và thực thi câu lênh. Khi biên dịch qua mã assembly, đọc đoạn mã assembly để phân tích xem chương trình này có phải là virus máy tính không, có những hành vi bất thường từ đó xem xét đưa ra kết quả chương trình này có an toàn với máy tính.\\
+
 \section{Mục tiêu đề tài}
 
 Trong phạm vi của đề tài thực tập tốt nghiệp, mục tiêu nhắm tới là phát triển hệ thống xử lý các Windows API cho BE-PUM. Với số lượng các API rất lớn hiện có trong hệ điều hành Windows, hiện tại đề tài đang tập trung vào xử lý các API ở phiên bản Win32 API, do hầu hết các phần mềm độc hại mà BE-PUM hướng tới vẫn đang dùng bộ API này; với sự ưu tiên từng bước xây dựng cho các API được dùng phổ biến trước.\\
@@ -40,21 +45,25 @@ Và như vậy với những tương tác vật lý từ lời gọi API (bộ l
 
 Lưu ý: do nội dung đề tài tập trung vào xử lý cho Win32 API, nên kể từ đây, khi báo cáo nhắc đến Windows API tức là nói đến Win32 API.\\
 
+Trong phạm vi của đề tài luận văn tốt nghiệp, mục tiêu nhắm tới là hiện thực câu lệnh assembly với số lượng lớn nhất có thể, hiện số lượng câu lệnh assembly đã được hiện thực lên tới 200 câu lệnh xử lý xử lý số nguyên, 50 câu lệnh xử lý số thập phân, đã góp phần phân tích một số loại virus đang nghiên cứu, các câu lệnh đã được tiến hành kiểm tra. Dựa trên một số hành virus hiện nay và những câu lệnh phổ biến thường gặp, BE-PUM đã hỗ trợ tốt công việc phân tích đúng môi trường làm việc của từng câu lệnh từ đó xác định chính xác và phân tính đúng các kỹ thuật mà virus đang tiến hành.\\
+
+Bên cạnh đó, BE-PUM còn xây dựng chương trình so trùng đồ thị, với những đồ thị mẫu được cho là của chương trình độc ai, BE-PUM trả kết quả là vị trí đỉnh đầu tiên mà chương trình đó bắt đầu, công việc này có thể được xem là tách chương trình độc hại từ chương trình cần phân tích. Quá trình xây dựng so trùng đồ thị chỉ ở mới bước bắt đầu thực hiện, mục tiêu đặt ra là trả về đồ thị được cho là chương trình an toàn.\\
+
 \section{Cấu trúc của báo cáo}
 
 Bài báo cáo này bao gồm những đề mục sau đây:
 
 \begin{description}
   	\item[Chương 1] \hfill \\
-	Giới thiệu tổng quan về BE-PUM, yếu tố quyết  định để cho ra đề tài này; dẫn nhập về Windows API, thành phần sẽ được áp dụng để phát triển cho BE-PUM; và cuối cùng nêu ra được mục đính chính của đề tài sẽ cần làm gì\\.
+	Giới thiệu tổng quan về BE-PUM, yếu tố quyết  định để cho ra đề tài này; dẫn nhập về Windows API, thành phần sẽ được áp dụng để phát triển cho BE-PUM; dẫn nhập về hợp ngữ assembly, và cuối cùng nêu ra được mục đính chính của đề tài sẽ cần làm gì. \\
  	\item[Chương 2] \hfill \\
-	Đem đến những cái nhìn về những vấn đề đã và đang được lưu tâm khi thực hiện đề tài này; sự phổ biến của Windows API trong những phần mềm độc hại để thấy sự cần thiết của việc xây dựng một bộ xử lý Windows API cho BE-PUM; những khó khăn khi thực hiện điều đó và giải pháp cho vấn đề.\\
+	Đem đến những cái nhìn về những vấn đề đã và đang được lưu tâm khi thực hiện đề tài này; sự phổ biến của Windows API trong những phần mềm độc hại để thấy sự cần thiết của việc xây dựng một bộ xử lý Windows API cho BE-PUM; những khó khăn khi thực hiện điều đó và giải pháp cho vấn đề. Đông thời phân tích vấn đề đặt ra là hiện thực các câu lệnh trong hợp ngữ assembly, giải thích tại sao sử dụng ngôn ngữ assembly để tiến hành phân tích chương trình.\\
 	\item[Chương 3] \hfill \\
-	Trình bày những kiến thức cần thiết cho quá trình thực hiện đề tài; từ những kiến thức phải nắm được về hệ thống BE-PUM do đây là một đề tài làm việc dựa trên đó; và mỗi khi làm việc với một thư viện bất kỳ, đòi hỏi ta phải tìm hiểu cách thức làm việc với thư viện đó và cả những kiến thức cần thiết do bộ thư viện ấy yêu cầu. \\
+	Trình bày những kiến thức cần thiết cho quá trình thực hiện đề tài; từ những kiến thức phải nắm được về hệ thống BE-PUM do đây là một đề tài làm việc dựa trên đó; và mỗi khi làm việc với một thư viện bất kỳ, đòi hỏi ta phải tìm hiểu cách thức làm việc với thư viện đó và cả những kiến thức cần thiết do bộ thư viện ấy yêu cầu. Đồng thời cũng trình bày các kiến thức cơ bản về hợp ngữ assembly, từ đó có cái nhìn tổng quan về assembly để tiến hành xây dựng chương trình BE-PUM. \\
 	\item[Chương 4] \hfill \\
-	Mỗi chương trình bất kỳ đều cần một thiết kế tốt để giúp cho việc xây dựng dễ dàng và quy chuẩn hơn. Mục này sẽ trình bày cách mà bộ xử lý Windows API đã được hiện thực để tương tai sau này có thể dễ dàng sửa chữa, bảo trì và bổ sung thêm vào kiến trúc đó.\\
+	Mỗi chương trình bất kỳ đều cần một thiết kế tốt để giúp cho việc xây dựng dễ dàng và quy chuẩn hơn. Mục này sẽ trình bày cách mà bộ xử lý Windows API đã được hiện thực để tương tai sau này có thể dễ dàng sửa chữa, bảo trì và bổ sung thêm vào kiến trúc đó. Để hiểu rõ cấu chương trình mô phỏng câu lệnh assembly, sơ đồ class trình bày trong chương này thể hiện được mối quan hệ giữa các class, cấu trúc của chương trình BE-PUM được phát triển dựa trên dự án JakStab, giới thiệu các class quan trọng của chương trình BE-PUM\\
 	\item[Chương 5] \hfill \\
-	 Trình bày về kết quả mà bộ xử Windows API đã đạt được với những Windows API đã được hỗ trợ cho hệ thống BE-PUM.\\
+	 Trình bày về kết quả mà bộ xử Windows API đã đạt được với những Windows API đã được hỗ trợ cho hệ thống BE-PUM. Đông thời trình bày các bước để hiện thực một câu lệnh của hợp ngữ assembly, cách đánh giá kết quả đúng hay sai bằng cách so sánh kết quả với chương trình OnlyDbg, giới thiệu về công cụ MASM. \\
 	\item[Chương 6] \hfill \\
 	 Liệt kê về những tài liệu và nguồn tham khảo có liên quan đến đề tài này.\\
 \end{description}
