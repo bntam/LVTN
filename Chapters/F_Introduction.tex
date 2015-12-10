@@ -1,6 +1,20 @@
+\begin{concept}[15cm]
+\textit{Nội dung chương này sẽ tập trung giới thiệu tổng quan về đề tài, cụ thể về hệ thống BE-PUM và cách thức xây dựng mô hình của BE-PUM, đồng thời giới thiệu về packer, phương pháp kiểm tra mô hình và và công cụ kiểm tra mô hình NuSMV; mục tiêu cụ thể hướng tới của đề tài và phạm vi hiện thực của đề tài.}
+\end{concept}
+
 \section{Tổng quan đề tài}
 
 \subsection{Tổng quan về hệ thống BE-PUM}
+
+\hspace{0.5cm}Binary Emulation for PUshdown Model (BE-PUM) là công cụ với lõi được xây dựng dựa trên framework Jackstab - một thư viện mã nguồn mở được xây dựng cho phép dịch ngược mã nhị phân, nói cách khác Jackstab hỗ trợ chuyển đổi từ những giá trị mã máy thành hợp ngữ cấp cao hơn, ngoài ra Jackstab cũng cho phép phân tích tĩnh một tập tin thực thi. Dựa trên cơ sở đó, BE-PUM được xây dựng với mục tiêu xây dựng một mô hình thực thi hoàn chỉnh của một tập tin mã nhị phân nói chung và cụ thể là malware, cũng như những tập tin được đóng gói bởi các công cụ packer, mô hình đó được biểu diễn cụ thể thông qua Control Flow Graph (CFG).\\ 
+
+\hspace{0.5cm}Kế thừa bộ thư viện dịch ngược mã nhị phân của Jackstab, với mục tiêu có thể xây dựng hoàn chỉnh mô hình cho các tập tin thực thi, BE-PUM không chỉ dừng lại với việc phân tích tĩnh mà còn mở rộng để có thể phân tích động thông qua việc áp dụng các kỹ thuật bao gồm:
+
+\begin{itemize}
+\item{Dynamic symbolic execution: kỹ thuật nhằm tính toán các giá trị thanh ghi và bộ nhớ cụ thể từ đó có thể giải quyết vấn đề xử lý kỹ thuật trong đó sử dụng các câu lệnh nhảy động, nhảy có điều kiện - một kỹ thuật được sử dụng rất phổ biến trong malware và packer.}
+\item{On-the-fly model generation: giải thuật chính được áp dụng trong hệ thống BE-PUM, do sự thực thi của mã nhị phân là thực thi động, do đó quá trình này sẽ bao gồm một dãy các câu lệnh mã nhị phân liên tiếp bắt đầu từ một giá trị trong bộ nhớ ở phân vùng mã, giá trị địa chỉ này được trỏ tới bởi giá trị thanh ghi EIP. Chính việc áp dụng On-the-fly mà vấn đề thay đổi động giá trị opcode của các câu lệnh trong quá trình thực thi được giải quyết một cách triệt để, hay nói cách khác với những tập tin thực thi có sử dụng kỹ thuật tự thay đổi mã sẽ được BE-PUM hỗ trợ.}
+\item{Xử lý kỹ thuật obfuscation: điểm mạnh và là ưu thế vượt trội của BE-PUM so với các công cụ phân tích mã thực thi khác như Jackstab, IDA-Pro, Capstone, Unicorn, METASM, HOOPER đó là BE-PUM có hỗ trợ xử lý những kỹ thuật obfuscation phức tạp như: indirect jump, self-modification code, entry point obscuring, strutured exception handling, overlapping instruction những kỹ thuật vốn được sử dụng rất phổ biến trong malware hay packer.}
+\end{itemize}
 
 \subsection{Tổng quan về Packer}
 

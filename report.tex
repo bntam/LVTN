@@ -54,6 +54,15 @@ toc
 
 \renewcommand{\baselinestretch}{1.5} 
 
+\newenvironment{concept}[1][\textwidth]{
+   \begin{center}
+   \begin{minipage}[t]{#1}
+   \raggedright
+}{
+  \end{minipage}
+   \end{center}
+}
+
 \begin{document}
 
 \pagenumbering{roman}
