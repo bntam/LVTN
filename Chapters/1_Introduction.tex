@@ -1,0 +1,50 @@
+\begin{concept}[15cm]
+\textit{Nội dung chương này sẽ tập trung giới thiệu tổng quan về đề tài, cụ thể về hệ thống BE-PUM và cách thức xây dựng mô hình của BE-PUM, đồng thời giới thiệu về packer, phương pháp model checking và và công cụ NuSMV; mục tiêu cụ thể hướng tới của đề tài và phạm vi thực hiện của đề tài.}
+\end{concept}
+
+\section{Tổng quan đề tài}
+
+\subsection{Tổng quan về hệ thống BE-PUM}
+
+\hspace{0.5cm}Binary Emulation for PUshdown Model (BE-PUM) là công cụ với lõi được xây dựng dựa trên framework Jackstab - một thư viện mã nguồn mở được xây dựng cho phép dịch ngược mã nhị phân, nói cách khác Jackstab hỗ trợ chuyển đổi từ những giá trị mã máy thành hợp ngữ cấp cao, ngoài ra Jackstab cũng cho phép phân tích tĩnh một tập tin thực thi. Dựa trên cơ sở đó, BE-PUM được xây dựng với mục tiêu xây dựng một mô hình thực thi hoàn chỉnh của một tập tin mã nhị phân nói chung và cụ thể hơn là malware, cũng như những tập tin được đóng gói bởi các công cụ packer, mô hình đó được biểu diễn thông qua Control Flow Graph của chương trình.\\ 
+
+\hspace{0.5cm}Kế thừa bộ thư viện dịch ngược mã nhị phân của Jackstab, với mục tiêu có thể xây dựng hoàn chỉnh mô hình cho các tập tin thực thi, BE-PUM không chỉ dừng lại với việc phân tích tĩnh mà còn mở rộng để có thể phân tích động thông qua việc áp dụng các kỹ thuật bao gồm:
+
+\begin{itemize}
+\item{Dynamic symbolic execution: kỹ thuật nhằm tính toán các giá trị thanh ghi và bộ nhớ cụ thể từ đó có thể giải quyết vấn đề xử lý kỹ thuật trong đó sử dụng các câu lệnh nhảy động, nhảy có điều kiện - một kỹ thuật được sử dụng rất phổ biến trong hầu hết các malware và packer.\\}
+\item{On-the-fly model generation: giải thuật chính được áp dụng trong hệ thống BE-PUM, do quá trình thực thi của tập tin mã nhị phân là thực thi động, do đó quá trình này sẽ bao gồm một dãy các câu lệnh mã nhị phân liên tiếp bắt đầu từ một giá trị trong bộ nhớ ở phân vùng mã, giá trị địa chỉ này được trỏ tới bởi giá trị thanh ghi EIP. Chính việc áp dụng giải thuật On-the-fly mà vấn đề thay đổi động giá trị opcode của các câu lệnh trong quá trình thực thi được giải quyết một cách triệt để, hay nói cách khác với những tập tin thực thi có sử dụng kỹ thuật self-modifcation code sẽ được BE-PUM hỗ trợ hoàn toàn.\\}
+\item{Xử lý kỹ thuật obfuscation: điểm mạnh và là ưu thế vượt trội của BE-PUM so với các công cụ phân tích mã thực thi khác như Jackstab, IDA-Pro, Capstone, Unicorn, METASM, HOOPER đó là BE-PUM có hỗ trợ xử lý những kỹ thuật obfuscation như: indirect jump, self-modification code, entry point obscuring, strutured exception handling, overlapping instruction những kỹ thuật vốn được sử dụng rất phổ biến trong malware hay packer.}
+\end{itemize}
+
+\subsection{Tổng quan về Packer}
+
+\hspace{0.5cm}Packer là những công cụ dùng để đóng gói một tập tin, trong đó mục tiêu chính của một packer có thể được chia làm 3 mục tiêu cụ thể là:
+
+\begin{itemize}
+\item{Giảm kích thước của tập tin: đây cũng là mục tiêu mà rất nhiều packer hướng tới, bằng việc áp dụng các kỹ thuật packing và self-unpacking, encryption và self-decryption, mà kích thước của một tập tin được đóng gói qua đó cũng giảm đi một cách đáng kể. Tuy nhiên, những packer hiện đại ngày nay đã không còn đặt tiêu chí giảm kích thước tập tin lên hàng đầu, bởi giảm kích thước đồng nghĩa với việc sử dụng những kỹ thuật bảo mật khác sẽ được loại bỏ và do đó độ tin cậy của một packer cũng giảm đi. Thậm chí những packer có cơ chế bảo mật tốt hiện nay có thể kể ra như Armadillo, Themida hay PEBundle có thể làm kích thước tập tin tăng lên rất nhiều lần do việc áp dụng kỹ thuật phức tạp của những packer này trên tập tin cần đóng gói là rất nhiều.\\}
+\item{Chống dịch ngược: một trong những kỹ thuật được sử dụng rất nhiều trong việc tìm ra những lỗ hỏng của một phần mềm từ đó tìm cách đánh cắp dữ liệu mật của phần mềm đó hay tìm hiểu cơ chế sinh khoá, dịch ngược cũng được áp dụng để phát hiện những kỹ thuật malware từ đó tìm cách sửa lỗi hệ thống mà malware khai thác và chống lại malware đó. Nhằm chống lại kỹ thuật dịch ngược, packer cũng được sử dụng như một công cụ hiệu quả vì những giải thuật đóng gói tập tin phức tạp của packer có thể khiến việc dịch ngược mã nhị phân trở nên vô cùng khó khăn.\\}
+\item{Bảo vệ bản quyền của phần mềm: đây cũng là mục tiêu chính yếu nhất mà các packer ngày nay hướng tới, bằng cách nâng cao độ phức tạp của các giải thuật đóng gói, đồng thời áp dụng những kỹ thuật anti-debugging, anti-reversing sẽ qua đó giúp bảo vệ một phần mềm khỏi việc đánh cắp thông tin bất hợp pháp. Malware cũng lợi dụng điểm mạnh này của packer nhằm che dấu quá trình thực thi của mình.}
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{simple_packer_schema}
+\caption{Mô hình của một packer đơn giản}
+\end{figure}
+
+\subsection{Tổng quan về Model Checking}
+
+\hspace{0.5cm}Bài toán kiểm định các hệ thống phần mềm hay phần cứng là một bài toán vô cùng quan trọng và tốn rất nhiều thời gian và công sức nếu được thực hiện một cách thủ công, do đó việc đề ra một phương thức tự động nhằm kiểm định hệ thống là yêu cầu cần thiết được đề ra nhằm giải quyết vấn đề này. Chính vì điều này, mà việc xây dựng một phương pháp hình thức hay nói cách khác là việc áp dụng toán học để xử lý bài toán kiểm định sẽ mang lại hiệu quả và giảm rất nhiều thời gian, công sức.\\
+
+\hspace{0.5cm}Model checking được xây dựng bởi Edmund Melson Clarke và Ernest Allen Emerson, cũng như Jean-Pierre Queille và Joseph Sifakis Jean-Pierre ra đời để giải quyết bài toán này. Model checking là một kỹ thuật kiểm định tự động một mô hình hệ thống với một đặc tả các tính năng của mô hình đó dưới dạng công thức logic có yếu tố thời gian. Bằng cách duyệt toàn bộ không gian trạng thái của mô hình đó, phương pháp model checking sẽ chứng minh mô hình có thoả mãn các tính chất đã được mô tả trước đó hay không.
+
+\subsection{Tổng quan về NuSMV}
+
+\hspace{0.5cm}NuSMV là một công cụ kiểm tra mô hình dạng ký hiệu mã nguồn mở, là một dự án kết hợp giữa ITC-IRST, viện nghiên cứu ở phía Đông Trento, Ý và đại học Carnegie Mellon. Chính vì mã nguồn mở mà thông qua đó có thể dễ dàng thay đổi mã nguồn để có thể cung cấp thêm nhiều tính năng và hỗ trợ tốt hơn, nâng cao hiệu suất kiểm tra mô hình trên hệ thống có số trạng thái hữu hạn.\\
+
+\hspace{0.5cm}Giống như những công cụ kiểm tra mô hình khác, NuSMV cũng cần đầu vào là một mô hình cần được kiểm tra và một mô tả dưới dạng công thức luận lý có yếu tố thời gian để thực hiện việc kiểm tra mô hình. Mô hình NuSMV được biểu diễn dưới dạng ngôn ngữ SMV, NuSMV hỗ trợ cả CTL model checking và LTL model checking.
+
+\section{Mục tiêu đề tài}
+
+
+\section{Phạm vi đề tài}
