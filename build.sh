@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pdflatex --output-directory=build report.tex 
+pdflatex --output-directory=build report.tex
 
 file="build/report.pdf"
 if [ -f "$file" ]
@@ -9,4 +9,4 @@ then
 	open "$file"
 else 
 	echo "FAILED !!!"
-fi
+fi 

@@ -1,3 +1,10 @@
+% ==========================================
+% ABSTRACT
+% ==========================================
+
+\newpage
+\chapter{ABSTRACT}
+
 \setlength\parindent{0pt}
 
 \hspace{0.5cm}Nowadays, malware has been becoming a real threat. It consumed too much money and other resources on overcoming and preventing. The damage is still increasing, it ravaged to many system and dangerously, malware became an instrument for intrusing and stealing the user's information.\\
@@ -5,3 +12,4 @@
 \hspace{0.5cm}Most of industrial anti-virus software can detect easily the malwares via signature based technique. Unluckily, most of the modern popular malwares are either packed or obfuscated, thus malwares can also easily bypass this weak technique. Packed malware also increases the difficulty of the reverse engineering technique which is inherently efficient and available for exploring the malware techniques, since it often takes a very long time for unpacking or detecting a packed file, may it be a hard way. Most of anti-virus software choose the other way is to detect packer signature for verifying the packed malware. However, since hacker can easily modify header signature of packed file, this solution cannot determine precisely whether a malware is packed or not.\\
 
 \hspace{0.5cm}Thesis proposes a model checking method for packer detection using a combination BE-PUM tool and symbolic model checker NuSMV. BE-PUM (Binary Emulator for PUshdown Model generation) is designed for generating a precise control flow graph (CFG), which handled many of typical obfuscation techniques of malware, e.g., indirect jump, self-modification code, and structured exception handler, which could be observed in most of modern packers. Currently, BE-PUM can cover the patterns for 13 techniques mainly used in supported 27 packers. Applying the CTL, LTL formula for that patterns as properties of proposed model checker tool, it can detect completely all the malwares which are packed by these packers. By implementing this technique and applying to automatically detect packed malware, as well as comparing with header signature based technique for accurateness evaluation, the reality purpose is always an target.
+

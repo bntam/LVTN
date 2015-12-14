@@ -1,3 +1,12 @@
+% ==========================================
+% INTRODUCTION
+% ==========================================
+
+\newpage
+\pagenumbering{arabic}
+
+\chapter{GIỚI THIỆU}
+
 \begin{concept}[15cm]
 \textit{Nội dung chương này sẽ tập trung giới thiệu tổng quan về đề tài, cụ thể về hệ thống BE-PUM và cách thức xây dựng mô hình của BE-PUM, đồng thời giới thiệu về packer, phương pháp model checking và và công cụ NuSMV; mục tiêu cụ thể hướng tới của đề tài và phạm vi thực hiện của đề tài.}
 \end{concept}
@@ -46,5 +55,23 @@
 
 \section{Mục tiêu đề tài}
 
+\hspace{0.5cm}Hệ thống BE-PUM được phát triển để có thể xây dựng được mô hình chính xác của chương trình thực thi, cụ thể là mô hình quá trình thực thi của malware, từ đó có thể nhận dạng được malware. Tuy nhiên, việc malware sử dụng packer để ẩn thân khiến quá trình xây dựng này trở nên khó khăn. Xuất phát từ khó khăn thực tế đó, mục tiêu của đề tài luận văn tốt nghiệp này hướng tới bao gồm:
+
+\begin{itemize}
+\item{Phân tích những kỹ thuật được sử dụng của các packer bao gồm nhóm kỹ thuật obfuscation, kỹ thuật anti-reversing, anti-debugging.\\} 
+\item{Hỗ trợ hệ thống BE-PUM xử lý các kỹ thuật của packer để đảm bảo BE-PUM có thể phân tích hoàn toàn các packer, cụ thể, tìm ra được vị trí entry point thực sự của tập tin được đóng gói. Từ đó, có thể xây dựng chính xác mô hình quá trình thực thi của tập tin.\\}
+\item{Nhận dạng packer thông qua chữ ký bằng phương pháp nhận dạng chữ ký được sử dụng trong thực tế.\\}
+\item{Nhận dạng packer thông qua ngữ nghĩa bằng phương pháp model checking, cụ thể, kết hợp hệ thống BE-PUM và công cụ kiểm tra mô hình dạng ký hiệu NuSMV để kết luận một tập tin có đang được đóng gói bởi packer nào hay không.\\}
+\item{So sánh độ hiệu quả giữa hai phương pháp nhận dạng packer, một là phương pháp nhận dạng chữ ký và hai là phương pháp nhận dạng ngữ nghĩa.}
+\end{itemize}
 
 \section{Phạm vi đề tài}
+
+\hspace{0.5cm}Với những giới hạn trong việc chuyển đổi giữa mô hình của BE-PUM và mô hình của NuSMV, cũng như những khó khăn khi phân tích những packer hiện đại mà đề tài luận văn bao gồm những hạn chế cụ thể như sau:
+
+\begin{itemize}
+\item{Dữ liệu chữ ký của packer được sử dụng từ dữ liệu mở của phần mềm CFF Explorer, do đó BE-PUM chỉ hỗ trợ nhận dạng chữ ký những packer trong giới hạn cụ thể được định nghĩa tương tự như trong CFF Explorer.\\}
+\item{Do sự phức tạp trong việc sử dụng kỹ thuật mới đòi hỏi xử lý Process, Thread phức tạp của các packer hiện đại như: Armadillo, Fastpack, Themida, PEBunble, mà những kỹ thuật này chưa được hỗ trợ hoàn toàn trong BE-PUM nên hiện tại BE-PUM chưa xử lý được những packer này, giới hạn đề tài chỉ hỗ trợ 27 packer.\\}
+\item{Do BE-PUM chỉ xử lý được 27 packer và 13 kỹ thuật được sử dụng trong packer, nên giới hạn đề tài chỉ hỗ trợ nhận dạng 27 packer thông qua kiểm tra mô hình dựa trên mô tả của 13 kỹ thuật này.}
+\end{itemize}  
+
