@@ -6,44 +6,123 @@
 \chapter{PHÂN TÍCH VẤN ĐỀ}
 
 \begin{concept}[15cm]
-\textit{Nội dung chương này sẽ tập trung phân tích vấn đề được đặt ra trong đề tài, cụ thể là những vấn đề của hệ thống BE-PUM khi xử lý packer thông qua 2 ví dụ cụ thể về 2 packer được malware sử dụng trong thực tế, rút ra nhận xét tổng quát và những thách thức đặt ra cho đề tài. Ngoài ra, chương này cũng sẽ tập trung bàn luận về những thách thức này, từ đó đưa ra những giải pháp cụ thể để giải quyết những khó khăn đó.}
+\textit{Nội dung chương này sẽ tập trung phân tích vấn đề được đặt ra trong đề tài, cụ thể là những vấn đề của hệ thống BE-PUM khi xử lý packer thông qua 3 ví dụ cụ thể về 2 packer được malware sử dụng trong thực tế, rút ra nhận xét tổng quát và những thách thức đặt ra cho đề tài. Ngoài ra, chương này cũng sẽ tập trung bàn luận về những thách thức này, từ đó đưa ra những giải pháp cụ thể để giải quyết những khó khăn đó.}
 \end{concept}
 
 \section{Ví dụ thực tế}
 
 \subsection{Ví dụ 1}
 
-\hspace{0.5cm}Trong thực tế, một malware để tránh bị phát hiện bởi một chương trình chống malware, có thể sử dụng packer để ẩn thân hay nói cách khác che dấu điểm nhập thực sự của mình. Cụ thể malware sẽ sử dụng packer để đóng gói đoạn code thực thi thực sự của mình, và tự mở gói bằng kỹ thuật self-unpacking. Ví dụ 1 sẽ trình bày cụ thể về packer FSG được malware sử dụng trong thực tế có sử dụng kỹ thuật packing và self-unpacking:
+\hspace{0.5cm}Không chỉ thay đổi giải thuật phức tạp nhằm đóng gói mã thực thi, packer còn sử dụng các kỹ thuật obfuscation ngày càng tinh vi hơn. Ví dụ 1 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế sử dụng kỹ thuật Strutured Exception Handler dựa trên Trap Flag:\\ 
 
-% COPY CODE IN HERE -> CFG
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Strutured Exception Handler sử dụng trong packer TELOCK},frame=single]
+00405A32	PUSHAD
+00405A33	CALL 00405A3E
+...
+00405A3E	PUSH DWORD PTR FS:[0] 
+00405A44	MOV DWORD PTR FS:[0], ESP
+00405A4A	PUSHFD
+00405A4B	OR DWORD PTR SS:[ESP], 100
+00405452	POPFD
+00405A53	CLC
+00405A54	JNB 00405A32
+\end{lstlisting}
+\end{code}
+
+\hspace{0.5cm}Trong đoạn mã 2.1 có thể thấy giá trị của thanh ghi cờ EFLAGS sẽ bị thay đổi qua câu lệnh tại địa chỉ 00405A4B, qua đó sẽ thay đổi giá trị của Trap Flag thành TRUE, chính vì giá trị này thay đổi sẽ gây ra một exception trong chương trình với kiểu SINGLE\_STEP\_EXCEPTION. Khi đó luồng thực thi sẽ thay đổi và trỏ tới hàm xử lý exception với điểm nhập là giá trị địa chỉ được lưu trong bộ nhớ tại vị trí FS:[0]. Hệ thống BE-PUM chưa hỗ trợ Trap Flag do đó sẽ dẫn tới vòng lặp vô tận tại vị trí 00405A54.
 
 \subsection{Ví dụ 2}
 
-\hspace{0.5cm}Đối với những packer hiện đại ngày nay, không chỉ nâng cấp độ phức tạp của giải thuật đóng gói bằng việc sử dụng rất nhiều câu lệnh tính toán phức tạp, những packer này còn áp dụng rất nhiều kỹ thuật anti-reversing, anti-debugging nhằm khiến cho quá trình dịch ngược hay gỡ lỗi trở nên khó khăn rất nhiều. Ví dụ 2 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế có sử dụng kỹ thuật Hardware Breakpoint nhằm che dấu quá trình mở gói:
+\hspace{0.5cm}Trong thực tế, một malware để tránh bị phát hiện bởi một chương trình chống malware, có thể sử dụng packer để ẩn thân hay nói cách khác che dấu điểm nhập thực sự của mình. Cụ thể malware sẽ sử dụng packer để đóng gói đoạn code thực thi thực sự của mình, và tự mở gói bằng kỹ thuật self-unpacking. Ví dụ 2 sẽ trình bày cụ thể về packer FSG được malware sử dụng trong thực tế có sử dụng kỹ thuật packing và self-unpacking:\\
 
-% COPY CODE IN HERE
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Unpacking sử dụng trong packer FSG},frame=single]
+004001A1	CMP EAX, DWORD PTR DS:[EBX-8]
+004001A4	JNB 004001B0
+...
+004001B0	INC ECX
+004001B1	INC ECX
+004001B2	XCHG EAX, EBP
+004001B3	MOV EAX, EBP
+004001B5	MOV DH, 0
+004001B7	PUSH ESI
+004001B8	MOV ESI, EDI
+004001BA	SUB ESI, EAX
+004001BC	REP MOVS BYTE PTR ES:[EDI], BYTE PTR DS:[ESI]
+004001BE	POP ESI
+004001BF 	JMP 00400160		
+...
+004001D1	JMP DWORD PTR DS:[EBX+C]
+\end{lstlisting}
+\end{code} 
 
-\subsection{Nhận xét và những thách thức đặt ra}
+\hspace{0.5cm}Trong đoạn mã 2.2 có thể thấy quá trình mở gói được thực hiện thông qua việc sử dụng các câu lệnh tính toán và kết thúc là một lệnh nhảy tại địa chỉ 004001D1 tới vị trí 00401000 trong bộ nhớ, mà vị trí này là vị trí entry point thực sự của tập tin trước khi đóng gói. Vị trí này cũng chính là vị trí mà quá trình mở gói sẽ thay đổi giá trị mã liên tục cho tới khi quá trình kết thúc. 
 
-\hspace{0.5cm}Hai ví dụ được đua ra ở trên là hai kỹ thuật nổi bật trong 2 nhóm kỹ thuật gồm: nhóm kỹ thuật obfuscation, nhóm kỹ thuật anti-reversing mà những kỹ thuật này được sử dụng rất phổ biến và là đặc trưng trong hầu hết các packer, những kỹ thuật này sẽ cản trở quá trình phân tích dịch ngược, gỡ lỗi nhằm che dấu điểm nhập chính thực sự của chương trình. Đối với những chương trình chỉ hỗ trợ quá tình phân tích tĩnh tập tin thực thi như: Jackstab, Capstone, Unicorn hay IDAPro vốn không xử lý được kỹ thuật self-modification code, là kỹ thuật lõi trong kỹ thuật unpacking của packer, hay không hỗ trợ việc xử lý, truy cập vào vùng memory nói chung và stack nói riêng, sẽ không thể hoặc hoàn toàn không có khả năng để xử lý các kỹ thuật trên. Do đó việc sử dụng một chương trình cho phép phân tích động, cụ thể là hệ thống BE-PUM là cần thiết và là giải pháp chung để phân tích một packer. Tuy nhiên, hệ thống BE-PUM còn một số hạn chế về xử lý các kỹ thuật anti-reversing, anti-debugging. Nhìn chung, những thách thức lớn nhất được đặt ra trong đề tài khi áp dụng hệ thống BE-PUM bao gồm:
+\subsection{Ví dụ 3}
 
-\begin{itemize}
-\item{Packer sử dụng rất nhiều kỹ thuật đa dạng nhằm nhận dạng nếu chương trình thực thi đang được phân tích trong môi trường gỡ lỗi bằng cách sử dụng các kỹ thuật thuộc nhóm kỹ thuật anti-reversing, anti-debugging. Vậy làm thế nào để có thể vượt qua được những kỹ thuật này.\\}
-\item{Ngoài ra, packer cũng sử dụng các kỹ thuật thuộc nhóm kỹ thuật obfuscation với rất nhiều những biến thể khác nhau. Vậy làm cách nào để có thể hỗ trợ tốt hơn cho hệ thống BE-PUM để xử lý tốt hơn và hiệu quả hơn các kỹ thuật này.\\}
-\item{Một thách thức khác được đặt ra là làm thế nào để có thể xác định được một tập tin thực thi có đang được đóng gói bởi một packer nào hay không, nhận dạng một packer thông qua chữ ký và thông qua ngữ nghĩa, phương pháp nào đưa ra được kết quả chính xác và tổng quát hơn.}
-\end{itemize}
+\hspace{0.5cm}Đối với những packer hiện đại ngày nay, không chỉ nâng cấp độ phức tạp của giải thuật đóng gói bằng việc sử dụng rất nhiều câu lệnh tính toán phức tạp, những packer này còn áp dụng rất nhiều kỹ thuật anti-reversing, anti-debugging nhằm khiến cho quá trình dịch ngược hay gỡ lỗi trở nên khó khăn rất nhiều. Ví dụ 3 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế có sử dụng kỹ thuật Hardware Breakpoint nhằm che dấu quá trình mở gói:\\
+
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Hardware Breakpoints sử dụng trong packer TELOCK},frame=single]
+0040408C 	INT3
+0040408D 	NOP
+0040408E 	MOV EAX, EAX 
+00404090 	STC
+...
+00404099 	CLC
+...
+0040409E 	CLD
+...
+004040A3 	NOP
+\end{lstlisting}
+\end{code} 
+
+\hspace{0.5cm}Trong đoạn mã 2.3 có thể thấy TELOCK packer sẽ gây ra một exception trong chương trình bằng việc sử dụng câu lệnh INT3, sau khi ngắt chương trình, luồng thực thi sẽ được thay đổi tới vị trí của hàm xử lý exception. Tại đây, các giá trị của các thanh ghi debug sẽ được thay đổi đến các giá trị 00404090, 00404099, 0040409E, 004040A3 tương ứng, chính vì các thanh ghi debug được kích hoạt sẽ dẫn đến exception xảy ra liên tục trong chương trình tại các vị trí trên. Nếu chương trình đang được phân tích trong môi trường debugger thì các exception này sẽ được bỏ qua dẫn đến quá trình mở gói sau sẽ không được thực thi chính xác.   
+
+\subsection{Nhận xét vấn đề}
+
+\hspace{0.5cm}Những ví dụ được đưa ra ở trên là những kỹ thuật nổi bật thuộc 2 nhóm kỹ thuật gồm: nhóm kỹ thuật obfuscation và nhóm kỹ thuật anti-reversing mà những kỹ thuật này được sử dụng rất phổ biến và là đặc trưng trong hầu hết các packer, những kỹ thuật này sẽ cản trở quá trình phân tích dịch ngược, gỡ lỗi nhằm che dấu điểm nhập chính thực sự của chương trình. Đối với những chương trình chỉ hỗ trợ quá tình phân tích tĩnh tập tin thực thi như: Jackstab, Capstone, Unicorn hay IDAPro vốn không xử lý được kỹ thuật self-modification code, là kỹ thuật lõi trong kỹ thuật unpacking của packer, hay không hỗ trợ việc xử lý, truy cập vào vùng memory nói chung và stack nói riêng, sẽ không thể hoặc hoàn toàn không có khả năng để xử lý các kỹ thuật trên. Do đó việc sử dụng một chương trình cho phép phân tích động, cụ thể là hệ thống BE-PUM là cần thiết và là giải pháp chung để phân tích một packer.
 
 \section{Phân tích}
 
 \subsection {Phân tích Packer trên hệ thống BE-PUM}
 
+\hspace{0.5cm}Việc phân tích hoàn toàn một packer và tìm ra điểm nhập thực sự của chương trình là một vấn đề vô cùng quan trọng bởi từ đó mới có thể xây dựng hoàn chỉnh được quá trình thực thi của một malware và từ đó quá trình nhận dạng malware đó mới thực sự khả thi. Phân tích vấn đề được đưa ra trong 3 ví dụ trong chương 2.1 sẽ giúp cụ thể hoá những thách thức gặp phải của hệ thống BE-PUM trong quá trình phân tích packer, từ đó sẽ tìm ra được các công việc cần phải thực hiện trong quá trình xử lý này.\\
+
+\hspace{0.5cm}Hệ thống BE-PUM hỗ trợ phân tích động một tập tin mã nhị phân, quá trình phân tích một packer đặt ra các yêu cầu đối với hệ thống BE-PUM như sau:
+
+\begin{itemize}
+\item{Packer sử dụng các kỹ thuật thuộc nhóm kỹ thuật obfuscation, cụ thể được nêu ra ở ví dụ 1 và ví dụ 2 thuộc chương 2.1. Đối với các chương trình phân tích tĩnh, quá trình thay đổi luồng thực thi, cũng như tự thay đổi mã sẽ khiến cho việc xử lý là bất khả thi. Hệ thống BE-PUM đã xử lý được những kỹ thuật obfuscation tuy nhiên với một biến thể mới như trong ví dụ đã nêu, BE-PUM sẽ gặp rất nhiều khó khăn. Từ đó cho thấy công việc cần thực hiện là hỗ trợ cho hệ thống BE-PUM để xử lý tốt hơn và hiệu quả hơn các kỹ thuật này.\\}
+\item{Packer sử dụng rất nhiều kỹ thuật đa dạng nhằm phát hiện nếu chương trình thực thi đang được phân tích trong môi trường debugger bằng cách sử dụng các kỹ thuật thuộc nhóm kỹ thuật anti-reversing, anti-debugging như được nêu ra trong ví dụ 3 chương 2.1. Do đó, công việc cần thực hiện là hỗ trợ BE-PUM xử lý các kỹ thuật này, cụ thể hơn, cần phải giả lập một môi trường thực thi thực sự cho tập tin được đóng gói.}
+\end{itemize}
+
 \subsection {Nhận dạng Packer}
+
+\hspace{0.5cm}Sau khi phân tích được một packer hoàn toàn trên hệ thống BE-PUM, đồng nghĩa với việc xây dựng được mô hình cho quá trình thực thi của một packer. Vậy làm cách nào để có thể nhận dạng được một tập tin có được đóng gói bởi một packer nào hay không khi chỉ có mô hình của quá trình thực thi tập tin bất kì. Do đó những yêu cầu mới được đặt ra như sau:
+
+\begin{itemize}
+\item{Xây dựng giải thuật nhận dạng packer thông qua chữ ký dựa trên dữ liệu chữ ký được thu thập. Tích hợp nhận dạng packer bằng chữ ký như một phần của hệ thống BE-PUM.\\}
+\item{Với những malware, việc thay đổi chữ ký là một vấn đề gây khó khăn cho giải pháp nhận dạng chữ ký, đòi hỏi cơ sở dữ liệu lớn và cập nhật thường xuyên vì chỉ sự thay đổi chỉ một byte trong chữ ký cũng sẽ sinh ra một chữ ký mới. Do đó yêu cầu mới đặt ra là xây dựng giải thuật nhận dạng packer thông qua ngữ nghĩa dựa trên phương pháp model checking, cụ thể kết hợp giữa hệ thống BE-PUM và công cụ NuSMV. Do đó, yêu cầu đặt ra là chuyển đổi từ mô hình được sinh ra bởi hệ thống BE-PUM sang mô hình NuSMV được chấp nhận bởi công cụ NuSMV. Tích hợp nhận dạng packer thông qua công cụ NuSMV như một phần của hệ thống BE-PUM.}
+\end{itemize}
 
 \section{Giải pháp đề nghị}
 
 \subsection {Thu thập và xử lý các kỹ thuật Packer}
 
+\hspace{0.5cm}Để có thể đáp ứng được những yêu cầu được đặt ra trong quá trình xử lý và phân tích hoàn toàn một packer, giải pháp được đưa ra bao gồm:
+
+\begin{itemize}
+\item{Phân tích luồng thực thi của packer đó bằng một công cụ emulator hỗ trợ giả lập môi trường debugger như OllyDBG, cho phép phân tích từng câu lệnh thực thi, từ đó tìm ra những kỹ thuật mới của packer.\\}
+\item{Tiến hành phân tích kỹ thuật đó trên hệ thống BE-PUM, hỗ trợ hệ thống BE-PUM xử lý kỹ thuật nếu quá trình phân tích gặp lỗi, quá trình phân tích là thành công khi tìm ra được điểm nhập thực sự của một chương trình. Khi đó có thể kết luận tập tin đã được mở gói thành công.\\}
+\item{Thu thập các kỹ thuật đã được phân tích của các packer và xây dựng mẫu cho các kỹ thuật này.}
+\end{itemize} 
+
 \subsection {Nhận dạng Packer thông qua chữ ký}
 
+\hspace{0.5cm}Nhận dạng thông qua chữ ký được sử dụng chủ yếu trong các phần mềm nổi tiếng như: PEID và CFF Explorer, những hạn chế về dữ liệu chữ ký là vấn đề không tránh khỏi khi nhận dạng packer theo phương pháp này. Để có thể đưa ra một sự so sánh về hiệu quả giữa 2 phương pháp nhận dạng packer được chọn, quá trình xây dựng giải thuật nhận dạng packer thông qua chữ ký được tích hợp trong hệ thống BE-PUM sẽ gồm việc thu thập dữ liệu chữ ký của các packer, lưu trữ dữ liệu này dưới dạng dữ liệu JSON và xây dựng giả thuật cụ thể để nhận dạng. 
+
 \subsection {Nhận dạng Packer thông qua ngữ nghĩa}
+
+\hspace{0.5cm}Chính vì những hạn chế dễ nhận thấy của phương pháp chữ ký, xây dựng giải thuật nhận dạng packer thông qua ngữ nghĩa hay sử dụng phương pháp model checking sẽ bao gồm việc chuyển đổi mô hình sang mô hình NuSMV và biểu diễn các kỹ thuật của packer dưới dạng biểu thức logic có yếu tố thời gian, cụ thể là CTL và LTL.
 
