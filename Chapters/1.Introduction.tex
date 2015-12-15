@@ -1,12 +1,44 @@
 
 
-\section{Giới thiệu sơ lược về BE-PUM}
+\section{Giới thiệu về BE-PUM}\
+
+	\subsection{BE-PUM là gì}
 
 BE-PUM tên đầy đủ là Binary Emulation for Pushdown Model generation, là một công cụ dùng để phân tích động mã nhị phân của một chương trình bất kỳ chạy trên kiến trúc X86 của hệ điều hành Microsoft Windows nền tảng 32-bit. Sau khi phân tích, BE-PUM sẽ sinh ra hợp ngữ – mã assembly và đồ thị luồng điều khiển (control flow graph – CFG) của chương trình đầu vào.\\
 
-BE-PUM được xây dựng chính trên mã nguồn của JakStab nhưng không hạn hẹp ở việc chỉ phân tích tĩnh, BE-PUM có thể phân tích động và chỉ ra lại mỗi dòng lệnh của mã assembly môi trường làm việc của nó là như thế nào. Việc này sẽ giải quyết được những trường hợp phân tính vào những nhánh không cần thiết – không bao giờ được thực thi hoặc khi chương trình đang cố gắng thay đổi chính nội dung của mình.\\
+BE-PUM được xây dựng chính trên mã nguồn của JakStab, nhưng không hạn hẹp ở việc chỉ phân tích tĩnh, BE-PUM có thể phân tích động và chỉ ra lại mỗi dòng lệnh của mã assembly môi trường làm việc của nó là như thế nào. Việc này sẽ giải quyết được những hạn chế mà phương pháp phân tích tĩnh không thể xử lý được.
 
-Với việc phân tích mã nhị phân đó, BE-PUM đang được phát triển để tập trung vào phân tích những phần mềm bị nghi ngờ để rồi sau đó sẽ phát hiện được những kỹ thuật tấn công, và cuối cùng là xác định xem đây có thực là phần mềm gây hại đến máy tính hay không?\\
+	\subsection{Mục tiêu hướng đến của BE-PUM}
+
+Với cuộc sống ngày càng hiện đại của con người, sự phổ biến và tầm quan trọng của máy tính ngày càng nâng cao. Các công việc quan trọng nay hầu hết đều có thể được quản lý và xử lý bởi các phần mềm máy tính, từ các hệ thống quản lý nhân công hay các quy trình tài chính, ngân hàng. Sự lệ thuộc nhiều vào máy tính đó đã kéo theo cho sự ra đời của hàng loạt những phần mềm độc hại, với các mục đích xấu, đôi lúc chỉ là để mua vui hay nghiêm trọng hơn là tư lợi cho bản thân người viết ra chúng. \\
+
+Bằng việc phân tích mã nhị phân, BE-PUM đang được phát triển để tập trung vào việc phân tích những phần mềm bị nghi ngờ, sau đó dựa vào hành vi sẽ phát hiện được những kỹ thuật tấn công, và cuối cùng là xác định xem đây có thực là phần mềm gây hại đến máy tính (malware - malicious software) hay không?
+
+	\subsection{Các hướng tiếp cận}
+
+Với một công cụ phân tích tập trung vào phần mềm độc hại, ta có một số hướng tiếp cận như sau:
+		\subsubsection{Phát hiện dựa trên dấu hiệu}
+Phát hiện dựa trên dấu hiệu (signature detection) là một hướng tiếp cận theo kiểu công nghiệp, nó được dùng trong đại đa số các phần mềm phát hiện malware vì đặc tính là nhanh chóng xác định một malware; nhưng đi kèm là hạn chế chỉ phát hiện được trong giới hạn một lượng dấu hiệu đã nạp sẵn.\\
+
+Khi một chương trình phát hiện malware thông thường thực hiện việc quét tìm mối nguy hiểm, chúng sẽ kiểm tra nội dung của từng tập tin, so trùng nội dung đó với bộ từ điển các dấu hiện đã có sẵn và nhận biết. Việc này sẽ đòi hỏi bộ từ điển kia được cập nhật liên tục từ nhà phát hành, nhưng việc cập nhật đó cũng chỉ có giới hạn, trong khi các malware được gia tăng qua từng ngày. Việc một malware sinh ra biến thể nhỏ có thể khiến cho một dấu hiệu nhận dạng trước đó không hoạt động chính xác nữa.
+
+		\subsubsection{Phát hiện dựa vào giả lập}
+Dựa vào bộ giả lập (emulation) là một cách tiếp cận với việc xây dựng và thực thi tập tin malware trong một môi trường sandbox. Môi trường sandbox là môi trường ảo hóa được dựng lên với các tính năng tương tự như một hệ thống thật, nhưng cách ly và bị hạn chế không thể tạo ra một thay đổi lâu dài. Điều này có nghĩa là tất cả những gì xảy ra trong sandbox sẽ chỉ ở trong sandbox.\\
+
+Nhưng một malware tinh vi có thể phát hiện được rằng chúng đang chạy trong sandbox và ta sẽ không thu được kết quả gì. Cộng thêm với việc xây dựng một môi trường sandbox đòi hỏi bỏ ra rất nhiều công sức, và hành vi của một malware sẽ có thể bị khác nhau (do thực thi thật) ở nhiều thời điểm; do đó phương pháp này không được nhắm tới.
+
+		\subsubsection{Phát hiện dựa vào sinh mô hình}
+
+Sinh mô hình (model generation) là một cách tiếp cận hình thức với việc mọi câu lệnh được mô hình hóa và biểu diễn bằng mô hình. Sau khi xử lý một chuỗi các mô hình qua các câu lệnh có trong tập tin, có sẽ có được mô hình luồng điều khiển và giải quyết bài toán trên đó bằng phương pháp kiểm tra mô hình (model checking).
+
+	\subsection{Mô hình luồng điều khiển}
+
+	\subsection{Những đòi hỏi trong quá trình hiện thực}
+
+\section{Tổng quan về hợp ngữ}
+Ngôn ngữ assembly (hay hợp ngữ) là ngôn ngữ cấp thấp được biên dịch để thực thi một chương trình nào đó. Ngôn ngữ assembly có tính gợi nhớ, mỗi câu lệnh thực thi một chức năng, hay nhiệm vụ riêng biệt tương ứng với một lệnh yêu cầu máy thực thi. \\
+
+Các chương trình sau khi biên dịch ra thành nhiều dạng file khác nhau để thực thi. Mỗi chương trình được biên dịch thành ngôn ngữ assembly trước khi biên dịch qua ngôn ngữ máy để máy hiểu và thực thi câu lệnh. Khi biên dịch qua mã assembly, đọc đoạn mã assembly để phân tích xem chương trình này có phải là virus máy tính không, có những hành vi bất thường từ đó xem xét đưa ra kết quả chương trình này có an toàn với máy tính.\\
 
 \section {Tổng quan về Windows API}
 
@@ -30,11 +62,6 @@ Win64 & Đây là một biến thể sau đó của bộ API được hiện th�
 \caption[Một số phiên bản chính của Windows API]{Một số phiên bản chính của Windows API}
 \label{table:tblwapiver}
 \end{longtable}
-
-\section{Tổng quan về assembly}
-Ngôn ngữ assembly (hay hợp ngữ) là ngôn ngữ cấp thấp được biên dịch để thực thi một chương trình nào đó. Ngôn ngữ asseambly có tính gợi nhớ, mỗi câu lệnh thực thi một chức năng, hay nhiệm vụ riêng biệt tưng ứng với một lệnh yêu cầu máy thực thi. \\
-
-Các chương trình sau khi biên dịch ra thành nhiều dạng file khác nhau để thực thi. Mỗi chương trình được biên dịch thành ngôn ngữ asembly trước khi biên dịch qua ngôn ngữ máy để máy hiểu và thực thi câu lênh. Khi biên dịch qua mã assembly, đọc đoạn mã assembly để phân tích xem chương trình này có phải là virus máy tính không, có những hành vi bất thường từ đó xem xét đưa ra kết quả chương trình này có an toàn với máy tính.\\
 
 \newpage
 \section{Mục tiêu đề tài}
