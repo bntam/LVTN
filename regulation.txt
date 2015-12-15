@@ -1,9 +1,0 @@
-Only use English for these term
-- Malware
-- Packer
-- Model checking
-- Packer's techniques, e.g, obfuscation, anti-reversing, anti-debugging, etc.
-- Framework 
-- Control Flow Graph
-- Opcode
-- Logic
