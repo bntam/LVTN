@@ -5,11 +5,37 @@
 \newpage
 \chapter{THIẾT KẾ VÀ XÂY DỰNG}
 
+\begin{concept}[15cm]
+\textit{Nội dung chương này sẽ trình bày về các công việc đã thực hiện trong luận văn dựa trên những kiến thức nền được giới thiệu ở chương 2. Cụ thể, chương này sẽ tập trung giới thiệu việc kết hợp giữa hệ thống BE-PUM và công cụ NuSMV trong việc nhận dạng packer. Để có thể so sánh giữa phương pháp pháp nhận dạng packer thông qua chữ ký và phương pháp model checking, giải thuật nhận dạng packer thông qua chữ ký cũng được hiện thực và giới thiệu cụ thể trong chương này.}
+\end{concept}
+
 \section{Thiết kế giải thuật nhận dạng Packer thông qua chữ ký}
+
+\hspace{0.5cm}Phương pháp nhận dạng thông qua chữ ký được sử dụng trong các phần mềm như PEID, CFF Explorer. Ưu điểm của phương pháp nhận dạng chữ ký là quá trình nhận dạng không tốn quá nhiều thời gian, công sức. Chữ ký là một chuỗi byte có duy nhất tương ứng với mỗi packer, do đó nhược điểm lớn nhất là những chữ ký này luôn được packer thay đổi sau mỗi lần nâng cấp phiên bản nhằm ẩn thân trước các công cụ nhận dạng.\\
+
+\hspace{0.5cm}Giải thuật nhận dạng chữ ký của packer sẽ bao gồm công việc thu thập những chữ ký này và xử lý dữ liệu thôi. Dữ liệu sẽ được lưu trữ dưới dạng dữ liệu JSON qua đó cho phép BE-PUM dễ dàng sửa đổi và thêm mới các chữ ký này.
+
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Cấu trúc lưu trữ của một chữ ký},frame=single]
+{
+  "PACKER_NAME"    : name
+  "VERSION"        : version
+  "IS_ENTRY_POINT" : yes/no
+  "SIGNATURE"      : bytes array
+}
+\end{lstlisting}
+\end{code}
+
+\hspace{0.5cm}BE-PUM sẽ chuyển đổi dữ liệu JSON lưu trữ chữ ký này thành dữ liệu lưu trữ dưới dạng mảng các byte. Thuộc tính "IS\_ENTRY\_POINT" sẽ xác định nếu quá trình nhận dạng chữ ký này sẽ bắt đầu kiểm tra từ header hay từ vị trí entry point của tập tin. Nếu giá trị này là TRUE, quá trình kiểm tra sẽ bắt đầu từ vị trí entry point, và ngược lại nếu giá trị này là FALSE, quá trình kiểm tra sẽ bắt đầu từ vị trí header đến vị trí entry point. Vì packer có thể nâng cấp những phiên bản mới nhằm mục đích thay đổi chữ ký này, do đó BE-PUM cũng sẽ lưu trữ lại phiên bản của packer thông qua thuộc tính "VERSION".\\ 
+
+\hspace{0.5cm}Quá trình kiểm tra sẽ so trùng từng byte của tập tin thực thi với mảng các byte của chữ ký, bước đầu sẽ tiến hành so trùng ít nhất 2 byte đầu của chữ ký và tập tin. Nếu trong trường hợp, 2 giá trị này trùng với 2 giá trị của chữ ký thì một quá trình kiểm tra so trùng toàn bộ chữ ký được thực hiện. Nếu trùng với chữ ký của packer thì BE-PUM sẽ trả về tên của packer và phiên bản của packer. Ngược lại, quá trình sẽ trả về giá trị rỗng. 
 
 \section{Kết hợp hệ thống BE-PUM và NuSMV}
 
+\hspace{0.5cm}Chính vì những nhược điểm rất lớn của quá trình nhận dạng packer thông qua chữ ký, mà việc nhận dạng packer bằng phương pháp nhận dạng thông qua ngữ nghĩa được áp dụng, cụ thể là quá trình kết hợp giữa hệ thống BE-PUM và công cụ kiểm tra mô hình NuSMV. Công việc được thực hiện bao gồm việc xây dựng mô hình NuSMV và mô tả những kỹ thuật của packer thông qua biểu thức CTL, LTL.\\
+
 \subsection{Thiết kế và xây dựng NuSMV Model}
+
 
 \subsection{Mô tả kỹ thuật Packer thông qua biểu thức CTL, LTL}
 

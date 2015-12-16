@@ -1,5 +1,7 @@
 #!/bin/sh
 
+clear
+
 pdflatex --output-directory=build report.tex
 
 file="build/report.pdf"

@@ -67,8 +67,10 @@
 \def\andname{và}
 \def\lastandname{\unskip, và}
 \def\appendixname{Phụ lục}
-\def\refname{Tài liệu tham khảo}
-\def\bibname{Tài liệu tham khảo}
+%\def\refname{Tài liệu tham khảo}
+%\def\bibname{Tài liệu tham khảo}
+\def\refname{}
+\def\bibname{}
 \def\chaptername{Chương}
 \def\claimname{Tuyên bố}
 \def\conjecturename{Phỏng đoán}

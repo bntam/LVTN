@@ -13,7 +13,7 @@
 
 \subsection{Ví dụ 1}
 
-\hspace{0.5cm}Không chỉ thay đổi giải thuật phức tạp nhằm đóng gói mã thực thi, packer còn sử dụng các kỹ thuật obfuscation ngày càng tinh vi hơn. Ví dụ 1 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế sử dụng kỹ thuật Strutured Exception Handler dựa trên Trap Flag:\\ 
+\hspace{0.5cm}Không chỉ thay đổi giải thuật phức tạp nhằm đóng gói mã thực thi, packer còn sử dụng các kỹ thuật obfuscation ngày càng tinh vi hơn. Ví dụ 1 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế sử dụng kỹ thuật Strutured Exception Handler dựa trên Trap Flag:
 
 \begin{code}
 \begin{lstlisting}[captionpos=b,caption={Kỹ thuật Strutured Exception Handler sử dụng trong packer TELOCK},frame=single]
@@ -34,7 +34,7 @@
 
 \subsection{Ví dụ 2}
 
-\hspace{0.5cm}Trong thực tế, một malware để tránh bị phát hiện bởi một chương trình chống malware, có thể sử dụng packer để ẩn thân hay nói cách khác che dấu điểm nhập thực sự của mình. Cụ thể malware sẽ sử dụng packer để đóng gói đoạn code thực thi thực sự của mình, và tự mở gói bằng kỹ thuật self-unpacking. Ví dụ 2 sẽ trình bày cụ thể về packer FSG được malware sử dụng trong thực tế có sử dụng kỹ thuật packing và self-unpacking:\\
+\hspace{0.5cm}Trong thực tế, một malware để tránh bị phát hiện bởi một chương trình chống malware, có thể sử dụng packer để ẩn thân hay nói cách khác che dấu điểm nhập thực sự của mình. Cụ thể malware sẽ sử dụng packer để đóng gói đoạn code thực thi thực sự của mình, và tự mở gói bằng kỹ thuật self-unpacking. Ví dụ 2 sẽ trình bày cụ thể về packer FSG được malware sử dụng trong thực tế có sử dụng kỹ thuật packing và self-unpacking:
 
 \begin{code}
 \begin{lstlisting}[captionpos=b,caption={Kỹ thuật Unpacking sử dụng trong packer FSG},frame=single]
@@ -61,7 +61,7 @@
 
 \subsection{Ví dụ 3}
 
-\hspace{0.5cm}Đối với những packer hiện đại ngày nay, không chỉ nâng cấp độ phức tạp của giải thuật đóng gói bằng việc sử dụng rất nhiều câu lệnh tính toán phức tạp, những packer này còn áp dụng rất nhiều kỹ thuật anti-reversing, anti-debugging nhằm khiến cho quá trình dịch ngược hay gỡ lỗi trở nên khó khăn rất nhiều. Ví dụ 3 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế có sử dụng kỹ thuật Hardware Breakpoint nhằm che dấu quá trình mở gói:\\
+\hspace{0.5cm}Đối với những packer hiện đại ngày nay, không chỉ nâng cấp độ phức tạp của giải thuật đóng gói bằng việc sử dụng rất nhiều câu lệnh tính toán phức tạp, những packer này còn áp dụng rất nhiều kỹ thuật anti-reversing, anti-debugging nhằm khiến cho quá trình dịch ngược hay gỡ lỗi trở nên khó khăn rất nhiều. Ví dụ 3 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế có sử dụng kỹ thuật Hardware Breakpoint nhằm che dấu quá trình mở gói:
 
 \begin{code}
 \begin{lstlisting}[captionpos=b,caption={Kỹ thuật Hardware Breakpoints sử dụng trong packer TELOCK},frame=single]
@@ -93,7 +93,7 @@
 \hspace{0.5cm}Hệ thống BE-PUM hỗ trợ phân tích động một tập tin mã nhị phân, quá trình phân tích một packer đặt ra các yêu cầu đối với hệ thống BE-PUM như sau:
 
 \begin{itemize}
-\item{Packer sử dụng các kỹ thuật thuộc nhóm kỹ thuật obfuscation, cụ thể được nêu ra ở ví dụ 1 và ví dụ 2 thuộc chương 2.1. Đối với các chương trình phân tích tĩnh, quá trình thay đổi luồng thực thi, cũng như tự thay đổi mã sẽ khiến cho việc xử lý là bất khả thi. Hệ thống BE-PUM đã xử lý được những kỹ thuật obfuscation tuy nhiên với một biến thể mới như trong ví dụ đã nêu, BE-PUM sẽ gặp rất nhiều khó khăn. Từ đó cho thấy công việc cần thực hiện là hỗ trợ cho hệ thống BE-PUM để xử lý tốt hơn và hiệu quả hơn các kỹ thuật này.\\}
+\item{Packer sử dụng các kỹ thuật thuộc nhóm kỹ thuật obfuscation, cụ thể được nêu ra ở ví dụ 1 và ví dụ 2 chương 2.1. Đối với các chương trình phân tích tĩnh, quá trình thay đổi luồng thực thi, cũng như tự thay đổi mã sẽ khiến cho việc xử lý là bất khả thi. Hệ thống BE-PUM đã xử lý được những kỹ thuật obfuscation tuy nhiên với một biến thể mới như trong ví dụ đã nêu, BE-PUM sẽ gặp rất nhiều khó khăn. Từ đó cho thấy công việc cần thực hiện là hỗ trợ cho hệ thống BE-PUM để xử lý tốt hơn và hiệu quả hơn các kỹ thuật này.\\}
 \item{Packer sử dụng rất nhiều kỹ thuật đa dạng nhằm phát hiện nếu chương trình thực thi đang được phân tích trong môi trường debugger bằng cách sử dụng các kỹ thuật thuộc nhóm kỹ thuật anti-reversing, anti-debugging như được nêu ra trong ví dụ 3 chương 2.1. Do đó, công việc cần thực hiện là hỗ trợ BE-PUM xử lý các kỹ thuật này, cụ thể hơn, cần phải giả lập một môi trường thực thi thực sự cho tập tin được đóng gói.}
 \end{itemize}
 
@@ -103,7 +103,7 @@
 
 \begin{itemize}
 \item{Xây dựng giải thuật nhận dạng packer thông qua chữ ký dựa trên dữ liệu chữ ký được thu thập. Tích hợp nhận dạng packer bằng chữ ký như một phần của hệ thống BE-PUM.\\}
-\item{Với những malware, việc thay đổi chữ ký là một vấn đề gây khó khăn cho giải pháp nhận dạng chữ ký, đòi hỏi cơ sở dữ liệu lớn và cập nhật thường xuyên vì chỉ sự thay đổi chỉ một byte trong chữ ký cũng sẽ sinh ra một chữ ký mới. Do đó yêu cầu mới đặt ra là xây dựng giải thuật nhận dạng packer thông qua ngữ nghĩa dựa trên phương pháp model checking, cụ thể kết hợp giữa hệ thống BE-PUM và công cụ NuSMV. Do đó, yêu cầu đặt ra là chuyển đổi từ mô hình được sinh ra bởi hệ thống BE-PUM sang mô hình NuSMV được chấp nhận bởi công cụ NuSMV. Tích hợp nhận dạng packer thông qua công cụ NuSMV như một phần của hệ thống BE-PUM.}
+\item{Với những malware, việc thay đổi chữ ký là một vấn đề gây khó khăn cho giải pháp nhận dạng chữ ký, đòi hỏi cơ sở dữ liệu lớn và cập nhật thường xuyên vì chỉ cần sự thay đổi duy nhất một byte trong chữ ký cũng sẽ sinh ra một chữ ký mới. Do đó yêu cầu mới đặt ra là xây dựng giải thuật nhận dạng packer thông qua ngữ nghĩa dựa trên phương pháp model checking, cụ thể kết hợp giữa hệ thống BE-PUM và công cụ NuSMV. Do đó, yêu cầu đặt ra là chuyển đổi từ mô hình được sinh ra bởi hệ thống BE-PUM sang mô hình NuSMV như đầu vào của công cụ NuSMV. Tích hợp nhận dạng packer thông qua công cụ NuSMV như một phần của hệ thống BE-PUM.}
 \end{itemize}
 
 \section{Giải pháp đề nghị}
@@ -115,14 +115,28 @@
 \begin{itemize}
 \item{Phân tích luồng thực thi của packer đó bằng một công cụ emulator hỗ trợ giả lập môi trường debugger như OllyDBG, cho phép phân tích từng câu lệnh thực thi, từ đó tìm ra những kỹ thuật mới của packer.\\}
 \item{Tiến hành phân tích kỹ thuật đó trên hệ thống BE-PUM, hỗ trợ hệ thống BE-PUM xử lý kỹ thuật nếu quá trình phân tích gặp lỗi, quá trình phân tích là thành công khi tìm ra được điểm nhập thực sự của một chương trình. Khi đó có thể kết luận tập tin đã được mở gói thành công.\\}
-\item{Thu thập các kỹ thuật đã được phân tích của các packer và xây dựng mẫu cho các kỹ thuật này.}
+\item{Thu thập các kỹ thuật đã được phân tích của các packer và xây dựng mẫu hành vi cho các kỹ thuật này.}
 \end{itemize} 
 
 \subsection {Nhận dạng Packer thông qua chữ ký}
 
-\hspace{0.5cm}Nhận dạng thông qua chữ ký được sử dụng chủ yếu trong các phần mềm nổi tiếng như: PEID và CFF Explorer, những hạn chế về dữ liệu chữ ký là vấn đề không tránh khỏi khi nhận dạng packer theo phương pháp này. Để có thể đưa ra một sự so sánh về hiệu quả giữa 2 phương pháp nhận dạng packer được chọn, quá trình xây dựng giải thuật nhận dạng packer thông qua chữ ký được tích hợp trong hệ thống BE-PUM sẽ gồm việc thu thập dữ liệu chữ ký của các packer, lưu trữ dữ liệu này dưới dạng dữ liệu JSON và xây dựng giả thuật cụ thể để nhận dạng. 
+\hspace{0.5cm}Nhận dạng thông qua chữ ký được sử dụng chủ yếu trong các phần mềm nổi tiếng như: PEID và CFF Explorer, những hạn chế về dữ liệu chữ ký là vấn đề không tránh khỏi khi nhận dạng packer theo phương pháp này. Để có thể đưa ra một sự so sánh về hiệu quả giữa 2 phương pháp nhận dạng packer được chọn, quá trình xây dựng giải thuật nhận dạng packer thông qua chữ ký được tích hợp trong hệ thống BE-PUM sẽ bao gồm:
+
+\begin{itemize}
+\item{Thu thập dữ liệu chữ ký của các packer.\\}
+\item{Chuyển đổi dữ liệu chữ ký thô và lưu trữ dữ liệu này dưới dạng dữ liệu JSON.\\}
+\item{Xây dựng giải thuật để nhận dạng chữ ký này trên packer.}
+\end{itemize} 
 
 \subsection {Nhận dạng Packer thông qua ngữ nghĩa}
 
-\hspace{0.5cm}Chính vì những hạn chế dễ nhận thấy của phương pháp chữ ký, xây dựng giải thuật nhận dạng packer thông qua ngữ nghĩa hay sử dụng phương pháp model checking sẽ bao gồm việc chuyển đổi mô hình sang mô hình NuSMV và biểu diễn các kỹ thuật của packer dưới dạng biểu thức logic có yếu tố thời gian, cụ thể là CTL và LTL.
+\hspace{0.5cm}Chính vì những hạn chế dễ nhận thấy của phương pháp chữ ký, xây dựng giải thuật nhận dạng packer thông qua ngữ nghĩa hay sử dụng phương pháp model checking sẽ bao gồm:
+
+\begin{itemize}
+\item{Chuyển đổi mô hình được sinh ra bởi BE-PUM sang mô hình NuSMV.\\}
+\item{Mô tả các mẫu hành vi của packer dưới dạng công thức CTL, LTL.\\}
+\item{Sử dụng công cụ kiểm tra mô hình NuSMV với đầu vào là mô hình NuSMV đã được chuyển đổi và hành vi của packer, để kiểm tra tập tin có đang được đóng gói hay không.}
+\end{itemize} 
+
+% MODEL CHECKING PROCESS in here.
 
