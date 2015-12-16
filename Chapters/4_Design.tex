@@ -13,7 +13,7 @@
 
 \hspace{0.5cm}Phương pháp nhận dạng thông qua chữ ký được sử dụng trong các phần mềm như PEID, CFF Explorer. Ưu điểm của phương pháp nhận dạng chữ ký là quá trình nhận dạng không tốn quá nhiều thời gian, công sức. Chữ ký là một chuỗi byte có duy nhất tương ứng với mỗi packer, do đó nhược điểm lớn nhất là những chữ ký này luôn được packer thay đổi sau mỗi lần nâng cấp phiên bản nhằm ẩn thân trước các công cụ nhận dạng.\\
 
-\hspace{0.5cm}Giải thuật nhận dạng chữ ký của packer sẽ bao gồm công việc thu thập những chữ ký này và xử lý dữ liệu thôi. Dữ liệu sẽ được lưu trữ dưới dạng dữ liệu JSON qua đó cho phép BE-PUM dễ dàng sửa đổi và thêm mới các chữ ký này.
+\hspace{0.5cm}Giải thuật nhận dạng chữ ký của packer sẽ bao gồm công việc thu thập những chữ ký này và xử lý dữ liệu thô. Dữ liệu sẽ được lưu trữ dưới dạng dữ liệu JSON qua đó cho phép BE-PUM dễ dàng sửa đổi và thêm mới các chữ ký này.
 
 \begin{code}
 \begin{lstlisting}[captionpos=b,caption={Cấu trúc lưu trữ của một chữ ký},frame=single]

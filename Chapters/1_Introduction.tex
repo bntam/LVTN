@@ -27,19 +27,20 @@
 
 \subsection{Tổng quan về Packer}
 
-\hspace{0.5cm}Packer là những công cụ dùng để đóng gói một tập tin, trong đó mục tiêu chính của một packer có thể được chia làm 3 mục tiêu cụ thể là:
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{simple_packer_schema}
+\caption{Mô hình của một packer đơn giản}
+\label{fig:PackerSchema}
+\end{figure}
+
+\hspace{0.5cm}Packer là những công cụ dùng để đóng gói một tập tin. Hình \ref {fig:PackerSchema} mô tả cấu trúc của một packer đơn giản. Trong đó có thể thấy mục tiêu chính của một packer có thể được chia làm 3 mục tiêu cụ thể là:
 
 \begin{itemize}
 \item{Giảm kích thước của tập tin: đây cũng là mục tiêu mà rất nhiều packer hướng tới, bằng việc áp dụng các kỹ thuật packing và self-unpacking, encryption và self-decryption, mà kích thước của một tập tin được đóng gói qua đó cũng giảm đi một cách đáng kể. Tuy nhiên, những packer hiện đại ngày nay đã không còn đặt tiêu chí giảm kích thước tập tin lên hàng đầu, bởi giảm kích thước đồng nghĩa với việc sử dụng những kỹ thuật bảo mật khác sẽ được loại bỏ và do đó độ tin cậy của một packer cũng giảm đi. Thậm chí những packer có cơ chế bảo mật tốt hiện nay có thể kể ra như Armadillo, Themida hay PEBundle có thể làm kích thước tập tin tăng lên rất nhiều lần do việc áp dụng kỹ thuật phức tạp của những packer này trên tập tin cần đóng gói là rất nhiều.\\}
 \item{Chống dịch ngược: một trong những kỹ thuật được sử dụng rất nhiều trong việc tìm ra những lỗ hỏng của một phần mềm từ đó tìm cách đánh cắp dữ liệu mật của phần mềm đó hay tìm hiểu cơ chế sinh khoá, dịch ngược cũng được áp dụng để phát hiện những kỹ thuật malware từ đó tìm cách sửa lỗi hệ thống mà malware khai thác và chống lại malware đó. Nhằm chống lại kỹ thuật dịch ngược, packer cũng được sử dụng như một công cụ hiệu quả vì những giải thuật đóng gói tập tin phức tạp của packer có thể khiến việc dịch ngược mã nhị phân trở nên vô cùng khó khăn.\\}
 \item{Bảo vệ bản quyền của phần mềm: đây cũng là mục tiêu chính yếu nhất mà các packer ngày nay hướng tới, bằng cách nâng cao độ phức tạp của các giải thuật đóng gói, đồng thời áp dụng những kỹ thuật anti-debugging, anti-reversing sẽ qua đó giúp bảo vệ một phần mềm khỏi việc đánh cắp thông tin bất hợp pháp. Malware cũng lợi dụng điểm mạnh này của packer nhằm che dấu quá trình thực thi của mình.}
 \end{itemize}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.5\textwidth]{simple_packer_schema}
-\caption{Mô hình của một packer đơn giản}
-\end{figure}
 
 \subsection{Tổng quan về Model Checking}
 

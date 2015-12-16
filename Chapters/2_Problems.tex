@@ -16,7 +16,7 @@
 \hspace{0.5cm}Không chỉ thay đổi giải thuật phức tạp nhằm đóng gói mã thực thi, packer còn sử dụng các kỹ thuật obfuscation ngày càng tinh vi hơn. Ví dụ 1 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế sử dụng kỹ thuật Strutured Exception Handler dựa trên Trap Flag:
 
 \begin{code}
-\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Strutured Exception Handler sử dụng trong packer TELOCK},frame=single]
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Strutured Exception Handler sử dụng trong packer TELOCK},label={lst:SEHinTELOCK},frame=single]
 00405A32	PUSHAD
 00405A33	CALL 00405A3E
 ...
@@ -30,14 +30,14 @@
 \end{lstlisting}
 \end{code}
 
-\hspace{0.5cm}Trong đoạn mã 2.1 có thể thấy giá trị của thanh ghi cờ EFLAGS sẽ bị thay đổi qua câu lệnh tại địa chỉ 00405A4B, qua đó sẽ thay đổi giá trị của Trap Flag thành TRUE, chính vì giá trị này thay đổi sẽ gây ra một exception trong chương trình với kiểu SINGLE\_STEP\_EXCEPTION. Khi đó luồng thực thi sẽ thay đổi và trỏ tới hàm xử lý exception với điểm nhập là giá trị địa chỉ được lưu trong bộ nhớ tại vị trí FS:[0]. Hệ thống BE-PUM chưa hỗ trợ Trap Flag do đó sẽ dẫn tới vòng lặp vô tận tại vị trí 00405A54.
+\hspace{0.5cm}Trong đoạn mã \ref {lst:SEHinTELOCK} có thể thấy giá trị của thanh ghi cờ EFLAGS sẽ bị thay đổi qua câu lệnh tại địa chỉ 00405A4B, qua đó sẽ thay đổi giá trị của Trap Flag thành TRUE, chính vì giá trị này thay đổi sẽ gây ra một exception trong chương trình với kiểu SINGLE\_STEP\_EXCEPTION. Khi đó luồng thực thi sẽ thay đổi và trỏ tới hàm xử lý exception với điểm nhập là giá trị địa chỉ được lưu trong bộ nhớ tại vị trí FS:[0]. Hệ thống BE-PUM chưa hỗ trợ Trap Flag do đó sẽ dẫn tới vòng lặp vô tận tại vị trí 00405A54.
 
 \subsection{Ví dụ 2}
 
 \hspace{0.5cm}Trong thực tế, một malware để tránh bị phát hiện bởi một chương trình chống malware, có thể sử dụng packer để ẩn thân hay nói cách khác che dấu điểm nhập thực sự của mình. Cụ thể malware sẽ sử dụng packer để đóng gói đoạn code thực thi thực sự của mình, và tự mở gói bằng kỹ thuật self-unpacking. Ví dụ 2 sẽ trình bày cụ thể về packer FSG được malware sử dụng trong thực tế có sử dụng kỹ thuật packing và self-unpacking:
 
 \begin{code}
-\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Unpacking sử dụng trong packer FSG},frame=single]
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Unpacking sử dụng trong packer FSG},label={lst:UnpackinFSG},frame=single]
 004001A1	CMP EAX, DWORD PTR DS:[EBX-8]
 004001A4	JNB 004001B0
 ...
@@ -57,14 +57,14 @@
 \end{lstlisting}
 \end{code} 
 
-\hspace{0.5cm}Trong đoạn mã 2.2 có thể thấy quá trình mở gói được thực hiện thông qua việc sử dụng các câu lệnh tính toán và kết thúc là một lệnh nhảy tại địa chỉ 004001D1 tới vị trí 00401000 trong bộ nhớ, mà vị trí này là vị trí entry point thực sự của tập tin trước khi đóng gói. Vị trí này cũng chính là vị trí mà quá trình mở gói sẽ thay đổi giá trị mã liên tục cho tới khi quá trình kết thúc. 
+\hspace{0.5cm}Trong đoạn mã \ref {lst:UnpackinFSG} có thể thấy quá trình mở gói được thực hiện thông qua việc sử dụng các câu lệnh tính toán và kết thúc là một lệnh nhảy tại địa chỉ 004001D1 tới vị trí 00401000 trong bộ nhớ, mà vị trí này là vị trí entry point thực sự của tập tin trước khi đóng gói. Vị trí này cũng chính là vị trí mà quá trình mở gói sẽ thay đổi giá trị mã liên tục cho tới khi quá trình kết thúc. 
 
 \subsection{Ví dụ 3}
 
 \hspace{0.5cm}Đối với những packer hiện đại ngày nay, không chỉ nâng cấp độ phức tạp của giải thuật đóng gói bằng việc sử dụng rất nhiều câu lệnh tính toán phức tạp, những packer này còn áp dụng rất nhiều kỹ thuật anti-reversing, anti-debugging nhằm khiến cho quá trình dịch ngược hay gỡ lỗi trở nên khó khăn rất nhiều. Ví dụ 3 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế có sử dụng kỹ thuật Hardware Breakpoint nhằm che dấu quá trình mở gói:
 
 \begin{code}
-\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Hardware Breakpoints sử dụng trong packer TELOCK},frame=single]
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Hardware Breakpoints sử dụng trong packer TELOCK},label={lst:HBinTELOCK},frame=single]
 0040408C 	INT3
 0040408D 	NOP
 0040408E 	MOV EAX, EAX 
@@ -78,7 +78,7 @@
 \end{lstlisting}
 \end{code} 
 
-\hspace{0.5cm}Trong đoạn mã 2.3 có thể thấy TELOCK packer sẽ gây ra một exception trong chương trình bằng việc sử dụng câu lệnh INT3, sau khi ngắt chương trình, luồng thực thi sẽ được thay đổi tới vị trí của hàm xử lý exception. Tại đây, các giá trị của các thanh ghi debug sẽ được thay đổi đến các giá trị 00404090, 00404099, 0040409E, 004040A3 tương ứng, chính vì các thanh ghi debug được kích hoạt sẽ dẫn đến exception xảy ra liên tục trong chương trình tại các vị trí trên. Nếu chương trình đang được phân tích trong môi trường debugger thì các exception này sẽ được bỏ qua dẫn đến quá trình mở gói sau sẽ không được thực thi chính xác.   
+\hspace{0.5cm}Trong đoạn mã \ref {lst:HBinTELOCK} có thể thấy TELOCK packer sẽ gây ra một exception trong chương trình bằng việc sử dụng câu lệnh INT3, sau khi ngắt chương trình, luồng thực thi sẽ được thay đổi tới vị trí của hàm xử lý exception. Tại đây, các giá trị của các thanh ghi debug sẽ được thay đổi đến các giá trị 00404090, 00404099, 0040409E, 004040A3 tương ứng, chính vì các thanh ghi debug được kích hoạt sẽ dẫn đến exception xảy ra liên tục trong chương trình tại các vị trí trên. Nếu chương trình đang được phân tích trong môi trường debugger thì các exception này sẽ được bỏ qua dẫn đến quá trình mở gói sau sẽ không được thực thi chính xác.   
 
 \subsection{Nhận xét vấn đề}
 
@@ -130,13 +130,40 @@
 
 \subsection {Nhận dạng Packer thông qua ngữ nghĩa}
 
-\hspace{0.5cm}Chính vì những hạn chế dễ nhận thấy của phương pháp chữ ký, xây dựng giải thuật nhận dạng packer thông qua ngữ nghĩa hay sử dụng phương pháp model checking sẽ bao gồm:
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=1.5cm]
+\node (s1) [statement] {Hành vi của packer};
+\node (s2) [statement, right=4cm of s1] {Tập tin thực thi};
+\node (p1) [process, below of=s1] {Hình thức hoá};
+\node (p2) [process, below of=s2] {Mô hình hoá bằng hệ thống BE-PUM};
+\node (s3) [statement, below of=p1] {Biểu thức CTL/LTL};
+\node (s4) [statement, below of=p2] {CFG};
+\node (s7) [statement, below of=s4] {Mô hình NuSMV};
+\node (p3) [process, below = of $(s3)!0.5!(s7)$] {Công cụ NuSMV};
+\node (d1) [decision, below=1cm of p3, align=center] {Thoả mãn \\\ tính chất ?};
+\node (s5) [statement, below=1cm of d1] {Packer};
+\node (s6) [statement, right=1cm of d1] {Chưa xác định};
+\draw [arrow] (s1) -- (p1);
+\draw [arrow] (s2) -- (p2);
+\draw [arrow] (p1) -- (s3);
+\draw [arrow] (p2) -- (s4);
+\draw [arrow] (s3) |- (p3);
+\draw [arrow] (s4) -- (s7);
+\draw [arrow] (s7) |- (p3);
+\draw [arrow] (p3) -- (d1);
+\draw [arrow] (d1) -- node[anchor=east]{TRUE}(s5);
+\draw [arrow] (d1) -- node[anchor=south]{FALSE}(s6);
+\end{tikzpicture}
+\caption{Kết hợp mô hình của BE-PUM và công cụ NuSMV} 
+\label{fig:BepumwithNusmv}
+\end{figure}
+
+\hspace{0.5cm}Chính vì những hạn chế dễ nhận thấy của phương pháp chữ ký. Hình \ref {fig:BepumwithNusmv} mô tả quá trình kết hợp giữa hệ thống BE-PUM và công cụ NuSMV để có thể nhận dạng packe. Qua đó có thể thấy xây dựng giải thuật nhận dạng packer thông qua ngữ nghĩa hay sử dụng phương pháp model checking sẽ bao gồm:
 
 \begin{itemize}
 \item{Chuyển đổi mô hình được sinh ra bởi BE-PUM sang mô hình NuSMV.\\}
 \item{Mô tả các mẫu hành vi của packer dưới dạng công thức CTL, LTL.\\}
 \item{Sử dụng công cụ kiểm tra mô hình NuSMV với đầu vào là mô hình NuSMV đã được chuyển đổi và hành vi của packer, để kiểm tra tập tin có đang được đóng gói hay không.}
 \end{itemize} 
-
-% MODEL CHECKING PROCESS in here.
 
