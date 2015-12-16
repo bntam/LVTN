@@ -1,5 +1,4 @@
 
-
 \section{Giới thiệu về BE-PUM}\
 
 	\subsection{BE-PUM là gì}
@@ -29,22 +28,95 @@ Nhưng một malware tinh vi có thể phát hiện được rằng chúng đang
 
 		\subsubsection{Phát hiện dựa vào sinh mô hình}
 
-Sinh mô hình (model generation) là một cách tiếp cận hình thức với việc mọi câu lệnh được mô hình hóa và biểu diễn bằng mô hình. Sau khi xử lý một chuỗi các mô hình qua các câu lệnh có trong tập tin, có sẽ có được mô hình luồng điều khiển và giải quyết bài toán trên đó bằng phương pháp kiểm tra mô hình (model checking).
+Sinh mô hình (model generation) là một cách tiếp cận hình thức với việc mọi câu lệnh được mô hình hóa và biểu diễn bằng mô hình. Sau khi xử lý một chuỗi các mô hình qua các câu lệnh có trong tập tin, ta sẽ có được đồ thị luồng điều khiển và giải quyết bài toán trên đó bằng phương pháp kiểm tra mô hình (model checking).
 
-	\subsection{Mô hình luồng điều khiển}
+	\subsection{Đồ thị luồng điều khiển}
+
+\textit{Đồ thị luồng điều khiển (control flow graph - CFG)} trong khoa học máy tính là một phép biểu diễn của tất cả các đường có thể được duyệt qua trong quá trình thực thi của một chương trình. \cite{cfg-def}\\
+
+Trong BE-PUM, một địa chỉ trong chương trình được ánh xạ tương ứng với 1 nút (node) trong đồ thị. BE-PUM sẽ xử lý theo luồng thực thi của chương trình và sinh ra từng nút một tương ứng. Trong quá trình xử lý, BE-PUM sẽ quyết định được điểm kế tiếp cần đi đến trong lúc duyệt nhánh. Tất cả việc đó được thực hiện thông qua giải thuật \textit{on-the-fly model generation}.\\
+
+\textit{On-the-fly model generation} là giải thuật chính trong hệ thống BE-PUM. Quá trình thực thi của tập tin mã nhị phân là một chuỗi thực thi động, bắt đầu từ một giá trị trong ở phân vùng mã (code section) của bộ nhớ, giá trị địa chỉ này được chỉ rõ bởi giá trị thanh ghi EIP. BE-PUM sẽ đặt khởi điểm từ đây, và lần dò theo từng câu lệnh hợp ngữ, tìm điểm kế tiếp sẽ được thực thi. Cứ như vậy, BE-PUM sẽ đi qua hết các nhánh có khả năng thực thi của chương trình và cho ra một đồ thị luồng điều khiển đầy đủ.
+
+\begin{longtable}{ | m{3cm} | m{5cm} | }
+	\hline
+Địa chỉ câu lệnh & Nội dung câu lệnh\\
+	\hline
+	\hline
+0x00401000 & cmp eax, 0 \\
+	\hline
+0x00401003	& je 0x0040100d \\
+	\hline
+0x00401005 & mov eax, 0x00401001 \\
+	\hline
+0x0040100a & jmp 0x00401015 \\
+	\hline
+0x0040100c & ret \\
+	\hline
+0x0040100d & mov eax, 0x00401018 \\
+	\hline
+0x00401012 & add eax, 10 \\
+	\hline
+0x00401015 & sub eax, 4 \\
+	\hline
+0x00401015 & ret \\
+	\hline
+
+\caption{Ví dụ về nội dung của một tập tin nhị phân dưới dạng hợp ngữ}
+\label{table:tblexcfg}
+\end{longtable}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+[->,>=stealth',shorten >=1pt,auto,node distance=2cm,thick,main node/.style={circle,draw}]
+
+\node[main node] (00) {00};
+\node[main node] (03) [below of=00] {03};
+\node[main node] (0A) [below of=03] {0A};
+\node[main node] (05) [right of=0A] {05};
+\node[main node] (0D) [left of=0A] {0D};
+\node[main node] (12) [below of=0D] {12};
+\node[main node] (15) [below of=0A] {15};
+\node[main node] (18) [right of=15] {18};
+
+
+\path[every node/.style={font=\sffamily\small}]
+    	(00) edge node [left] {} (03)
+    	(03) edge [bend left] node [left] {} (05)
+        	       edge [bend right] node[left] {} (0D)
+    	(05) edge node [left] {} (0A)
+    	(0D) edge node [left] {} (12)
+    	(0A) edge node [left] {} (15)
+	(15) edge node [left] {} (18)
+	(12)edge node[left] {} (15)
+	;
+\end{tikzpicture}
+\caption{Ví dụ mô hình luồng điều khiển được sinh ra từ tập tin ở Bảng \ref {table:tblexcfg}} 
+\label{fig:imgexcfg}
+\end{figure}
+
 
 	\subsection{Những đòi hỏi trong quá trình hiện thực}
+
+Đối với những tập tin nhị phân đơn giản, ta có thể dễ dàng quyết định được nút kế tiếp. Nhưng với những malware tinh vi, chúng sẽ có cách để ta không dễ dàng hiểu được ý định chúng sẽ làm gì, ra sao. Phương thức trên được gọi là làm rối mã (obfuscation). Một trong những cách điển hình có thể kể đến là nhảy gián tiếp (indirect jump -- thực hiện lệnh nhảy đến một giá trị không phải là hằng số như giá trị thanh ghi, giá trị ô nhớ...) và tự thay đổi mã (self-modification code -- trong quá trình thực thi sẽ tự ý thay đổi nội dung mã thực thi của chính mình).\\
+
+Và BE-PUM đã được dựng lên để có thể chống lại việc làm rối mã này. Đó là điểm mạnh và là ưu thế vượt trội của BE-PUM so với các công cụ phân tích tĩnh mã thực thi khác như Jackstab, IDA-Pro, Capstone, Unicorn, METASM, HOOPER bằng việc áp dụng phương pháp \textit{dynamic symbolic execution}.\\
+
+\textit{Dynamic symbolic execution} là một phương pháp nhằm tính toán các giá trị thanh ghi và bộ nhớ ở một vị trí cụ thể, khi chúng ta không thể biết được điểm thực thi kế tiếp của chương trình là gì. Nhờ đó ta có thể giải quyết được các cách thức làm rối mã như nhảy gián tiếp, tự thay đổi mã như đã nói ở trên.\\
+
+Để có thể tính toán được các giá trị thanh ghi cũng như bộ nhớ, ta cần xây dựng một hệ thống mô phỏng các câu lệnh mà một tập tin nhị phân thực hiện được. Các câu lệnh đó bao gồm 2 phần chính đó là \textit{hợp ngữ} và \textit{Windows API}.
 
 \section{Tổng quan về hợp ngữ}
 Ngôn ngữ assembly (hay hợp ngữ) là ngôn ngữ cấp thấp được biên dịch để thực thi một chương trình nào đó. Ngôn ngữ assembly có tính gợi nhớ, mỗi câu lệnh thực thi một chức năng, hay nhiệm vụ riêng biệt tương ứng với một lệnh yêu cầu máy thực thi. \\
 
-Các chương trình sau khi biên dịch ra thành nhiều dạng file khác nhau để thực thi. Mỗi chương trình được biên dịch thành ngôn ngữ assembly trước khi biên dịch qua ngôn ngữ máy để máy hiểu và thực thi câu lệnh. Khi biên dịch qua mã assembly, đọc đoạn mã assembly để phân tích xem chương trình này có phải là virus máy tính không, có những hành vi bất thường từ đó xem xét đưa ra kết quả chương trình này có an toàn với máy tính.\\
+Các chương trình sau khi biên dịch ra thành nhiều dạng file khác nhau để thực thi. Mỗi chương trình được biên dịch thành ngôn ngữ assembly trước khi biên dịch qua ngôn ngữ máy để máy hiểu và thực thi câu lệnh. Khi biên dịch qua mã assembly, đọc đoạn mã assembly để phân tích xem chương trình này có phải là virus máy tính không, có những hành vi bất thường từ đó xem xét đưa ra kết quả chương trình này có an toàn với máy tính.
 
 \section {Tổng quan về Windows API}
 
 Với tên gọi đầy đủ là Microsoft Windows application programming interface, đôi lúc được gọi một cách ngắn gọn là WinAPI, đây là một bộ giao diện lập trình ứng dụng (API) lõi có sẵn trong hệ điều hành Microsoft Windows (hay thường được gọi ngắn gọn là Windows).\\
 
-Windows API là tên gọi chung của những dự án được triển khai cho những nền tảng khác nhau được áp dụng trong hệ điều hành Windows; mà thông thường chúng có những tên gọi riêng. Một số tên gọi và mô tả cho những phiên bản xin được trình bày trong Bảng \ref{table:tblwapiver}.
+Windows API là tên gọi chung của những dự án được triển khai cho những nền tảng khác nhau được áp dụng trong hệ điều hành Windows; mà thông thường chúng có những tên gọi riêng. Một số tên gọi và mô tả cho những phiên bản xin được trình bày trong Bảng \ref{table:tblwapiver}.\\
 
 
 \begin{longtable}{ | m{3cm} | m{11cm} | }
@@ -63,19 +135,28 @@ Win64 & Đây là một biến thể sau đó của bộ API được hiện th�
 \label{table:tblwapiver}
 \end{longtable}
 
-\newpage
 \section{Mục tiêu đề tài}
 
-Trong phạm vi của đề tài thực tập tốt nghiệp, mục tiêu nhắm tới là phát triển hệ thống xử lý các Windows API cho BE-PUM. Với số lượng các API rất lớn hiện có trong hệ điều hành Windows, hiện tại đề tài đang tập trung vào xử lý các API ở phiên bản Win32 API, do hầu hết các phần mềm độc hại mà BE-PUM hướng tới vẫn đang dùng bộ API này; với sự ưu tiên từng bước xây dựng cho các API được dùng phổ biến trước.\\
+Trong phạm vi của đề tài luận tốt nghiệp, mục tiêu nhắm tới là phát triển hệ thống xử lý các câu lệnh hợp ngữ và Windows API cho BE-PUM.\\
+
+Với số lượng các API rất lớn hiện có trong hệ điều hành Windows, hiện tại đề tài đang tập trung vào xử lý các API ở phiên bản Win32 API, do hầu hết các phần mềm độc hại mà BE-PUM hướng tới vẫn đang dùng bộ API này; với sự ưu tiên từng bước xây dựng cho các API được dùng phổ biến trước.\\
 
 Bên cạnh việc nhận thông tin đầu vào từ vùng nhớ đã được xây dựng của BE-PUM và trả về kết quả sau khi gọi API vào đúng địa chỉ cần thiết, điều quan trọng là phải đảm bảo không gây ngắt quãng cũng như tránh nguy hại hệ thống đang chạy.
 Và như vậy với những tương tác vật lý từ lời gọi API (bộ lưu trữ máy tính, cơ sở dữ liệu registry…) hay tương tác người dùng (API tạo cửa sổ message box, lệnh cho một thread “ngủ đông” trong một khoảng thời gian,…) cần được kiểm soát để không làm ảnh hưởng tới kết quả thực thi của BE-PUM.\\
 
-Lưu ý: do nội dung đề tài tập trung vào xử lý cho Win32 API, nên kể từ đây, khi báo cáo nhắc đến Windows API tức là nói đến Win32 API.\\
+\textit{Lưu ý: do nội dung đề tài tập trung vào xử lý cho Win32 API, nên kể từ đây, khi báo cáo nhắc đến Windows API tức là nói đến Win32 API.}\\
 
-Trong phạm vi của đề tài luận văn tốt nghiệp, mục tiêu nhắm tới là hiện thực câu lệnh assembly với số lượng lớn nhất có thể, hiện số lượng câu lệnh assembly đã được hiện thực lên tới 200 câu lệnh xử lý xử lý số nguyên, 50 câu lệnh xử lý số thập phân, đã góp phần phân tích một số loại virus đang nghiên cứu, các câu lệnh đã được tiến hành kiểm tra. Dựa trên một số hành virus hiện nay và những câu lệnh phổ biến thường gặp, BE-PUM đã hỗ trợ tốt công việc phân tích đúng môi trường làm việc của từng câu lệnh từ đó xác định chính xác và phân tính đúng các kỹ thuật mà virus đang tiến hành.\\
+Việc hiện thực các câu lệnh hợp ngữ góp phần phân tích một số loại malware đang nghiên cứu. Dựa trên một số bộ malware hiện nay và những câu lệnh phổ biến thường gặp, BE-PUM sẽ hỗ trợ tốt công việc phân tích đúng môi trường làm việc của từng câu lệnh từ đó xác định chính xác và phân tính đúng các kỹ thuật mà malware đang tiến hành.
 
-\newpage
+\section{Giới hạn đề tài}
+
+Trong phạm vi của đề tài luận văn tốt nghiệp, mục tiêu nhắm tới là hiện thực các câu lệnh hợp ngữ và Windows API với số lượng đạt mức như sau:
+
+\begin{itemize}
+  \item Số lượng câu lệnh hợp ngữ được hỗ trợ đạt khoảng 250 câu lệnh.
+  \item Số lượng câu lệnh Windows API được hỗ trợ đạt khoảng 400 câu lệnh.
+\end{itemize}
+
 \section{Cấu trúc của báo cáo}
 
 Bài báo cáo này bao gồm những đề mục sau đây:
@@ -92,5 +173,7 @@ Bài báo cáo này bao gồm những đề mục sau đây:
 	\item[Chương 5] \hfill \\
 	 Trình bày về kết quả mà bộ xử Windows API đã đạt được với những Windows API đã được hỗ trợ cho hệ thống BE-PUM. Đông thời trình bày các bước để hiện thực một câu lệnh của hợp ngữ assembly, cách đánh giá kết quả đúng hay sai bằng cách so sánh kết quả với chương trình OnlyDbg, giới thiệu về công cụ MASM. \\
 	\item[Chương 6] \hfill \\
+	 Sau khi có được những kết quả ở thời điểm hiện tại của quá trình thực hiện đề tài, chương cuối này sẽ trình bày về những phương hướng cần tiếp tục phát triển trong tương lai đối với đề tài hiện tại.\\
+	\item[Phụ Lục] \hfill \\
 	 Liệt kê về những tài liệu và nguồn tham khảo có liên quan đến đề tài này.\\
 \end{description}
