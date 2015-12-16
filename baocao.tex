@@ -65,6 +65,7 @@ toc          %show listings as entries in table of contents
 
 %Figures
 \graphicspath{{Figures/}}
+\usepackage{float}
 
 % create AmS style
 \def\AmS{{\protect\usefont{OMS}{cmsy}{m}{n}%
@@ -89,6 +90,14 @@ toc          %show listings as entries in table of contents
 
 %Bullet
 \renewcommand{\labelitemi}{\textbullet}
+\renewcommand{\labelitemii}{--}
+
+%Box
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{%
+  \parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-4pt}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstset{frame=ltrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
 
 \begin{document} %Bắt đầu văn bản
 
