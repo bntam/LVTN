@@ -732,3 +732,74 @@ CTLSPEC AF(s.mnem == pushl)
 \item{Anti-tampering: Checksumming, Timing check, Anti-debugging, Anti-rewriting và Hardware breakpoints}
 \end{itemize}
 
+\subsection{Code placing obfuscation}
+\begin{enumerate}
+\item{Dynamic Code: nhóm kỹ thuật Dynamic code được sử dụng trong packer dưới dạng 2 kỹ thuật chính là Code overwriting và kỹ thuật Packing/unpacking.  
+\begin{itemize}
+\item{Code Overwriting: kỹ thuật này còn được gọi là kỹ thuật Self-modifying code (SMC). Theo đó, packer sẽ sử dụng kỹ thuật này để có thể thay đổi động mã nhị phân của chương trình trong quá trình thực thi, chính vì giá trị này hay giá trị opcode thay đổi dẫn đến câu lệnh tại địa chỉ đó cũng được thay đổi. Packer sử dụng kỹ thuật này để có thể thay đổi chữ ký của mình vì thế đối với những phần mềm chống malware nhận dạng packer thông qua chữ ký sẽ không thể nhận dạng được vì chữ ký này luôn thay đổi liên tục. Chính vì hệ thống BE-PUM hỗ trợ giải thuật On-the-fly model generation với khả năng xử lý những thay động trong mã nhị phân mà hệ thống BE-PUM dễ dàng xử lý được kỹ thuật này. Đoạn mã \ref {lst:SMCinYODA} mô tả kỹ thuật Code overwriting được sử dụng trong packer YODA. Theo đó sau khi thực thi đoạn mã tại vị trí 0x004040C6 với giá trị EDI = 0x004040C6, câu lệnh CMP đã được thay đổi thành câu lệnh MOV. 
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Code Overwriting sử dụng trong packer YODA},label={lst:SMCinYODA},frame=single]
+4040C3	STOS BYTE PTR ES:[EDI]
+4040C6	CMP ECX, EBP
+
+4040C3	STOS BYTE PTR ES:[EDI]
+4040C6	MOV EBP, ECX
+\end{lstlisting}
+\end{code}
+}
+\item{Packing/Unpacking: kỹ thuật này còn được gọi là kỹ thuật Encryption/Decryption, lõi của kỹ thuật này chính là kỹ thuật SMC đã được trình bày như trên, với số lượng vòng lặp được sử dụng để thay đổi một hoặc nhiều byte dẫn đến việc thay đổi câu lệnh liên tục trong suốt quá trình thực thi. Chính vì hệ thống BE-PUM có thể xử lý kỹ thuật SMC và hỗ trợ Dynamic symbolic execution mà giải thuật này dễ dàng được xử lý. Đoạn mã \ref {lst:PUinYODA} mô tả kỹ thuật packing/unpacking được sử dụng trong packer YODA.  
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Packing/unpacking sử dụng trong packer YODA},label={lst:PUinYODA},frame=single]
+404092	LODS BYTE PTR DS:[EDI]
+404093	ROR AL, 0DB
+404096	JMP 404099
+404099	DEC AL
+40409B	ADD AL,21
+40409D	DEC AL
+40409F	ADD AL,CL
+4040A1	STC
+4040A2	ADD AL,57
+4040A4	CLC
+4040A5	ADD AL,8A
+4040A7	STC
+4040A8	NOP
+4040A9	ROR AL,0D7
+4040AC	ROR AL,10
+4040AF	JMP 4040B2
+4040B2	ROR AL,5B
+4040B5	CLC
+4040B6	XOR AL,0D6
+4040B8	STC
+4040B9	XOR AL,0D4
+4040BB	SUB AL,CL
+4040BD	JMP 4040C0 
+4040C0	SUB AL,8B
+4040C2	CLC		
+4040C3	STOS BYTE PTR ES:[EDI]
+4040C4	LOOPD 404092
+\end{lstlisting}
+\end{code}
+}
+\end{itemize}
+}
+\item{Code Layout: nhóm kỹ thuật Code layout được sử dụng trong packer dưới dạng 3 kỹ thuật chính là: Overlapping functions, Overlapping blocks và Code chunking.
+\begin{itemize}
+\item{Overlapping Functions: kỹ thuật này với lõi là kỹ thuật Overlapping instructions theo đó tại một địa chỉ bất kì trong phân cùng code mà có thể có rất nhiều câu lệnh mang giá trị tương ứng với các giá trị opcode khác nhau. Mỗi hàm được xác định với địa chỉ bắt đầu tại địa chỉ cũng là giá trị của toán hạng trong câu lệnh CALL và địa chỉ kết thúc chính là địa chỉ của câu lệnh RET trong cùng một hàm. Chính vì hệ thống BE-PUM hỗ trợ kỹ thuật On-the-fly nên kỹ thuật này cũng sẽ được BE-PUM xử lý không khó khăn.\\}
+\item{Overlapping Blocks: kỹ thuật này cũng với lõi là kỹ thuật Overlapping instructions. Khác với Overlapping function mỗi khối được xác định và giới hạn thông qua câu lệnh nhảy hoặc nhảy có điều kiện. Đoạn mã \ref {lst:OBinYODA} mô tả kỹ thuật Overlapping block được sử dụng trong packer YODA. Theo đó tại vị trí 0x004040BD một câu lệnh nhảy sẽ nhảy tới địa chỉ 0x004040C0 và tại địa chỉ này 
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Overlapping block sử dụng trong packer YODA},label={lst:OBinYODA},frame=single]
+40409D	DEC AL
+40409F	ADD AL, CL
+...
+4040BF	RETN 8B2C		
+4040C2	CLC
+4040C3	STOS BYTE PTR ES:[EDI]
+4040C4	LOOPD 404092
+404092	LODS BYTE PTR DS:[EDI]
+...		
+4040BD	JMP 4040C0
+\end{lstlisting}
+}
+\end{itemize}
+}
+\end{enumerate}
+
