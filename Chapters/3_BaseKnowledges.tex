@@ -5,6 +5,10 @@
 \newpage
 \chapter{KIẾN THỨC NỀN}
 
+\begin{concept}[15cm]
+\textit{Nội dung chương này sẽ giới thiệu những kiến thức nền và các công nghệ được sử dụng trong đề tài. Để có thể giải quyết những thách thức như chương 2 đã nêu ra, cần nắm vững kiến thức nền tảng về hệ thống BE-PUM và lý thuyết về model checking, cũng như về công cụ NuSMV. Ngoài ra chương này cũng tập trung giới thiệu cụ thể về 13 kỹ thuật được hỗ trợ trong packer.}
+\end{concept}
+
 \section{Hệ thống BE-PUM}
 
 \subsection{Kiến trúc của BE-PUM}
@@ -120,9 +124,611 @@ EBX & Địa chỉ PEB\\
 
 \subsection{Model Checking}
 
-\subsection{CTL và LTL}
+\hspace{0.5cm}Model checking hay kiểm tra mô hình là một kỹ thuật tự động được sử dụng để kiểm tra một hệ thống tuần tự có số trạng thái hữu hạn bằng việc vét cạn toàn bộ không gian trạng thái của mô hình hệ thống. Bằng việc cung cấp một mô hình của hệ thống và một mô tả hành vi hệ thống cần kiểm tra dưới dạng biểu thức logic có yếu tố thời gian, phương pháp model checking có thể kết luận mô hình được kiểm tra có thoả mãn các tính chất được mô tả hay không. Hay nói một cách khác, với một mô hình hệ thống với số trạng thái hữu hạn $\mathcal{M}$ và một tính chất được biểu diễn dưới dạng hình thức $\phi$, phương pháp model checking sẽ kiểm tra nếu tính chất đó là thoả mãn với mô hình hệ thống: $\mathcal{M}\models\phi$. 
+
+\subsection{Cấu trúc Kripke}
+
+\hspace{0.5cm}Trong bước mô hình hoá được thực hiện trong phương pháp model checking sẽ chuyển đổi mô hình một hệ thống dưới dạng hình thức được sử dụng bởi một công cụ kiểm tra mô hình. Cấu trúc Kripke là một dạng của mô hình chuyển trạng thái biểu diễn hành vi của hệ thống trong suốt quá trình thời gian của hệ thống. Với AP là một tập của các mệnh đề nguyên tử, một cấu trúc Kripke trên tập AP $M = (S, S_0, R, L)$ được định nghĩa như sau:
+
+\begin{itemize}
+\item{$S$: tập hữu hạn các trạng thái.}
+\item{$S_0 \subseteq S$: tập các trạng thái ban đầu.}
+\item{$R \subseteq S \times S$: mối quan hệ chuyển trạng thái, theo đó với mọi trạng thái $s \in S$ luôn có trạng thái $s' \in S$ sao cho $R(s, s')$..}
+\item{$L: S \rightarrow 2^{AP}$ là hàm xác định nhãn cho mỗi trạng thái với giá trị là các tập mệnh đề nguyên tử sao cho các mệnh đề đó là luôn đúng trong trạng thái đó.}
+\end{itemize}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto] 
+   	\node[state,initial](s_1){$\lbrace p,q\rbrace$}; 
+   	\node[state](s_2)[below left=of s_1]{$\lbrace q\rbrace$};
+   	\node[state](s_3)[below right=of s_2]{$\lbrace p\rbrace$};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge [bend left] node {} (s_2)
+    (s_2) edge [bend left] node {} (s_1)
+    	  edge node {} (s_3)
+    (s_3) edge [loop above] node {} ();
+\end{tikzpicture}
+\caption{Ví dụ về cấu trúc Kripke}
+\label{fig:KripkeStruct}
+\end{figure}
+
+\hspace{0.5cm}Với mô hình \ref {fig:KripkeStruct}, cho $AP = \lbrace p,q\rbrace$. Một cấu trúc Kripke $M = (S, S_0, R, L)$ được xác định với: $S = \lbrace s_1, s_2, s_3 \rbrace$, $S_0 = \lbrace s_1 \rbrace$, $R = \lbrace (s_1, s_2), (s_2, s_1), (s_2, s_3), (s_3, s_3)$ và $L = \lbrace (s_1,\lbrace p,q \rbrace), (s_2,\lbrace q \rbrace), (s_3,\lbrace p \rbrace) \rbrace$	 
+
+\subsection{Logic có yếu tố thời gian}
+
+\hspace{0.5cm}Logic yếu tố thời gian là mở rộng của logic mệnh đề truyền thống với việc kết hợp các toán tử mô tả được hành vi của hệ thống theo thời gian. Logic yếu tố thời gian cho phép mô tả được các tính chất của hệ thống thực như tính correctness, reachability, safety, liveness, fairness. Các toán tử được sự dụng để mô tả các hành vi của hệ thống theo thời gian là Path quantifiers và Temporal operators trong đó.
+
+\begin{itemize}
+\item{Path quantifiers: trong một biểu thức logic yếu tố thời gian được sử dụng để mô tả cấu trúc nhánh trong một cây tính toán. Trong đó 2 path quantifiers được sử dụng trong một biểu thức logic tính toán cây là $A$, mô tả với mọi đường tính toán, và $E$, mô tả tồn tại một đường tính toán.\\}
+\item{Temporal operators: trong một biểu thức logic yếu tố thời gian được sử dụng để mô tả tính chất của một đường tính toán trong một cây tính toán. Trong đó 4 temporal operators được sử dụng trong một biểu thức tính toán cây là $X, F, G, U$.}
+\end{itemize}
+
+\hspace{0.5cm}\textbf{$X$("neXt")}: $X\varphi$ mô tả trạng thái tiếp theo trên một đường tính toán thoả mãn tính chất $\varphi$.
+\begin{figure}
+\centering
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+   	\node[state,initial,align=center,minimum size=0.5cm](s_0){$X\varphi$}; 
+   	\node[state,align=center,minimum size=0.5cm,fill=gray](s_1)[right=of s_0]{$\varphi$};
+   	\node[state,align=center,minimum size=0.5cm](s_2)[right=of s_1]{};
+   	\node[state,align=center,minimum size=0.5cm](s_3)[right=of s_2]{};
+   	\node (s_dots) [right=of s_3] {$\cdots$}; 
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_0) edge node {} (s_1)
+    (s_1) edge node {} (s_2)
+    (s_2) edge node {} (s_3)
+    (s_3) edge node {} (s_dots);
+\end{tikzpicture}
+\caption{Toán tử thời gian $X$}
+\label{fig:nxtTemporal}
+\end{figure}
+
+\hspace{0.5cm}\textbf{$F$("Finally")}: $F\varphi$ mô tả một trạng thái bất kì trong tương lai thoả mãn tính chất $\varphi$.
+\begin{figure}
+\centering
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+   	\node[state,initial,align=center,minimum size=0.5cm](s_0){$F\varphi$}; 
+   	\node[state,align=center,minimum size=0.5cm](s_1)[right=of s_0]{};
+   	\node[state,align=center,minimum size=0.5cm](s_2)[right=of s_1]{};
+   	\node[state,align=center,minimum size=0.5cm,fill=gray](s_3)[right=of s_2]{$\varphi$};
+   	\node (s_dots) [right=of s_3] {$\cdots$}; 
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_0) edge node {} (s_1)
+    (s_1) edge node {} (s_2)
+    (s_2) edge node {} (s_3)
+    (s_3) edge node {} (s_dots);
+\end{tikzpicture}
+\caption{Toán tử thời gian $F$}
+\label{fig:futureTemporal}
+\end{figure}
+
+\hspace{0.5cm}\textbf{$G$("Globally")}: $G\varphi$ mô tả tất cả trạng thái trong tương lai thoả mãn tính chất $\varphi$.
+\begin{figure}
+\centering
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+   	\node[state,initial,align=center,minimum size=0.5cm,fill=gray](s_0){$G\varphi,\varphi$}; 
+   	\node[state,align=center,minimum size=0.5cm,fill=gray](s_1)[right=of s_0]{$\varphi$};
+   	\node[state,align=center,minimum size=0.5cm,fill=gray](s_2)[right=of s_1]{$\varphi$};
+   	\node[state,align=center,minimum size=0.5cm,fill=gray](s_3)[right=of s_2]{$\varphi$};
+   	\node (s_dots) [right=of s_3] {$\cdots$}; 
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_0) edge node {} (s_1)
+    (s_1) edge node {} (s_2)
+    (s_2) edge node {} (s_3)
+    (s_3) edge node {} (s_dots);
+\end{tikzpicture}
+\caption{Toán tử thời gian $G$}
+\label{fig:globalTemporal}
+\end{figure}
+
+
+\hspace{0.5cm}\textbf{$U$("Until")}: $\varphi_1U\varphi_2$ mô tả tính chất $\varphi_1$ thoả mãn trên tất cả trạng thái cho đến khi tính chất $\varphi_2$ thoả mãn.
+\begin{figure}
+\centering
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+   	\node[state,initial,align=center,minimum size=0.5cm,fill=white!30!gray](s_0){$\varphi_1 U \varphi_2,\varphi_1$}; 
+   	\node[state,align=center,minimum size=0.5cm,fill=white!30!gray](s_1)[right=of s_0]{$\varphi_1$};
+   	\node[state,align=center,minimum size=0.5cm,fill=white!30!gray](s_2)[right=of s_1]{$\varphi_1$};
+   	\node[state,align=center,minimum size=0.5cm,fill=gray](s_3)[right=of s_2]{$\varphi_2$};
+   	\node (s_dots) [right=of s_3] {$\cdots$}; 
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_0) edge node {} (s_1)
+    (s_1) edge node {} (s_2)
+    (s_2) edge node {} (s_3)
+    (s_3) edge node {} (s_dots);
+\end{tikzpicture}
+\end{figure}
+
+\subsection{CTL}
+
+\hspace{0.5cm}\textbf{Syntax}
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={CTL Syntax},label={lst:CTLSyntax},frame=single,mathescape=true]
+$\Phi \Coloneqq true\;|\;p\;|\;(\neg\Phi)\;|\;(\Phi_1\wedge\Phi_2)\;|\;A\phi\;|\;E\phi$
+$\phi \Coloneqq X\Phi\;|\;\Phi_1 U\Phi_2$
+\end{lstlisting}
+\end{code}
+
+\hspace{0.5cm}\textbf{Semantic}
+\begin{center}
+\resizebox{10cm}{!}{
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+   	\node[state,initial,minimum size=0.5cm](s_1){}; 
+   	\node[state, minimum size=0.5cm][below=of s_1](s_3){};
+   	\node[state, minimum size=0.5cm][left=4cm of s_3](s_2){};
+   	\node[state, minimum size=0.5cm][right=4cm of s_3,fill=red](s_4){};
+   	\node[state, minimum size=0.5cm][below left=of s_2](s_5){};
+   	\node[state, minimum size=0.5cm][below right=of s_2](s_6){};
+   	\node[state, minimum size=0.5cm][below=1.06cm of s_3](s_7){};
+   	\node[state, minimum size=0.5cm][below left=of s_4](s_8){};
+	\node[state, minimum size=0.5cm][below right=of s_4](s_9){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_5](s_10){};
+	\node[state, minimum size=0.5cm][below left=1.7cm of s_7](s_11){};
+	\node[state, minimum size=0.5cm][below right=1.7cm of s_7](s_12){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_9](s_13){};
+	\node[minimum size=0.5cm][below=of s_10](s_14){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_6](s_15){$\cdots$};
+	\node[state, minimum size=0.5cm][below=of s_11](s_16){};
+	\node[minimum size=0.5cm][below=of s_12](s_17){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_8](s_18){$\cdots$};
+	\node[state,minimum size=0.5cm][below=of s_13](s_19){};
+	\node[state,minimum size=0.5cm][below left=2.12cm of s_13](s_20){};
+	\node[state,minimum size=0.5cm][below right=2.12cm of s_13](s_21){};
+	\node[minimum size=0.5cm][below=of s_16](s_22){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_19](s_23){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_20](s_24){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_21](s_25){$\cdots$};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge node {} (s_2)
+    	edge node {} (s_3)
+    	edge node {} (s_4)
+    (s_2) edge node {} (s_5)
+    	edge node {} (s_6)
+    (s_3) edge node {} (s_7)
+    (s_4) edge node {} (s_8)
+    	edge node {} (s_9)
+    (s_5) edge node {} (s_10)
+    (s_7) edge node {} (s_11)
+    	edge node {} (s_12)
+    (s_9) edge node {} (s_13)
+    (s_11) edge node {} (s_16)
+    (s_13) edge node {} (s_19)
+    	edge node {} (s_20)
+    	edge node {} (s_21);
+\end{tikzpicture}
+}\\
+$M,s_0\models EX$\color{red}p
+\end{center}
+
+\begin{center}
+\resizebox{10cm}{!}{
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+   	\node[state,initial,minimum size=0.5cm,fill=red](s_1){}; 
+   	\node[state, minimum size=0.5cm][below=of s_1,fill=red](s_3){};
+   	\node[state, minimum size=0.5cm][left=4cm of s_3](s_2){};
+   	\node[state, minimum size=0.5cm][right=4cm of s_3](s_4){};
+   	\node[state, minimum size=0.5cm][below left=of s_2](s_5){};
+   	\node[state, minimum size=0.5cm][below right=of s_2](s_6){};
+   	\node[state, minimum size=0.5cm][below=1.06cm of s_3,fill=red](s_7){};
+   	\node[state, minimum size=0.5cm][below left=of s_4](s_8){};
+	\node[state, minimum size=0.5cm][below right=of s_4](s_9){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_5](s_10){};
+	\node[state, minimum size=0.5cm][below left=1.7cm of s_7,fill=red](s_11){};
+	\node[state, minimum size=0.5cm][below right=1.7cm of s_7](s_12){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_9](s_13){};
+	\node[minimum size=0.5cm][below=of s_10](s_14){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_6](s_15){$\cdots$};
+	\node[state, minimum size=0.5cm][below=of s_11,fill=red](s_16){};
+	\node[minimum size=0.5cm][below=of s_12](s_17){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_8](s_18){$\cdots$};
+	\node[state,minimum size=0.5cm][below=of s_13](s_19){};
+	\node[state,minimum size=0.5cm][below left=2.12cm of s_13](s_20){};
+	\node[state,minimum size=0.5cm][below right=2.12cm of s_13](s_21){};
+	\node[minimum size=0.5cm][below=of s_16](s_22){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_19](s_23){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_20](s_24){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_21](s_25){$\cdots$};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge node {} (s_2)
+    	edge node {} (s_3)
+    	edge node {} (s_4)
+    (s_2) edge node {} (s_5)
+    	edge node {} (s_6)
+    (s_3) edge node {} (s_7)
+    (s_4) edge node {} (s_8)
+    	edge node {} (s_9)
+    (s_5) edge node {} (s_10)
+    (s_7) edge node {} (s_11)
+    	edge node {} (s_12)
+    (s_9) edge node {} (s_13)
+    (s_11) edge node {} (s_16)
+    (s_13) edge node {} (s_19)
+    	edge node {} (s_20)
+    	edge node {} (s_21);
+\end{tikzpicture}
+}\\
+$M,s_0\models EG$\color{red}p
+\end{center}
+
+\begin{center}
+\resizebox{10cm}{!}{
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+   	\node[state,initial,minimum size=0.5cm,fill=red](s_1){}; 
+   	\node[state, minimum size=0.5cm][below=of s_1](s_3){};
+   	\node[state, minimum size=0.5cm][left=4cm of s_3](s_2){};
+   	\node[state, minimum size=0.5cm][right=4cm of s_3,fill=red](s_4){};
+   	\node[state, minimum size=0.5cm][below left=of s_2](s_5){};
+   	\node[state, minimum size=0.5cm][below right=of s_2](s_6){};
+   	\node[state, minimum size=0.5cm][below=1.06cm of s_3](s_7){};
+   	\node[state, minimum size=0.5cm][below left=of s_4](s_8){};
+	\node[state, minimum size=0.5cm][below right=of s_4,fill=red](s_9){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_5](s_10){};
+	\node[state, minimum size=0.5cm][below left=1.7cm of s_7](s_11){};
+	\node[state, minimum size=0.5cm][below right=1.7cm of s_7](s_12){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_9,fill=red](s_13){};
+	\node[minimum size=0.5cm][below=of s_10](s_14){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_6](s_15){$\cdots$};
+	\node[state, minimum size=0.5cm][below=of s_11](s_16){};
+	\node[minimum size=0.5cm][below=of s_12](s_17){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_8](s_18){$\cdots$};
+	\node[state,minimum size=0.5cm][below=of s_13](s_19){};
+	\node[state,minimum size=0.5cm][below left=2.12cm of s_13,fill=blue](s_20){};
+	\node[state,minimum size=0.5cm][below right=2.12cm of s_13](s_21){};
+	\node[minimum size=0.5cm][below=of s_16](s_22){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_19](s_23){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_20](s_24){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_21](s_25){$\cdots$};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge node {} (s_2)
+    	edge node {} (s_3)
+    	edge node {} (s_4)
+    (s_2) edge node {} (s_5)
+    	edge node {} (s_6)
+    (s_3) edge node {} (s_7)
+    (s_4) edge node {} (s_8)
+    	edge node {} (s_9)
+    (s_5) edge node {} (s_10)
+    (s_7) edge node {} (s_11)
+    	edge node {} (s_12)
+    (s_9) edge node {} (s_13)
+    (s_11) edge node {} (s_16)
+    (s_13) edge node {} (s_19)
+    	edge node {} (s_20)
+    	edge node {} (s_21);
+\end{tikzpicture}
+}\\
+$M,s_0\models E$\color{red}q$\;U\;$\color{blue}p
+\end{center}
+
+\begin{center}
+\resizebox{10cm}{!}{
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+   	\node[state,initial,minimum size=0.5cm](s_1){}; 
+   	\node[state, minimum size=0.5cm][below=of s_1](s_3){};
+   	\node[state, minimum size=0.5cm][left=4cm of s_3](s_2){};
+   	\node[state, minimum size=0.5cm][right=4cm of s_3](s_4){};
+   	\node[state, minimum size=0.5cm][below left=of s_2](s_5){};
+   	\node[state, minimum size=0.5cm][below right=of s_2,fill=red](s_6){};
+   	\node[state, minimum size=0.5cm][below=1.06cm of s_3](s_7){};
+   	\node[state, minimum size=0.5cm][below left=of s_4](s_8){};
+	\node[state, minimum size=0.5cm][below right=of s_4](s_9){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_5](s_10){};
+	\node[state, minimum size=0.5cm][below left=1.7cm of s_7](s_11){};
+	\node[state, minimum size=0.5cm][below right=1.7cm of s_7](s_12){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_9](s_13){};
+	\node[minimum size=0.5cm][below=of s_10](s_14){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_6](s_15){$\cdots$};
+	\node[state, minimum size=0.5cm][below=of s_11](s_16){};
+	\node[minimum size=0.5cm][below=of s_12](s_17){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_8](s_18){$\cdots$};
+	\node[state,minimum size=0.5cm][below=of s_13](s_19){};
+	\node[state,minimum size=0.5cm][below left=2.12cm of s_13](s_20){};
+	\node[state,minimum size=0.5cm][below right=2.12cm of s_13](s_21){};
+	\node[minimum size=0.5cm][below=of s_16](s_22){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_19](s_23){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_20](s_24){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_21](s_25){$\cdots$};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge node {} (s_2)
+    	edge node {} (s_3)
+    	edge node {} (s_4)
+    (s_2) edge node {} (s_5)
+    	edge node {} (s_6)
+    (s_3) edge node {} (s_7)
+    (s_4) edge node {} (s_8)
+    	edge node {} (s_9)
+    (s_5) edge node {} (s_10)
+    (s_7) edge node {} (s_11)
+    	edge node {} (s_12)
+    (s_9) edge node {} (s_13)
+    (s_11) edge node {} (s_16)
+    (s_13) edge node {} (s_19)
+    	edge node {} (s_20)
+    	edge node {} (s_21);
+\end{tikzpicture}
+}\\
+$M,s_0\models EF$\color{red}p
+\end{center}
+
+\begin{center}
+\resizebox{10cm}{!}{
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+   	\node[state,initial,minimum size=0.5cm](s_1){}; 
+   	\node[state, minimum size=0.5cm][below=of s_1,fill=red](s_3){};
+   	\node[state, minimum size=0.5cm][left=4cm of s_3,fill=red](s_2){};
+   	\node[state, minimum size=0.5cm][right=4cm of s_3,fill=red](s_4){};
+   	\node[state, minimum size=0.5cm][below left=of s_2](s_5){};
+   	\node[state, minimum size=0.5cm][below right=of s_2](s_6){};
+   	\node[state, minimum size=0.5cm][below=1.06cm of s_3](s_7){};
+   	\node[state, minimum size=0.5cm][below left=of s_4](s_8){};
+	\node[state, minimum size=0.5cm][below right=of s_4](s_9){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_5](s_10){};
+	\node[state, minimum size=0.5cm][below left=1.7cm of s_7](s_11){};
+	\node[state, minimum size=0.5cm][below right=1.7cm of s_7](s_12){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_9](s_13){};
+	\node[minimum size=0.5cm][below=of s_10](s_14){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_6](s_15){$\cdots$};
+	\node[state, minimum size=0.5cm][below=of s_11](s_16){};
+	\node[minimum size=0.5cm][below=of s_12](s_17){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_8](s_18){$\cdots$};
+	\node[state,minimum size=0.5cm][below=of s_13](s_19){};
+	\node[state,minimum size=0.5cm][below left=2.12cm of s_13](s_20){};
+	\node[state,minimum size=0.5cm][below right=2.12cm of s_13](s_21){};
+	\node[minimum size=0.5cm][below=of s_16](s_22){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_19](s_23){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_20](s_24){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_21](s_25){$\cdots$};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge node {} (s_2)
+    	edge node {} (s_3)
+    	edge node {} (s_4)
+    (s_2) edge node {} (s_5)
+    	edge node {} (s_6)
+    (s_3) edge node {} (s_7)
+    (s_4) edge node {} (s_8)
+    	edge node {} (s_9)
+    (s_5) edge node {} (s_10)
+    (s_7) edge node {} (s_11)
+    	edge node {} (s_12)
+    (s_9) edge node {} (s_13)
+    (s_11) edge node {} (s_16)
+    (s_13) edge node {} (s_19)
+    	edge node {} (s_20)
+    	edge node {} (s_21);
+\end{tikzpicture}
+}\\
+$M,s_0\models AX$\color{red}p
+\end{center}
+
+\begin{center}
+\resizebox{10cm}{!}{
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+   	\node[state,initial,minimum size=0.5cm,fill=red](s_1){}; 
+   	\node[state, minimum size=0.5cm][below=of s_1,fill=red](s_3){};
+   	\node[state, minimum size=0.5cm][left=4cm of s_3,fill=red](s_2){};
+   	\node[state, minimum size=0.5cm][right=4cm of s_3,fill=red](s_4){};
+   	\node[state, minimum size=0.5cm][below left=of s_2,fill=red](s_5){};
+   	\node[state, minimum size=0.5cm][below right=of s_2,fill=red](s_6){};
+   	\node[state, minimum size=0.5cm][below=1.06cm of s_3,fill=red](s_7){};
+   	\node[state, minimum size=0.5cm][below left=of s_4,fill=red](s_8){};
+	\node[state, minimum size=0.5cm][below right=of s_4,fill=red](s_9){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_5,fill=red](s_10){};
+	\node[state, minimum size=0.5cm][below left=1.7cm of s_7,fill=red](s_11){};
+	\node[state, minimum size=0.5cm][below right=1.7cm of s_7,fill=red](s_12){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_9,fill=red](s_13){};
+	\node[minimum size=0.5cm][below=of s_10](s_14){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_6](s_15){$\cdots$};
+	\node[state, minimum size=0.5cm][below=of s_11,fill=red](s_16){};
+	\node[minimum size=0.5cm][below=of s_12](s_17){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_8](s_18){$\cdots$};
+	\node[state,minimum size=0.5cm][below=of s_13,fill=red](s_19){};
+	\node[state,minimum size=0.5cm][below left=2.12cm of s_13,fill=red](s_20){};
+	\node[state,minimum size=0.5cm][below right=2.12cm of s_13,fill=red](s_21){};
+	\node[minimum size=0.5cm][below=of s_16](s_22){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_19](s_23){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_20](s_24){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_21](s_25){$\cdots$};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge node {} (s_2)
+    	edge node {} (s_3)
+    	edge node {} (s_4)
+    (s_2) edge node {} (s_5)
+    	edge node {} (s_6)
+    (s_3) edge node {} (s_7)
+    (s_4) edge node {} (s_8)
+    	edge node {} (s_9)
+    (s_5) edge node {} (s_10)
+    (s_7) edge node {} (s_11)
+    	edge node {} (s_12)
+    (s_9) edge node {} (s_13)
+    (s_11) edge node {} (s_16)
+    (s_13) edge node {} (s_19)
+    	edge node {} (s_20)
+    	edge node {} (s_21);
+\end{tikzpicture}
+}\\
+$M,s_0\models AG$\color{red}p
+\end{center}
+
+\begin{center}
+\resizebox{10cm}{!}{
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+   	\node[state,initial,minimum size=0.5cm](s_1){}; 
+   	\node[state, minimum size=0.5cm][below=of s_1](s_3){};
+   	\node[state, minimum size=0.5cm][left=4cm of s_3](s_2){};
+   	\node[state, minimum size=0.5cm][right=4cm of s_3](s_4){};
+   	\node[state, minimum size=0.5cm][below left=of s_2](s_5){};
+   	\node[state, minimum size=0.5cm][below right=of s_2,fill=red](s_6){};
+   	\node[state, minimum size=0.5cm][below=1.06cm of s_3](s_7){};
+   	\node[state, minimum size=0.5cm][below left=of s_4,fill=red](s_8){};
+	\node[state, minimum size=0.5cm][below right=of s_4](s_9){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_5,fill=red](s_10){};
+	\node[state, minimum size=0.5cm][below left=1.7cm of s_7](s_11){};
+	\node[state, minimum size=0.5cm][below right=1.7cm of s_7,fill=red](s_12){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_9,fill=red](s_13){};
+	\node[minimum size=0.5cm][below=of s_10](s_14){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_6](s_15){$\cdots$};
+	\node[state, minimum size=0.5cm][below=of s_11,fill=red](s_16){};
+	\node[minimum size=0.5cm][below=of s_12](s_17){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_8](s_18){$\cdots$};
+	\node[state,minimum size=0.5cm][below=of s_13](s_19){};
+	\node[state,minimum size=0.5cm][below left=2.12cm of s_13](s_20){};
+	\node[state,minimum size=0.5cm][below right=2.12cm of s_13](s_21){};
+	\node[minimum size=0.5cm][below=of s_16](s_22){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_19](s_23){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_20](s_24){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_21](s_25){$\cdots$};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge node {} (s_2)
+    	edge node {} (s_3)
+    	edge node {} (s_4)
+    (s_2) edge node {} (s_5)
+    	edge node {} (s_6)
+    (s_3) edge node {} (s_7)
+    (s_4) edge node {} (s_8)
+    	edge node {} (s_9)
+    (s_5) edge node {} (s_10)
+    (s_7) edge node {} (s_11)
+    	edge node {} (s_12)
+    (s_9) edge node {} (s_13)
+    (s_11) edge node {} (s_16)
+    (s_13) edge node {} (s_19)
+    	edge node {} (s_20)
+    	edge node {} (s_21);
+\end{tikzpicture}
+}\\
+$M,s_0\models AF$\color{red}p
+\end{center}
+
+\begin{center}
+\resizebox{10cm}{!}{
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+   	\node[state,initial,minimum size=0.5cm,fill=red](s_1){}; 
+   	\node[state, minimum size=0.5cm][below=of s_1,fill=red](s_3){};
+   	\node[state, minimum size=0.5cm][left=4cm of s_3,fill=red](s_2){};
+   	\node[state, minimum size=0.5cm][right=4cm of s_3,fill=red](s_4){};
+   	\node[state, minimum size=0.5cm][below left=of s_2,fill=red](s_5){};
+   	\node[state, minimum size=0.5cm][below right=of s_2,fill=blue](s_6){};
+   	\node[state, minimum size=0.5cm][below=1.06cm of s_3,fill=red](s_7){};
+   	\node[state, minimum size=0.5cm][below left=of s_4,fill=blue](s_8){};
+	\node[state, minimum size=0.5cm][below right=of s_4,fill=red](s_9){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_5,fill=blue](s_10){};
+	\node[state, minimum size=0.5cm][below left=1.7cm of s_7,fill=red](s_11){};
+	\node[state, minimum size=0.5cm][below right=1.7cm of s_7,fill=blue](s_12){};
+	\node[state, minimum size=0.5cm][below=1.2cm of s_9,fill=blue](s_13){};
+	\node[minimum size=0.5cm][below=of s_10](s_14){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_6](s_15){$\cdots$};
+	\node[state, minimum size=0.5cm][below=of s_11,fill=blue](s_16){};
+	\node[minimum size=0.5cm][below=of s_12](s_17){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_8](s_18){$\cdots$};
+	\node[state,minimum size=0.5cm][below=of s_13](s_19){};
+	\node[state,minimum size=0.5cm][below left=2.12cm of s_13](s_20){};
+	\node[state,minimum size=0.5cm][below right=2.12cm of s_13](s_21){};
+	\node[minimum size=0.5cm][below=of s_16](s_22){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_19](s_23){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_20](s_24){$\cdots$};
+	\node[minimum size=0.5cm][below=of s_21](s_25){$\cdots$};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge node {} (s_2)
+    	edge node {} (s_3)
+    	edge node {} (s_4)
+    (s_2) edge node {} (s_5)
+    	edge node {} (s_6)
+    (s_3) edge node {} (s_7)
+    (s_4) edge node {} (s_8)
+    	edge node {} (s_9)
+    (s_5) edge node {} (s_10)
+    (s_7) edge node {} (s_11)
+    	edge node {} (s_12)
+    (s_9) edge node {} (s_13)
+    (s_11) edge node {} (s_16)
+    (s_13) edge node {} (s_19)
+    	edge node {} (s_20)
+    	edge node {} (s_21);
+\end{tikzpicture}
+}\\
+$M,s_0\models A$\color{red}q$\;U\;$\color{blue}p
+\end{center}
 
 \subsection{Kiểm tra mô hình với NuSMV}
 
+\hspace{0.5cm}Công cụ kiểm tra mô hình NuSMV được sử dụng để kiểm tra một mô hình có thoã mãn tính chất cần được kiểm tra hay không. Trong đó, mô hình cần kiểm tra sẽ được chuyển đổi qua mô hình NuSMV sử dụng ngôn ngữ SMV và tính chất cần được mô tả hình thức dưới dạng biểu thức logic CTL hoặc LTL.\\
+
+\hspace{0.5cm}Ví dụ \ref {lst:NuSMVSample} sẽ trình bày cú pháp đơn giản để xây dựng một mô hình NuSMV, qua đó chuyển đổi một mô hình cơ bản quá trình thực thi của một tập tin tương ứng với mô hình \ref {lst:SampleExe} đã được trình bày ở trên, dưới dạng mô hình NuSMV. Cũng như sẽ mô tả một tính chất đơn giản để thực hiện việc kiểm tra trên mô hình này, giả sử tính chất cần được kiểm tra là: "Tồn tại một câu lệnh push một giá trị bất kì vào stack trong quá trình thực thi."
+
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Ví dụ về kiểm tra mô hình trên NuSMV},label={lst:NuSMVSample},frame=single]
+
+MODULE operand2(addr)
+VAR
+  op:{esp, undefined}
+ASSIGN
+  init(op):=undefined;
+  next(op):=
+    case
+      (addr=0x00401000):undefined;
+      (addr=0x00401005):{esp, undefined};
+      TRUE: undefined;
+    esac;
+
+MODULE operand1(addr)
+VAR
+  op:{0x00401007, 0x0040101A, fs:[0], undefined}
+ASSIGN
+  init(op):=0x00401007;
+  next(op):=
+    case
+      (addr=0x00401000):0x0040101A;
+      (addr=0x00401005):{fs:[0], 0x00401007};
+      TRUE: undefined;
+    esac;
+
+MODULE mnemonic(addr)
+VAR
+  mnem:{pushl, jne, movl, undefined}
+ASSIGN
+  init(mnem):=pushl;
+  next(mnem):=
+    case
+      (addr=0x00401000):jne;
+      (addr=0x00401005):{movl, pushl};
+      TRUE: undefined;
+    esac;
+
+MODULE state
+VAR
+  addr:{0x00401000,0x00401005,0x0040100A};
+  mnem:mnemonic(addr);
+  op1:operand1(addr);
+  op2:operand2(addr);
+ASSIGN
+  init(addr):=0x00401000;
+  next(addr):=
+    case
+      (addr=0x00401000):0x00401005;
+      (addr=0x00401005):{0x0040100A, 0x00401000};
+      TRUE: addr;
+    esac;
+
+MODULE main
+VAR
+  s: state;
+
+CTLSPEC AF(s.mnem == pushl)
+
+\end{lstlisting}
+\end{code}
+
 \section{Các kỹ thuật chính của Packer}
+
+\hspace{0.5cm}Hiện tại, hệ thống BE-PUM đã phân tích hoàn toàn được 27 packer. Các kỹ thuật trong 27 packer này được chia thành 6 nhóm bao gồm:
+
+\begin{itemize}
+\item{Code placing obfuscation: Dynamic Code và Code layout}
+\item{Self-modification code: Dynamic code}
+\item{Instruction Obfuscation: Indirect Jump}
+\item{Anti-tracing: Structured Exception Handler và 2 Special APIs}
+\item{Arithmetic Operation: Obfuscated constants và Checksumming}
+\item{Anti-tampering: Checksumming, Timing check, Anti-debugging, Anti-rewriting và Hardware breakpoints}
+\end{itemize}
 
