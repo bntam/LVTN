@@ -2,4 +2,16 @@
 
 \section{Tăng số lượng các Windows API được hỗ trợ}
 
+Ở thời điểm hiện tại, số lượng các Windows API đã được hỗ trợ cho BE-PUM vẫn còn rất ít ỏi. Bởi thực tế, con số Windows API mà hệ điều hành Windows đang cung cấp vượt xa con số đó. Theo một thống kê nhỏ từ những bộ thư viện thường dùng của Windows, số lượng Windows API hiện đang được cung cấp lên đến khoảng 4000 hàm.\\
+
+Điều đỏ mở ra cho việc còn rất nhiều Windows API cần được hiện thực thêm cho BE-PUM. Chưa nói tới những hàm Windows API được ít người biết và dùng đến; trong quá trình chạy thí nghiệm, phân tích tự động một số lượng lớn các malware được tập hợp từ những phòng nghiên cứu trên thế giới, BE-PUM vẫn chưa thể xử lý bao quát hết mọi lời gọi hàm Windows API mà bộ malware đó yêu cầu.\\
+
+Vì thế, mỗi khi chạy hàng loạt malware từ bộ thí nghiệm, chúng tôi lại ghi nhận được thêm một danh sách dài các Windows API cần được hỗ trợ ngay cho BE-PUM. Danh sách đó được cập nhật thường xuyên và vẫn đã, đang luôn được giải quyết qua từng ngày để cung cấp thêm sức mạnh cho BE-PUM.
+
 \section{Hiện thực hóa việc tự động sinh mã cho công tác hỗ trợ Windows API}
+
+Với thiết kế và xây dựng một cách minh bạch và dễ dàng mở rộng như đã trình bày mở Mục \ref{sec:wapi_design}, đi kèm với số lượng Windows API đang cần được hỗ trợ còn quá lớn; điều đó dẫn đến công việc cần thiết cho tương lai, đó là bộ sinh mã tự động cho bộ xử lý Windows API trong BE-PUM.\\
+
+Trong quá trình 40 ngày thực tập tại đại học JAIST (Japan Advanced Institute of Science and Technology) Nhật Bản. Dưới sự hướng dẫn của giáo sư Mizuhito Ogawa, cùng với sự hợp tác của nghiên cứu sinh Lê Vinh đã giúp lên ý tưởng và hiện thực bước đầu cho dự án sinh mã tự động này. Dự án sẽ nhận đầu vào là thông tin tên Windows API cần hiện thực, sau đó sẽ tự động tìm kiếm tài liệu về Windows API đó dưới dạng ngôn ngữ tự nhiên, trích xuất thông tin cần thiết và sinh ra bộ mã theo yêu cầu.\\
+
+Hiện tại dự án vẫn chỉ khởi động bước đầu và cần thêm sự hợp tác lâu dài để có thể biến mọi thứ thành hiện thực. Và đây là một trong những bước đi đầy thách thức và quan trọng trong thời gian sắp tới cho sự phát triển kế tiếp của BE-PUM.
