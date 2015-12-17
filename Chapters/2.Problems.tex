@@ -1,36 +1,25 @@
-\section{BE-PUM và những khó khăn}
-
-	\subsection{Mục tiêu hướng đến của BE-PUM}
-
-	\subsection{Các hướng tiếp cận}
-
-	\subsection{Mô hình luồng điều khiển}
-
-	\subsection{Những đòi hỏi trong quá trình hiện thực}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Các câu lệnh hợp ngữ}
+
   \subsection{Assembly ngôn ngữ dùng để phân tích }
+
   Với các chương trình cần được phân tích, việc biết mã nguồn của chương trình là một điều rất khó khăn và hầu như là không thể biết được do đó để phân tích chương trình, BE-PUM dich ngược chương trình cần phân tích từ mã chương trình đó, dựa vào các opcode để chuyển sang mã assembly để có thể đọc được và hiểu được chương trình đang thực thi gì?\\
 
-Tại sao lại chọn mã assembly để phân tích? Vì lý do không thể tìm được mã nguồn của chương trình cần phân tích, để tiến hành dịch ngược, và trên cơ sở mọi chương trình thực thi đều phải biên dịch qua ngôn ngữ máy là mã nhị phần. Từ đó quyết định chọn ngôn ngữ assembly là ngôn ngữ cấp thấp nhưng vẫn có thể đọc hiểu và phân tích. Từ đó, dựa trên đoạn mã assembly của chương trình cần phân tích, BE-PUM tiến hành phân tích đoạn mã assembly để trả lời câu hỏi “Chương trình này có phải là virus hay không?”\\
+Tại sao lại chọn mã assembly để phân tích? Vì lý do không thể tìm được mã nguồn của chương trình cần phân tích, để tiến hành dịch ngược, và trên cơ sở mọi chương trình thực thi đều phải biên dịch qua ngôn ngữ máy là mã nhị phần. Từ đó quyết định chọn ngôn ngữ assembly là ngôn ngữ cấp thấp nhưng vẫn có thể đọc hiểu và phân tích. Từ đó, dựa trên đoạn mã assembly của chương trình cần phân tích, BE-PUM tiến hành phân tích đoạn mã assembly để trả lời câu hỏi “Chương trình này có phải là virus hay không?”
 
   \subsection{BE-PUM và Assembly}
   Hợp ngữ assembly là một ngôn ngữ lập trình cấp thấp. Trên thực tế đã có rất nhiều chương trình được viết bằng ngôn ngữ assembly được áp dụng cho những chiếc máy tính đầu tiên. Công việc lập trình bằng ngôn ngữ assembly rất cực nhọc, dễ xảy ra lỗi trong quá trình lập trình và tốn rất nhiều chi phi, công sức và thời gian. Các chương trình viết bằng hợp ngữ phụ thuộc rất nhiều vào kiến trúc máy tính của nó, và trong phạm vi của công cụ BE-PUM, dựa trên kiến trúc X86 của Microsoft Windows để tiến hành phân tích chương trình.\\
 
 Hợp ngữ assembly là tập hợp các câu lệnh gợi nhớ giúp người lập trình có thể hiểu được, là một ngôn ngữ cấp thấp nhưng vẫn có thể dễ đọc. Số lượng câu lênh assembly là khá nhiều do đó trong qua trình xây dựng công cụ phân tich BE-PUM tập trung vào những câu lệnh mà virus thường hay sử dụng và hiện thực thêm các câu lệnh để hỗ trợ trong quá trình phân tích virus.\\
 
-BE-PUM là một dự án được phát triển lên từ dự án JakStab và được viết hoàn toàn bằng ngôn ngữ JAVA. Việc hiện thực câu lệnh assembly trên JAVA có đôi chút khó khăn khi không có thư viện hỗ trợ, với mỗi câu lệnh assembly có biến môi trường khác nhau, nhiệm vụ khác nhau vì vậy để hiện thực một câu lệnh hoàn chỉnh cần phải có tài liệu tham khảo, có ví dụ từng trường hợp cụ thể, tránh sai xót hoặc xử lý thiếu trường hợp. Việc tìm tài liệu với từng câu lệnh cũng gặp đôi chút khó khăn khi tài liệu một số câu lệnh rất ít. Do đó để hạn chế những thiếu xót, các câu lệnh assemby thường được kiểm tra, nếu có trường hợp sai xảy ra sẽ được tìm hiểu và khắc phục.\\
+BE-PUM là một dự án được phát triển lên từ dự án JakStab và được viết hoàn toàn bằng ngôn ngữ JAVA. Việc hiện thực câu lệnh assembly trên JAVA có đôi chút khó khăn khi không có thư viện hỗ trợ, với mỗi câu lệnh assembly có biến môi trường khác nhau, nhiệm vụ khác nhau vì vậy để hiện thực một câu lệnh hoàn chỉnh cần phải có tài liệu tham khảo, có ví dụ từng trường hợp cụ thể, tránh sai xót hoặc xử lý thiếu trường hợp. Việc tìm tài liệu với từng câu lệnh cũng gặp đôi chút khó khăn khi tài liệu một số câu lệnh rất ít. Do đó để hạn chế những thiếu xót, các câu lệnh assemby thường được kiểm tra, nếu có trường hợp sai xảy ra sẽ được tìm hiểu và khắc phục.
 
   \subsection{Phân tích Assembly trong BE-PUM}
   Mục đích của chương trình Be-Pum đặt ra trả lời câu hỏi “Chương trình này có phải là virus hay không?”. Để trả lời câu hỏi này có rất nhiều cách khác nhau để hiện thực chương trình, Be-Pum dựa trên phân tích hành vi của chương trình để trả lời vấn đề trên. Phân tích mã assembly là một trong những bước đầu để trả lời câu hỏi đó. Assembly là ngôn ngữ cấp thấp nhưng người lập trình vẫn có thể đọc được nó, và mọi chương trình khi thực thi đều có thể biên dịch ra mã assembly. Do đó, dựa vào hành vi của chương trình và tiến hành phân tích mã assembly mà có thể đưa ra kết luận.\\
 
 Để giải quyết vấn đề hỗ trợ, phân tích từng câu lệnh của assembly, BE-PUM tiến hành xây dựng các class để tiến hành phân tích, hiện thực câu lệnh. Chia nhỏ vấn đề của từng câu lệnh thành các hàm trong từng class để hiện thực. Việc chia nhỏ vấn đề có thể giải quyết những câu lệnh có tính lặp lại, xử lý cùng một tính năng hay mục đích nào đó của câu lệnh. Giúp quản lý tốt hơn về hiện thực câu lệnh.\\
 
-Có rất nhiều bước để hoàn thành chương trình Be-Pum, trong đó đọc hiểu mã assembly đầu vào là một trong những bước cơ bản. Có rất nhiều câu lệnh assembly mà BE-PUM chưa hỗ trợ, do đó cần đặt ra nhiệm vụ là hiện thực các câu lệnh assembly trong BE-PUM. Tính tới thời điểm hiện nay, Be-Pum đã hiện thực 200 câu lệnh thực thi số nguyên và 65 câu lệnh thực thi số thực và đã được kiểm tra. \\ 
+Có rất nhiều bước để hoàn thành chương trình Be-Pum, trong đó đọc hiểu mã assembly đầu vào là một trong những bước cơ bản. Có rất nhiều câu lệnh assembly mà BE-PUM chưa hỗ trợ, do đó cần đặt ra nhiệm vụ là hiện thực các câu lệnh assembly trong BE-PUM. Tính tới thời điểm hiện nay, Be-Pum đã hiện thực 200 câu lệnh thực thi số nguyên và 65 câu lệnh thực thi số thực và đã được kiểm tra. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,7 +34,7 @@ Và vấn đề gì cũng có hai mặt của nó, sự hỗ trợ mạnh mẽ �
 
 Trong quá trình xây dựng BE-PUM và qua việc phân tích hàng ngàn mẫu malware chạy trên môi trường Windows được phát tán ở khắp nơi trên thế giới, hầu hết những mẫu malware trên đều áp dụng lời gọi Windows API vào cách thức tấn công của chúng. Những phương pháp tấn công phổ biến như SEH hay phương pháp chống phát hiện đều có sự tồn tại của Windows API trong đó.\\
 
-Do đó, việc xây dựng một bộ công cụ xử lý những thông tin trả về từ Windows API là rất cần thiết cho việc phát triển hệ thống BE-PUM, một hệ thống tập trung vào phân tích mã nhị phân của malware.\\
+Do đó, việc xây dựng một bộ công cụ xử lý những thông tin trả về từ Windows API là rất cần thiết cho việc phát triển hệ thống BE-PUM, một hệ thống tập trung vào phân tích mã nhị phân của malware.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -59,7 +48,7 @@ Hướng tiếp cận hiện tại là tiến hành lấy nội dung bộ nhớ,
 
 BE-PUM là một dự án được phát triển lên từ nhân của dự án JakStab và được viết hoàn toàn trên ngôn ngữ lập trình Java. Với Windows API thì lại là một câu chuyện hoàn toàn khác, Windows API được phát triển chủ yếu tập trung vào ngôn ngữ lập trình C kèm với các mô tả và cấu trúc dữ liệu được viết trên đó. Thêm lần nữa, việc hiện thực ý tưởng gọi để lấy kết quả Windows API từ trong lòng BE-PUM gặp nhiều khó khăn. Đặc biệt là việc ánh xạ các dữ liệu kiểu cấu trúc giữa hai thành phần trên cũng là một trăn trở.\\
 
-Vì những lý do trên, cần tìm hiểu một cách thức giải quyết vấn đề nhanh chóng và đơn giản hơn bằng một bộ công cụ nào đó để xử lý rào cản ngôn ngữ giữa Java và C. Thêm vào đó, bộ công cụ này cũng cần có tính linh hoạt và mềm dẻo để cho việc phát triển về sau được dễ dàng.\\
+Vì những lý do trên, cần tìm hiểu một cách thức giải quyết vấn đề nhanh chóng và đơn giản hơn bằng một bộ công cụ nào đó để xử lý rào cản ngôn ngữ giữa Java và C. Thêm vào đó, bộ công cụ này cũng cần có tính linh hoạt và mềm dẻo để cho việc phát triển về sau được dễ dàng.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,5 +1,16 @@
 \section{Làm việc với BE-PUM}
 
+Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm việc tương tự như trên một hệ thống máy tính khởi chạy ngoài thực tế; chúng bao gồm các thành phần chính mà đề tài sẽ ảnh hưởng đến như sau:
+
+\begin{itemize}
+\item 	\textbf{Chồng (stack)} là một đơn vị dùng để lưu trữ giá trị theo nguyên tắc xếp chồng lên nhau, hoạt động theo nguyên lý vào sau ra trước (Last In First Out (LIFO)). Nó được dùng với nhiều mục đích khác nhau, ví dụ như để ghi nhận địa chỉ cần trở về khi thực hiện gọi một chương trình con, hay để ghi nhận các giá trị của các tham số truyền vào khi gọi một hàm Windows API.\\
+
+\item 	\textbf{Bộ nhớ (memory)} dùng để lưu trữ toàn bộ giá trị của các vùng nhớ mà chương trình đang làm việc. Windows API cũng có khả năng tương tác với phần này; do vậy, đòi hỏi khi xây dựng xử lý API cần đảm bảo kết quả chính xác cho thành phần này.\\
+
+\item 	\textbf{Thanh ghi (register)} là một vùng nhớ có dung lượng nhỏ nhưng lại có khả năng truy xuất rất nhanh, chúng được dùng để làm vùng nhớ tạm, trung gian cho các câu lệnh chạy trong hệ thống. Mỗi khi gọi một hàm bất kỳ, nếu như kiểu trả về khác void thì giá trị trả về sẽ được lưu trữ vào thanh ghi EAX.\\
+\end{itemize}
+
+
 \section{Các câu lệnh hợp ngữ}
 
 	\subsection{Assembly}
@@ -1787,7 +1798,6 @@ Khi ngoại lệ toán hạng là số denormal xảy ra và các bit xử lý n
 Ở những bước xây dựng đầu của đề tài, cần ưu tiên tiến hành cho những bộ thư viện phổ biến và được dùng rộng rãi trước tiên. Bảng 2 sau đây sẽ mô tả thông tin những bộ thư viện đã được hỗ trợ bởi BE-PUM:
 
 
-%\begin{center}
 \begin{longtable}{ | m{3cm} | m{11cm} | }
 	\hline
 Tên & Chức năng\\
@@ -1810,7 +1820,6 @@ Các chức năng này nằm trong tập tin shell32.dll trên hệ điều hàn
 \caption[Những bộ thư viện được hỗ trợ bởi BE-PUM]{Những bộ thư viện được hỗ trợ bởi BE-PUM}
 \label{table:tblwapilib}
 \end{longtable}
-%\end{center}
 
 
 	\subsection{Trình tự các bước để ứng dụng JNA vào BE-PUM}
@@ -1889,11 +1898,18 @@ Căn bản việc ánh xạ kiểu dữ liệu trong JNA được đáp ứng b�
 Điểm hỗ trợ mạnh trong JNA đó là sử dụng và truy cập con trỏ của C thông qua đối tượng kiểu Pointer, dù rằng đang làm việc trong ngôn ngữ Java. Và nếu muốn lấy giá trị của một vùng nhớ thay vì chỉ một giá trị ô nhớ như Pointer, ta có thể sử dụng đối tượng kiểu Buffer để JNA đưa giá trị vùng nhớ đó vào trong đối tượng.
 
 
-	\subsection{Dữ liệu kiểu cấu trúc (structure)}
+	\subsection{Dữ liệu kiểu cấu trúc (structure)} \label{sec:structure}
 
 Một trong những lợi thế to lớn nhất mà JNA mang lại đó là nạp dữ liệu kiểu cấu trúc (structure) vào trong C mà ngôn ngữ Java không có. Điều này được hỗ trợ qua việc tạo ra một lớp mới, kế thừa từ lớp Structure của JNA.\\
 
-Để tạo ra chính xác kiểu cấu trúc để nạp vào JNA, ta cũng phải tìm hiểu và nắm rõ các quy tắc xây dựng và làm việc với kiểu cấu trúc trong ngôn ngữ lập trình C.\\
+Để tạo ra chính xác kiểu cấu trúc để nạp vào JNA, ta cũng phải tìm hiểu và nắm rõ các quy tắc xây dựng và làm việc với kiểu cấu trúc trong ngôn ngữ lập trình C.
+
+		\begin{center}
+			\begin{figure}[h]
+				\includegraphics[scale=0.8]{StructureMemoryOrganization.png}
+				\caption{Cách sắp xếp và lưu trữ bộ nhớ của structure}				
+			\end{figure}
+		\end{center}
 
 Một struct trong ngôn ngữ lập trình C là một khai báo dữ liệu kiểu phức hợp, trong đó nó định nghĩa một danh sách các biến được đặt bên trong một khối bộ nhớ. Nó cho phép các biến khác nhau được truy xuất thông qua một con trỏ duy nhất (con trỏ của structure). Một structure có khả năng chứa nhiều kiểu dữ liệu khác nhau từ kiểu dữ liệu nguyên thủy đến kiểu dữ liệu phức tạp khác (enum, structure).\\
 
