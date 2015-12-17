@@ -44,9 +44,96 @@
 		
 		Class Environmet có nhiệm vụ liên kết các class Stack, Register, Memory, Flag, FPUStatusWord, FPURegister, FPUControlWord, để thao tác truy xuất trực tiếp lên các biến môi trường này. Class Enviroment hiện thực các hàm để hỗ trợ thao tác truy xuất thuận tiện hơn. Ngoài ra, hiện thực hàm equals() để so sánh biến môi trường của câu lệnh assembly này với biến môi trường của câu lệnh assembly khác. Từ đó hỗ trợ trong việc đánh giá, phân tích câu lệnh assembly.
 		
+		\newpage
 	\subsection*{Môi trường xử lý số nguyên}
+	Class Environmet liên kết với class Stack, hình () thể hiện class Stack.
+		\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassStack.png}
+				\end{center}
+				\caption{Class Stack}	
+					\label{fig:ClassStack}		
+			\end{figure}
+		\end{center}		
+	
+	Class Stack gồm các hàm hỗ trợ thao tác trên stack của chương trinh. Hàm push() và pop() là hai hàm quan trọng có nhiệm vụ thao tác cơ bản trên stack là đưa vào ngăn xếp và lấy ngăn xếp ra. Ngoài ra còn có các hàm length() thể hiện kích thước stack, equals() để so sánh hai stack với nhau, việc này hỗ trợ rất nhiều trong qua trình phân tích hay so trùng được sử dụng trong các kỹ thuật phân tích virus. Ngoài ra còn có các hàm để hỗ trợ thao tác toán học như add() để cộng thêm một số, sub() để nhân với một số,…
+	
+	\newpage
+	Class Register được hiện thực như các thanh ghi Register trong hợp ngữ assembly. Hình () thể hiện class Register:
+	\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassStack.png}
+				\end{center}
+				\caption{Class Stack}	
+					\label{fig:ClassStack}		
+			\end{figure}
+		\end{center}		
+		
+		Class Register gồm các biến được thể hiện là các thanh ghi Register được sử dụng trong hợp ngữ assembly. Các biến này sẽ lưu giá trị của thanh ghi trong quá trình thực thi chương trình cần phân tích. Mỗi giá trị của biến có thể bị thay đổi khi thực hiện phân tích từng câu lệnh assembly của chương trình cần phân tích. Class Resgister xây dựng các hàm hỗ trợ thao tác trên thanh ghi như getRegiterValue() có nhiệm vụ lấy giá trị của thanh ghi nào đó, setRegisterValue() có nhiệm vụ gán lại giá trị của một thanh ghi. Ngoài ra, class Register còn hiện thực một số hàm hỗ trợ thao tác toán học trên thanh ghi như: add() có nhiệm vụ cộng thêm một giá trị nào đó vào thanh ghi, and() có nhiệm vụ như thực hiện phép and (đại số Boole),.. những hàm này giúp hỗ trợ nhanh trong việc hiện thực câu lệnh sau này.
+		
+		\newpage
+		Class Register được hiện thực như các thanh ghi Register trong hợp ngữ assembly. Hình () thể hiện class Register:
+		\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassRegister.png}
+				\end{center}
+				\caption{Class Register}	
+					\label{fig:ClassRegister}		
+			\end{figure}
+		\end{center}		
+			
+	Class Register gồm các biến được thể hiện là các thanh ghi Register được sử dụng trong hợp ngữ assembly. Các biến này sẽ lưu giá trị của thanh ghi trong quá trình thực thi chương trình cần phân tích. Mỗi giá trị của biến có thể bị thay đổi khi thực hiện phân tích từng câu lệnh assembly của chương trình cần phân tích. Class Resgister xây dựng các hàm hỗ trợ thao tác trên thanh ghi như getRegiterValue() có nhiệm vụ lấy giá trị của thanh ghi nào đó, setRegisterValue() có nhiệm vụ gán lại giá trị của một thanh ghi. Ngoài ra, class Register còn hiện thực một số hàm hỗ trợ thao tác toán học trên thanh ghi như: add() có nhiệm vụ cộng thêm một giá trị nào đó vào thanh ghi, and() có nhiệm vụ như thực hiện phép and (đại số Boole),.. những hàm này giúp hỗ trợ nhanh trong việc hiện thực câu lệnh sau này.
+	
+		\newpage
+	Class Memory được hiện thực như là các thao tác trên một bộ nhớ được sử dụng trong hợp ngữ assembly. Hình () thể hiện class Memory: 
+	
+		\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassMemory.png}
+				\end{center}
+				\caption{Class Memory}	
+					\label{fig:ClassMemory}		
+			\end{figure}
+		\end{center}		
+	
+	Class Memory gồm các hàm được hiện thực để hỗ trợ trong việc thao tác với địa chỉ bộ nhớ. Mỗi hàm được hiện thực có nhiệm vụ khác nhau nhưng cùng một mục đích là phân tích câu lệnh assembly như hàm equals() dùng để so sánh bộ nhớ, getMemoryValue() dùng để lấy giá trị của địa chỉ bộ nhớ đó, setMemoryValue() dùng để gán lại giá trị của bộ nhớ, getByteMemoryValue() dùng để lấy giá trị Byte của địa chỉ bộ nhớ, ngoài ra còn có các hàm hỗ trợ thao tác toán học được sử dụng trên bộ nhớ như hàm addMemoryValue() dùng để cộng thêm một số vào giá trị bộ nhớ, mulMemoryValue() dùng để nhân thêm một số vào giá trị bộ nhớ, changeValue() với địa chỉ xác định dùng để thay đổi giá trị của địa chỉ bộ nhớ đó, việc thay đổi giá trị tại địa chỉ bộ nhớ giúp hỗ trợ trong quá trình phân tích, đọc hiểu mã assembly.
+	
+	\newpage
+	Class Flag được hiện thực như các Flag trong hợp ngữ assembly. Hình () thể hiện class Flag của chương trình BE-PUM:	
+		\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassFlag.png}
+				\end{center}
+				\caption{Class Flag}	
+					\label{fig:ClassFlag}		
+			\end{figure}
+		\end{center}			
+	
+Class Flag gồm các biến được phỏng theo các biến Flag được sử dụng trong hợp ngữ assembly, mỗi tên biến tương với mỗi giá trị Flag trong quá trình phân tích. Các giá trị của Flag sẽ thay đổi theo từng câu lệnh assembly, dựa vào xự thay đổi này để hỗ trợ trong quá trình phân tích chương trình. Ngoài ra, class Flag còn hiện thực thêm một số hàm để hỗ trợ trong quá trình phân tích như getAFlag() để lấy giá trị của aFlag, setAFlag() để thay đổi giá trị của aFlag, tương tự như vậy đối với các biến đã được mô phỏng. Thêm vào đó là các hàm thay đổi Flag theo các câu lệnh hỗ trợ toán học như hàm changeFlagWithINC() có nhiệm vụ thay đổi các giá trị của Flag tương ứng khi thực hiện câu lệnh INC (tăng giá trị), changeFlagWithSUB() thay đổi Flag khi thực hiện phép toán công (SUB),… Tương tự như vậy, class tiếp tục xây dựng các hàm hỗ trợ thay đổi nhanh khi thực hiện các phép toán.
+
+
+	\newpage
+	Class X86TranstitionRule là class đặc biệt quan trọng, là nơi xử lý các câu lệnh assembly, class X86TranstitionRule được hỗ trợ bởi nhiểu class con khác để thực hiện việc phân tích mã assembly. Hình () biểu diễn class X86TranstitionRule:
+	\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassTransitionRule.png}
+				\end{center}
+				\caption{Class X86TransitionRule	}	
+					\label{fig:ClassFlag}		
+			\end{figure}
+		\end{center}			
+		
+	Class X86TransitionRule được hiện thực các hàm để hỗ trợ trong quá trình phân tích chương trình assembly. Mỗi đỉnh trong đồ thị phân tích là một câu lệnh, mỗi câu lệnh có nhiệm vụ, chức năng khác nhau. Do đó, cần phần nhóm các câu lệnh để hiện thực. Trong class X86TransitionRule, các hàm được chia theo nhóm câu lệnh như X86IntrustionInterprete() hiện thực các câu lệnh cơ bản thường dùng như STD (gán giá trị dFlag = 1) cmovcc (các điều kiện gán)… X86RetrunInterprete() hiện thực các câu lệnh trả kết quả về như RET (kết quả trả về khi kết thúc một hàm), X86MoveInterprete() hiện thực các câu liên quan đến gán giá trị như MOV, MOVZ,… tương tự như vậy các nhóm câu lệnh nhảy, biểu thức toán học, các câu lệnh gọi hàm được hiện thực. Ngoài ra còn có các hàm hỗ trợ trong việc phân tích và tính toán như hàm executeZ3() có nhiệm vụ gọi thư viện Z3 để tính toán. Đây làm class rất quan trọng vì class này đảm nhận nhiệm vụ phân tích chương trinh assmebly từ đó đưa ra kết quả.
 	
 	\subsection*{Môi trường xử lý số thực}
+	
+
 		
 \newpage
 \section{Windows API}
