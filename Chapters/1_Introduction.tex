@@ -8,7 +8,7 @@
 \chapter{GIỚI THIỆU}
 
 \begin{concept}[15cm]
-\textit{Nội dung chương này sẽ tập trung giới thiệu tổng quan về đề tài, cụ thể về hệ thống BE-PUM và cách thức xây dựng mô hình của BE-PUM, đồng thời giới thiệu về packer, phương pháp model checking và và công cụ NuSMV; mục tiêu cụ thể hướng tới của đề tài và phạm vi thực hiện của đề tài, cũng như những kết quả ban đầu đã đạt được của quá trình nghiên cứu đề tài.}
+\textit{Nội dung chương này sẽ tập trung giới thiệu tổng quan về đề tài, cụ thể về hệ thống BE-PUM và cách thức xây dựng mô hình của BE-PUM, đồng thời giới thiệu về packer, phương pháp model checking và và công cụ NuSMV; mục tiêu cụ thể hướng tới của đề tài và phạm vi thực hiện của đề tài, những kết quả ban đầu đã đạt được của quá trình nghiên cứu đề tài, cũng như cấu trúc của luận văn cũng sẽ được giới thiệu cụ thể.}
 \end{concept}
 
 \section{Tổng quan đề tài}
@@ -84,9 +84,9 @@ end start
 		\label{fig:IDAReal}
         \includegraphics[width=0.6\textwidth]{ida_sample}
 	}
-  \end{tabular}
-  \caption{Mô hình của BE-PUM và IDA Pro được sinh ra từ đoạn mã \ref {lst:ASMReal}}
-  \label{fig:ModelReal}
+\end{tabular}
+\caption{Mô hình của BE-PUM và IDA Pro được sinh ra từ đoạn mã \ref {lst:ASMReal}}
+\label{fig:ModelReal}
 \end{figure}
 
 \hspace{0.5cm}Hình \ref {fig:ModelReal} cho thấy công cụ IDA Pro, một công cụ rất mạnh được sử dụng cho quá trình phân tích tập tin mã nhị phân không thể xử lý kỹ thuật Indirect Jump tại câu lệnh JMP EAX tại vị trí 0x0040100f, cụ thể IDA Pro sẽ dừng thực thi và không nhảy đến được vị trí 0x00401015. Ngược lại hệ thống BE-PUM xử lý và nhảy đến vị trí 0x00401015 đã được tính toán trước đó.
@@ -152,7 +152,7 @@ end start
 
 \begin{itemize}
 \item{\textbf{Mở đầu}: giới thiệu sơ lược về đề tài luận văn, bố cục chung của luận văn, trình bày những mục tiêu khi chọn đề tài.\\}
-\item{\textbf{Chương 1}: tập trung giới thiệu tổng quan về đề tài, cụ thể về hệ thống BE-PUM và cách thức xây dựng mô hình của BE-PUM, đồng thời giới thiệu về packer, phương pháp model checking và công cụ NuSMV; mục tiêu cụ thể hướng tới của đề tài và phạm vi thực hiện của đề tài, cũng như những kết quả ban đầu đã đạt được của quá trình nghiên cứu đề tài.\\}
+\item{\textbf{Chương 1}: tập trung giới thiệu tổng quan về đề tài, cụ thể về hệ thống BE-PUM và cách thức xây dựng mô hình của BE-PUM, đồng thời giới thiệu về packer, phương pháp model checking và công cụ NuSMV; mục tiêu cụ thể hướng tới của đề tài và phạm vi thực hiện của đề tài, những kết quả ban đầu đã đạt được của quá trình nghiên cứu đề tài, cũng như cấu trúc của luận văn cũng sẽ được giới thiệu cụ thể.\\}
 \item{\textbf{Chương 2}: tập trung phân tích vấn đề, cụ thể là những vấn đề của hệ thống BE-PUM khi xử lý packer thông qua 3 ví dụ cụ thể về 2 packer được malware sử dụng trong thực tế, rút ra nhận xét tổng quát và những thách thức đặt ra cho đề tài. Ngoài ra, chương này cũng sẽ tập trung bàn luận về những thách thức này, từ đó đưa ra những giải pháp cụ thể để giải quyết những khó khăn đó.\\}
 \item{\textbf{Chương 3}: giới thiệu những kiến thức nền và các công nghệ được sử dụng trong đề tài. Để có thể giải quyết những thách thức như chương 2 đã nêu ra, cần nắm vững kiến thức nền tảng về hệ thống BE-PUM và lý thuyết về model checking, cũng như về công cụ NuSMV. Ngoài ra chương này cũng tập trung giới thiệu cụ thể về 13 kỹ thuật được hỗ trợ trong packer.\\}
 \item{\textbf{Chương 4}: trình bày về các công việc đã thực hiện trong luận văn dựa trên những kiến thức nền được giới thiệu ở chương 2. Cụ thể, chương này sẽ tập trung giới thiệu việc kết hợp giữa hệ thống BE-PUM và công cụ NuSMV trong việc nhận dạng packer. Để có thể so sánh giữa phương pháp pháp nhận dạng packer thông qua chữ ký và phương pháp model checking, giải thuật nhận dạng packer thông qua chữ ký cũng được hiện thực và giới thiệu cụ thể trong chương này.\\}

@@ -9,76 +9,140 @@
 \textit{Nội dung chương này sẽ tập trung phân tích vấn đề được đặt ra trong đề tài, cụ thể là những vấn đề của hệ thống BE-PUM khi xử lý packer thông qua 3 ví dụ cụ thể về 2 packer được malware sử dụng trong thực tế, rút ra nhận xét tổng quát và những thách thức đặt ra cho đề tài. Ngoài ra, chương này cũng sẽ tập trung bàn luận về những thách thức này, từ đó đưa ra những giải pháp cụ thể để giải quyết những khó khăn đó.}
 \end{concept}
 
-\section{Ví dụ thực tế}
+\section{Ví dụ thực tế}\label{sec:Example}
 
-\subsection{Ví dụ 1}
+\subsection{Ví dụ 1}\label{subsec:Example1}
 
-\hspace{0.5cm}Không chỉ thay đổi giải thuật phức tạp nhằm đóng gói mã thực thi, packer còn sử dụng các kỹ thuật obfuscation ngày càng tinh vi hơn. Ví dụ 1 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế sử dụng kỹ thuật Strutured Exception Handler dựa trên Trap Flag:
+\hspace{0.5cm}Không chỉ thay đổi giải thuật phức tạp nhằm đóng gói mã thực thi, packer còn sử dụng các kỹ thuật obfuscation ngày càng tinh vi hơn. Ví dụ \ref {subsec:Example1} sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế sử dụng kỹ thuật Strutured Exception Handler dựa trên Trap Flag:
 
 \begin{code}
-\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Strutured Exception Handler sử dụng trong packer TELOCK},label={lst:SEHinTELOCK},frame=single]
-00405A32	PUSHAD
-00405A33	CALL 00405A3E
-...
-00405A3E	PUSH DWORD PTR FS:[0] 
-00405A44	MOV DWORD PTR FS:[0], ESP
-00405A4A	PUSHFD
-00405A4B	OR DWORD PTR SS:[ESP], 100
-00405452	POPFD
-00405A53	CLC
-00405A54	JNB 00405A32
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Structured Exception Handler sử dụng trong packer TELOCK},label={lst:ASMExample1},frame=single]
+00405A27	call 0x00405A32
+00405A2C	mov esp, ss:[esp]
+00405A30	jmp 0x00405A4C
+00405A32	push fs:[0]
+00405A38	mov fs:[0], esp
+00405A3E	pushfd
+00405A3F	or ss:[esp], 0x100
+00405A46	popfd
+00405A47	clc
+00405A48	jnb 0x00405A32
 \end{lstlisting}
 \end{code}
 
-\hspace{0.5cm}Trong đoạn mã \ref {lst:SEHinTELOCK} có thể thấy giá trị của thanh ghi cờ EFLAGS sẽ bị thay đổi qua câu lệnh tại địa chỉ 00405A4B, qua đó sẽ thay đổi giá trị của Trap Flag thành TRUE, chính vì giá trị này thay đổi sẽ gây ra một exception trong chương trình với kiểu SINGLE\_STEP\_EXCEPTION. Khi đó luồng thực thi sẽ thay đổi và trỏ tới hàm xử lý exception với điểm nhập là giá trị địa chỉ được lưu trong bộ nhớ tại vị trí FS:[0]. Hệ thống BE-PUM chưa hỗ trợ Trap Flag do đó sẽ dẫn tới vòng lặp vô tận tại vị trí 00405A54.
+\begin{figure}
+\centering
+\begin{tabular}[c]{cc}
+	\subfloat[Trước]
+	{
+		\label{fig:BeforeExample1}
+		\resizebox{6cm}{!}{
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+		   	\node[cfgstate,align=center](s_1){0x00405A27\\[0.2cm] call 0x00405A32}; 
+		   	\node[cfgstate,align=center](s_2)[below of=s_1]{0x00405A32\\[0.2cm] push \%fs(0)};
+		   	\node[cfgstate,align=center](s_3)[below of=s_2]{0x00405A38\\[0.2cm] mov \%fs(0),\%esp};
+		   	\node[cfgstate,align=center](s_4)[below of=s_3]{0x00405A3E\\[0.2cm] pushfd};
+		   	\node[cfgstate,align=center](s_5)[below of=s_4]{0x00405A3F\\[0.2cm] or \%ss(\%esp), 0x100};
+		   	\node[cfgstate,align=center](s_6)[below of=s_5]{0x00405A46\\[0.2cm] popfd};
+		   	\node[cfgstate,align=center](s_7)[below of=s_6]{0x00405A47\\[0.2cm] clc};
+		   	\node[cfgstate,align=center](s_8)[below of=s_7]{0x00405A48\\[0.2cm] jnb 0x00405A32};
+		    \path[-{>[scale=2,length=3,width=3]}] 
+		    (s_1) edge node {} (s_2)
+		    (s_2) edge node {} (s_3)
+		   	(s_3) edge node {} (s_4)
+		   	(s_4) edge node {} (s_5)
+		   	(s_5) edge node {} (s_6)
+		   	(s_6) edge node {} (s_7)
+		   	(s_7) edge node {} (s_8)
+		   	(s_8.east) edge [bend right=60] node {} (s_2.east);
+		\end{tikzpicture}
+		}
+    }
+    &
+	\subfloat[Sau]
+	{
+		\label{fig:AfterExample1}
+		\resizebox{4cm}{!}{
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+		   	\node[cfgstate,align=center](s_1){0x00405A27\\[0.2cm] call 0x00405A32}; 
+		   	\node[cfgstate,align=center](s_2)[below of=s_1]{0x00405A32\\[0.2cm] push \%fs(0)};
+		   	\node[cfgstate,align=center](s_3)[below of=s_2]{0x00405A38\\[0.2cm] mov \%fs(0),\%esp};
+		   	\node[cfgstate,align=center](s_4)[below of=s_3]{0x00405A3E\\[0.2cm] pushfd};
+		   	\node[cfgstate,align=center](s_5)[below of=s_4]{0x00405A3F\\[0.2cm] or \%ss(\%esp), 0x100};
+		   	\node[cfgstate,align=center](s_6)[below of=s_5]{0x00405A46\\[0.2cm] popfd};
+		   	\node[cfgstate,align=center](s_7)[below of=s_6]{0x00405A47\\[0.2cm] clc};
+		   	\node[cfgstate,align=center](s_8)[below of=s_7]{0x00405A2C\\[0.2cm] mov \%esp, \%ss(\%esp)};
+		   	\node[cfgstate,align=center](s_9)[below of=s_8]{0x00405A30\\[0.2cm] jmp 0x00405A4C};
+		    \path[-{>[scale=2,length=3,width=3]}] 
+		    (s_1) edge node {} (s_2)
+		    (s_2) edge node {} (s_3)
+		   	(s_3) edge node {} (s_4)
+		   	(s_4) edge node {} (s_5)
+		   	(s_5) edge node {} (s_6)
+		   	(s_6) edge node {} (s_7)
+		   	(s_7) edge node {} (s_8)
+		   	(s_8) edge node {} (s_9);
+		\end{tikzpicture}
+		}
+	}
+\end{tabular}
+\caption{CFG của BE-PUM trước và sau khi xử lý packer TELOCK}
+\label{fig:CFGExample1}
+\end{figure}
 
-\subsection{Ví dụ 2}
+\hspace{0.5cm}Trong mô hình \ref {fig:CFGExample1} được sinh ra từ đoạn mã \ref {lst:ASMExample1} có thể thấy giá trị của thanh ghi cờ EFLAGS sẽ bị thay đổi qua câu lệnh tại địa chỉ 0x00405A3F, qua đó sẽ thay đổi giá trị của Trap Flag thành TRUE, chính vì giá trị này thay đổi sẽ gây ra một exception trong chương trình với kiểu SINGLE\_STEP\_EXCEPTION. Khi đó luồng thực thi sẽ thay đổi và trỏ tới hàm xử lý exception với điểm nhập là giá trị địa chỉ được lưu trong bộ nhớ tại vị trí FS:[0]. Hệ thống BE-PUM chưa hỗ trợ Trap Flag do đó sẽ dẫn tới vòng lặp vô tận tại vị trí 0x00405A32, khi đó stack sẽ được push liên tục và dẫn đến chương trình gọi ExitProcess để giải phóng bộ nhớ.
 
-\hspace{0.5cm}Trong thực tế, một malware để tránh bị phát hiện bởi một chương trình chống malware, có thể sử dụng packer để ẩn thân hay nói cách khác che dấu điểm nhập thực sự của mình. Cụ thể malware sẽ sử dụng packer để đóng gói đoạn code thực thi thực sự của mình, và tự mở gói bằng kỹ thuật self-unpacking. Ví dụ 2 sẽ trình bày cụ thể về packer FSG được malware sử dụng trong thực tế có sử dụng kỹ thuật packing và self-unpacking:
+\subsection{Ví dụ 2}\label{subsec:Example2}
+
+\hspace{0.5cm}Trong thực tế, một malware để tránh bị phát hiện bởi một chương trình chống malware, có thể sử dụng packer để ẩn thân hay nói cách khác che dấu điểm nhập thực sự của mình. Cụ thể malware sẽ sử dụng packer để đóng gói đoạn code thực thi thực sự của mình, và tự mở gói bằng kỹ thuật self-unpacking. Ví dụ \ref {subsec:Example2} sẽ trình bày cụ thể về packer FSG được malware sử dụng trong thực tế có sử dụng kỹ thuật packing và self-unpacking:
 
 \begin{code}
-\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Unpacking sử dụng trong packer FSG},label={lst:UnpackinFSG},frame=single]
-004001A1	CMP EAX, DWORD PTR DS:[EBX-8]
-004001A4	JNB 004001B0
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Unpacking sử dụng trong packer FSG},label={lst:ASMExample2},frame=single]
+004001A1	cmp eax, ds:[ebx-8]
+004001A4	jnb 0x004001B0
 ...
-004001B0	INC ECX
-004001B1	INC ECX
-004001B2	XCHG EAX, EBP
-004001B3	MOV EAX, EBP
-004001B5	MOV DH, 0
-004001B7	PUSH ESI
-004001B8	MOV ESI, EDI
-004001BA	SUB ESI, EAX
-004001BC	REP MOVS BYTE PTR ES:[EDI], BYTE PTR DS:[ESI]
-004001BE	POP ESI
-004001BF 	JMP 00400160		
+004001B0	inc ecx
+004001B1	inc ecx
+004001B2	xchg eax, ebp
+004001B3	mov eax, ebp
+004001B5	mov dh, 0
+004001B7	push esi
+004001B8	mov esi, edi
+004001BA	sub esi, eax
+004001BC	rep movs es:[edi], ds:[esi]
+004001BE	pop esi
+004001BF 	jmp 0x00400160		
 ...
-004001D1	JMP DWORD PTR DS:[EBX+C]
+004001D1	jmp ds:[ebx+C]
 \end{lstlisting}
 \end{code} 
 
-\hspace{0.5cm}Trong đoạn mã \ref {lst:UnpackinFSG} có thể thấy quá trình mở gói được thực hiện thông qua việc sử dụng các câu lệnh tính toán và kết thúc là một lệnh nhảy tại địa chỉ 004001D1 tới vị trí 00401000 trong bộ nhớ, mà vị trí này là vị trí entry point thực sự của tập tin trước khi đóng gói. Vị trí này cũng chính là vị trí mà quá trình mở gói sẽ thay đổi giá trị mã liên tục cho tới khi quá trình kết thúc. 
+\hspace{0.5cm}Trong đoạn mã \ref {lst:ASMExample2} có thể thấy quá trình mở gói được thực hiện thông qua việc sử dụng các câu lệnh tính toán và kết thúc là một lệnh nhảy tại địa chỉ 0x004001D1 tới vị trí 0x00401000 trong bộ nhớ, mà vị trí này là vị trí entry point thực sự của tập tin trước khi đóng gói. Vị trí này cũng chính là vị trí mà quá trình mở gói sẽ thay đổi giá trị mã liên tục cho tới khi quá trình kết thúc. 
 
-\subsection{Ví dụ 3}
+\subsection{Ví dụ 3}\label{subsec:Example3}
 
-\hspace{0.5cm}Đối với những packer hiện đại ngày nay, không chỉ nâng cấp độ phức tạp của giải thuật đóng gói bằng việc sử dụng rất nhiều câu lệnh tính toán phức tạp, những packer này còn áp dụng rất nhiều kỹ thuật anti-reversing, anti-debugging nhằm khiến cho quá trình dịch ngược hay gỡ lỗi trở nên khó khăn rất nhiều. Ví dụ 3 sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế có sử dụng kỹ thuật Hardware Breakpoint nhằm che dấu quá trình mở gói:
+\hspace{0.5cm}Đối với những packer hiện đại ngày nay, không chỉ nâng cấp độ phức tạp của giải thuật đóng gói bằng việc sử dụng rất nhiều câu lệnh tính toán phức tạp, những packer này còn áp dụng rất nhiều kỹ thuật anti-reversing, anti-debugging nhằm khiến cho quá trình dịch ngược hay gỡ lỗi trở nên khó khăn rất nhiều. Ví dụ \ref {subsec:Example3} sẽ trình bày cụ thể về packer TELOCK được malware sử dụng trong thực tế có sử dụng kỹ thuật Hardware Breakpoint nhằm che dấu quá trình mở gói:
 
 \begin{code}
-\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Hardware Breakpoints sử dụng trong packer TELOCK},label={lst:HBinTELOCK},frame=single]
-0040408C 	INT3
-0040408D 	NOP
-0040408E 	MOV EAX, EAX 
-00404090 	STC
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Hardware Breakpoints sử dụng trong packer TELOCK},label={lst:ASMExample3},frame=single]
+00404083	push 0x004040C5
+00404084	xor eax, eax
+00404086	push fs:[eax]
+00404089	mov fs:[eax],esp
+0040408C 	int3
+0040408D 	nop
+0040408E 	mov eax, eax 
+00404090 	stc
 ...
-00404099 	CLC
+00404099 	clc
 ...
-0040409E 	CLD
+0040409E 	cld
 ...
-004040A3 	NOP
+004040A3 	nop
 \end{lstlisting}
-\end{code} 
+\end{code}
 
-\hspace{0.5cm}Trong đoạn mã \ref {lst:HBinTELOCK} có thể thấy TELOCK packer sẽ gây ra một exception trong chương trình bằng việc sử dụng câu lệnh INT3, sau khi ngắt chương trình, luồng thực thi sẽ được thay đổi tới vị trí của hàm xử lý exception. Tại đây, các giá trị của các thanh ghi debug sẽ được thay đổi đến các giá trị 00404090, 00404099, 0040409E, 004040A3 tương ứng, chính vì các thanh ghi debug được kích hoạt sẽ dẫn đến exception xảy ra liên tục trong chương trình tại các vị trí trên. Nếu chương trình đang được phân tích trong môi trường debugger thì các exception này sẽ được bỏ qua dẫn đến quá trình mở gói sau sẽ không được thực thi chính xác.   
+\hspace{0.5cm}Trong đoạn mã \ref {lst:ASMExample3} có thể thấy TELOCK packer sẽ gây ra một exception trong chương trình bằng việc sử dụng câu lệnh INT3, sau khi ngắt chương trình, luồng thực thi sẽ được thay đổi tới vị trí của hàm xử lý exception. Tại đây, các giá trị của các thanh ghi debug sẽ được thay đổi đến các giá trị 0x00404090, 0x00404099, 0x0040409E, 0x004040A3 tương ứng, chính vì các thanh ghi debug được kích hoạt sẽ dẫn đến exception xảy ra liên tục trong chương trình tại các vị trí trên. Nếu chương trình đang được phân tích trong môi trường debugger thì các exception này sẽ được bỏ qua dẫn đến quá trình mở gói sau sẽ không được thực thi chính xác.   
 
 \subsection{Nhận xét vấn đề}
 
@@ -88,13 +152,13 @@
 
 \subsection {Phân tích Packer trên hệ thống BE-PUM}
 
-\hspace{0.5cm}Việc phân tích hoàn toàn một packer và tìm ra điểm nhập thực sự của chương trình là một vấn đề vô cùng quan trọng bởi từ đó mới có thể xây dựng hoàn chỉnh được quá trình thực thi của một malware và từ đó quá trình nhận dạng malware đó mới thực sự khả thi. Phân tích vấn đề được đưa ra trong 3 ví dụ trong chương 2.1 sẽ giúp cụ thể hoá những thách thức gặp phải của hệ thống BE-PUM trong quá trình phân tích packer, từ đó sẽ tìm ra được các công việc cần phải thực hiện trong quá trình xử lý này.\\
+\hspace{0.5cm}Việc phân tích hoàn toàn một packer và tìm ra điểm nhập thực sự của chương trình là một vấn đề vô cùng quan trọng bởi từ đó mới có thể xây dựng hoàn chỉnh được quá trình thực thi của một malware và từ đó quá trình nhận dạng malware đó mới thực sự khả thi. Phân tích vấn đề được đưa ra trong 3 ví dụ trong chương \ref {sec:example} sẽ giúp cụ thể hoá những thách thức gặp phải của hệ thống BE-PUM trong quá trình phân tích packer, từ đó sẽ tìm ra được các công việc cần phải thực hiện trong quá trình xử lý này.\\
 
 \hspace{0.5cm}Hệ thống BE-PUM hỗ trợ phân tích động một tập tin mã nhị phân, quá trình phân tích một packer đặt ra các yêu cầu đối với hệ thống BE-PUM như sau:
 
 \begin{itemize}
-\item{Packer sử dụng các kỹ thuật thuộc nhóm kỹ thuật obfuscation, cụ thể được nêu ra ở ví dụ 1 và ví dụ 2 chương 2.1. Đối với các chương trình phân tích tĩnh, quá trình thay đổi luồng thực thi, cũng như tự thay đổi mã sẽ khiến cho việc xử lý là bất khả thi. Hệ thống BE-PUM đã xử lý được những kỹ thuật obfuscation tuy nhiên với một biến thể mới như trong ví dụ đã nêu, BE-PUM sẽ gặp rất nhiều khó khăn. Từ đó cho thấy công việc cần thực hiện là hỗ trợ cho hệ thống BE-PUM để xử lý tốt hơn và hiệu quả hơn các kỹ thuật này.\\}
-\item{Packer sử dụng rất nhiều kỹ thuật đa dạng nhằm phát hiện nếu chương trình thực thi đang được phân tích trong môi trường debugger bằng cách sử dụng các kỹ thuật thuộc nhóm kỹ thuật anti-reversing, anti-debugging như được nêu ra trong ví dụ 3 chương 2.1. Do đó, công việc cần thực hiện là hỗ trợ BE-PUM xử lý các kỹ thuật này, cụ thể hơn, cần phải giả lập một môi trường thực thi thực sự cho tập tin được đóng gói.}
+\item{Packer sử dụng các kỹ thuật thuộc nhóm kỹ thuật obfuscation, cụ thể được nêu ra ở ví dụ 1 và ví dụ 2 chương \ref {sec:Example}. Đối với các chương trình phân tích tĩnh, quá trình thay đổi luồng thực thi, cũng như tự thay đổi mã sẽ khiến cho việc xử lý là bất khả thi. Hệ thống BE-PUM đã xử lý được những kỹ thuật obfuscation tuy nhiên với một biến thể mới như trong ví dụ đã nêu, BE-PUM sẽ gặp rất nhiều khó khăn. Từ đó cho thấy công việc cần thực hiện là hỗ trợ cho hệ thống BE-PUM để xử lý tốt hơn và hiệu quả hơn các kỹ thuật này.\\}
+\item{Packer sử dụng rất nhiều kỹ thuật đa dạng nhằm phát hiện nếu chương trình thực thi đang được phân tích trong môi trường debugger bằng cách sử dụng các kỹ thuật thuộc nhóm kỹ thuật anti-reversing, anti-debugging như được nêu ra trong ví dụ 3 chương \ref {sec:Example}. Do đó, công việc cần thực hiện là hỗ trợ BE-PUM xử lý các kỹ thuật này, cụ thể hơn, cần phải giả lập một môi trường thực thi thực sự cho tập tin được đóng gói.}
 \end{itemize}
 
 \subsection {Nhận dạng Packer}
