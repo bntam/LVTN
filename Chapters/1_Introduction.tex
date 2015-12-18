@@ -15,7 +15,32 @@
 
 \subsection{Tổng quan về hệ thống BE-PUM}
 
-\hspace{0.5cm}Binary Emulation for PUshdown Model (BE-PUM) là công cụ với lõi được xây dựng dựa trên framework Jackstab - một thư viện mã nguồn mở được xây dựng cho phép dịch ngược mã nhị phân, nói cách khác Jackstab hỗ trợ chuyển đổi từ những giá trị mã máy thành hợp ngữ cấp cao, ngoài ra Jackstab cũng cho phép phân tích tĩnh một tập tin thực thi. Dựa trên cơ sở đó, BE-PUM được xây dựng với mục tiêu xây dựng một mô hình thực thi hoàn chỉnh của một tập tin mã nhị phân nói chung và cụ thể hơn là malware, cũng như những tập tin được đóng gói bởi các công cụ packer, mô hình đó được biểu diễn thông qua Control Flow Graph của chương trình.\\ 
+\hspace{0.5cm}Binary Emulation for PUshdown Model (BE-PUM) là công cụ với lõi được xây dựng dựa trên framework Jackstab - một thư viện mã nguồn mở được xây dựng cho phép dịch ngược mã nhị phân, nói cách khác Jackstab hỗ trợ chuyển đổi từ những giá trị mã máy thành hợp ngữ cấp cao, ngoài ra Jackstab cũng cho phép phân tích tĩnh một tập tin thực thi. Dựa trên cơ sở đó, BE-PUM được xây dựng với mục tiêu xây dựng một mô hình thực thi hoàn chỉnh của một tập tin mã nhị phân nói chung và cụ thể hơn là malware, cũng như những tập tin được đóng gói bởi các công cụ packer, mô hình đó được biểu diễn thông qua Control Flow Graph (CFG) của chương trình.\\ 
+
+\hspace{0.5cm}CFG được sinh ra bởi hệ thống BE-PUM biểu diễn mô hình của tập tin được phân tích, hay nói cách khác biểu diễn luồng điều khiển của chương trình. Trong hệ thống BE-PUM, một node của CFG tương ứng với một node trong CFG, và một edge trong mô hình của BE-PUM được biểu diễn là cạnh nối giữa 2 node trong CFG. Quá trình sinh mô hình được thực hiện thông qua giải thuật On-the-fly model generation. Hình \ref {fig:IntroCFG} mô tả CFG sau khi tập tin với đoạn mã \ref {lst:IntroASM} được phân tích trong hệ thống BE-PUM.
+
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Đoạn mã thực thi Assembly},label={lst:IntroASM},frame=single]
+00401000	inc eax
+00401001	jne 0x00401000
+00401006 	push eax		
+\end{lstlisting}
+\end{code}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+   	\node[cfgstate,align=center](s_1){0x00401000\\\ inc \%eax}; 
+   	\node[cfgstate,align=center](s_2)[below of=s_1]{0x00401001\\\ jne 0x00401000};
+   	\node[cfgstate,align=center](s_3)[below of=s_2]{0x00401006\\\ pushl \%eax};
+    \path[-{>[scale=2,length=3,width=3]}] 
+    (s_1) edge node {} (s_2)
+  	(s_2.east) edge [bend right=60] node {} (s_1.east)
+    (s_2) edge node {} (s_3);	  
+\end{tikzpicture}
+\caption{CFG của BE-PUM với đoạn mã assembly \ref {lst:IntroASM}}
+\label{fig:IntroCFG}
+\end{figure}
 
 \hspace{0.5cm}Kế thừa bộ thư viện dịch ngược mã nhị phân của Jackstab, với mục tiêu có thể xây dựng hoàn chỉnh mô hình cho các tập tin thực thi, BE-PUM không chỉ dừng lại với việc phân tích tĩnh mà còn mở rộng để có thể phân tích động thông qua việc áp dụng các kỹ thuật bao gồm:
 
@@ -25,9 +50,50 @@
 \item{Xử lý kỹ thuật obfuscation: điểm mạnh và là ưu thế vượt trội của BE-PUM so với các công cụ phân tích mã thực thi khác như Jackstab, IDA-Pro, Capstone, Unicorn, METASM, HOOPER đó là BE-PUM có hỗ trợ xử lý những kỹ thuật obfuscation như: indirect jump, self-modification code, entry point obscuring, strutured exception handling, overlapping instruction những kỹ thuật vốn được sử dụng rất phổ biến trong malware hay packer.}
 \end{itemize}
 
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Đoạn mã thực thi dưới dạng ASM},label={lst:ASMReal},frame=single]
+start:
+	cmp eax, 0
+	jne A2
+A1:
+	add eax, 09h
+	inc eax
+	inc eax
+	jmp eax
+A2:
+	mov eax, ss:[esp]
+	ret
+A3:
+	push 0
+	call ExitProcess
+end start
+\end{lstlisting}
+\end{code} 
+
+\begin{figure}
+\centering
+\begin{tabular}[c]{cc}
+	\subfloat[BE-PUM]
+	{
+		\label{fig:BEPUMReal}
+		\includegraphics[width=0.4\textwidth]{bepum_sample}
+    }
+    &
+	\subfloat[IDA-Pro]
+	{
+		\label{fig:IDAReal}
+        \includegraphics[width=0.6\textwidth]{ida_sample}
+	}
+  \end{tabular}
+  \caption{Mô hình của BE-PUM và IDA Pro được sinh ra từ đoạn mã \ref {lst:ASMReal}}
+  \label{fig:ModelReal}
+\end{figure}
+
+\hspace{0.5cm}Hình \ref {fig:ModelReal} cho thấy công cụ IDA Pro, một công cụ rất mạnh được sử dụng cho quá trình phân tích tập tin mã nhị phân không thể xử lý kỹ thuật Indirect Jump tại câu lệnh JMP EAX tại vị trí 0x0040100f, cụ thể IDA Pro sẽ dừng thực thi và không nhảy đến được vị trí 0x00401015. Ngược lại hệ thống BE-PUM xử lý và nhảy đến vị trí 0x00401015 đã được tính toán trước đó.
+
 \subsection{Tổng quan về Packer}
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{simple_packer_schema}
 \caption{Mô hình của một packer đơn giản}
@@ -79,4 +145,18 @@
 \section{Kết quả đề tài}
 
 \hspace{0.5cm}Nội dung và kết quả nghiên cứu được thực hiện trong đề tài luận văn này đã được vinh dự đóng góp trong bài báo "Precise Packer detection using Model checking" tại hội nghị SEATUC 2016 (10th SOUTH EAST ASIAN TECHNICAL UNIVERSITY CONSORTIUM SYMPOSIUM) được diễn ra tại Viện công nghệ Shibaura, Tokyo, Nhật Bản từ ngày 22/02/2016 đến ngày 24/02/2016.
+
+\section{Cấu trúc của luận văn}
+
+\hspace{0.5cm}Nội dung của luận văn tốt nghiệp bao gồm các chương chính như sau:
+
+\begin{itemize}
+\item{\textbf{Mở đầu}: giới thiệu sơ lược về đề tài luận văn, bố cục chung của luận văn, trình bày những mục tiêu khi chọn đề tài.\\}
+\item{\textbf{Chương 1}: tập trung giới thiệu tổng quan về đề tài, cụ thể về hệ thống BE-PUM và cách thức xây dựng mô hình của BE-PUM, đồng thời giới thiệu về packer, phương pháp model checking và công cụ NuSMV; mục tiêu cụ thể hướng tới của đề tài và phạm vi thực hiện của đề tài, cũng như những kết quả ban đầu đã đạt được của quá trình nghiên cứu đề tài.\\}
+\item{\textbf{Chương 2}: tập trung phân tích vấn đề, cụ thể là những vấn đề của hệ thống BE-PUM khi xử lý packer thông qua 3 ví dụ cụ thể về 2 packer được malware sử dụng trong thực tế, rút ra nhận xét tổng quát và những thách thức đặt ra cho đề tài. Ngoài ra, chương này cũng sẽ tập trung bàn luận về những thách thức này, từ đó đưa ra những giải pháp cụ thể để giải quyết những khó khăn đó.\\}
+\item{\textbf{Chương 3}: giới thiệu những kiến thức nền và các công nghệ được sử dụng trong đề tài. Để có thể giải quyết những thách thức như chương 2 đã nêu ra, cần nắm vững kiến thức nền tảng về hệ thống BE-PUM và lý thuyết về model checking, cũng như về công cụ NuSMV. Ngoài ra chương này cũng tập trung giới thiệu cụ thể về 13 kỹ thuật được hỗ trợ trong packer.\\}
+\item{\textbf{Chương 4}: trình bày về các công việc đã thực hiện trong luận văn dựa trên những kiến thức nền được giới thiệu ở chương 2. Cụ thể, chương này sẽ tập trung giới thiệu việc kết hợp giữa hệ thống BE-PUM và công cụ NuSMV trong việc nhận dạng packer. Để có thể so sánh giữa phương pháp pháp nhận dạng packer thông qua chữ ký và phương pháp model checking, giải thuật nhận dạng packer thông qua chữ ký cũng được hiện thực và giới thiệu cụ thể trong chương này.\\}
+\item{\textbf{Chương 5}: chủ yếu trình bày những kết quả đã đạt được sau khi thực hiện đề tài, kết quả thí nghiệm trên tập malware thực tế, cũng như những so sánh giữa 2 phương pháp nhận dạng packer.\\}
+\item{\textbf{Chương 6}: nêu ra những hạn chế được đặt ra trong quá trình thực hiện đề tài và hướng giải quyết trong tương lai để có thể khắc phục những hạn chế đó.}
+\end{itemize}
 
