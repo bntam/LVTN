@@ -7,5 +7,25 @@
 
 \section{Thí nghiệm và đánh giá kết quả}
 
+\subsection{Kế hoạch thực hiện thí nghiệm}
+
+\hspace{0.5cm}Công việc thực hiện thí nghiệm để có thể phân tích và nhận dạng packer được chia làm các bước sau:
+
+\begin{itemize}
+\item{Để có thể thí nghiệm phân tích packer trên hệ thống BE-PUM. Lựa chọn 9 tập tin mẫu và nén bằng 27 packer. Các tập tin mẫu bao gồm 5 tập tin tự tạo: api\_test.exe, demo1.exe, demo2.exe, bof.exe, api\_test\_v2.exe và 4 virus trong thực tế từ tập virus VXHeaven bao gồm: Virus.Win32.Aztec, Virus.Win32.Adson, Virus.Win32.Benny và Virus.Win32.Cabanas.2999.\\}
+\item{Để có thể thí nghiệm nhận dạng packer qua kết hợp giữa hệ thống BE-PUM và công cụ NuSMV, lựa chọn từ tập virus LORIA 2000 virus và tiến hành chạy tự động.} 
+\item{Để có thể đưa ra so sánh giữa hai phương pháp nhận dạng packer, một là thông qua phương pháp nhận dạng chữ ký và hai là phương pháp nhận dạng thông qua model checking. Thí nghiệm về nhận dạng packer thông qua chữ ký cũng sẽ được tiến hành.}
+\end{itemize}
+
+\hspace{0.5cm}Thí nghiệm được thực hiện trên hệ thống VMWare WinXP SP3, Intel Core i5 - 2450M 2.5GHz, 2GB RAM, JDK 1.8 và công cụ thực hiện kiểm tra mô hình NuSMV 2.6.0.
+
+\section{Kết quả thí nghiệm}
+
+\hspace{0.5cm}Kết quả thí nghiệm phân tích packer trên hệ thống BE-PUM được thể hiện trong bảng.
+
+\hspace{0.5cm}Kết quả thí nghiệm nhận dạng packer qua công cụ NuSMV được thể hiện trong bảng.
+
 \section{Kết luận}
+
+\hspace{0.5cm}Trong quá trình tiến hành thí nghiệm phân tích packer trên hệ thống BE-PUM, những tập tin ... đã được phân tích hoàn toàn. Tuy nhiên một số tập tin bao gồm ... không thể đóng gói bởi một số packer và một số tập tin bao gồm ... chưa được phân tích hoàn toàn bởi hệ thống BE-PUM. 
 

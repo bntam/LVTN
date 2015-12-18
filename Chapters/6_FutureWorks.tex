@@ -7,5 +7,41 @@
 
 \section{Hạn chế của đề tài}
 
+\hspace{0.5cm}Trong giới hạn của đề tài, quá trình phân tích packer trên hệ thống BE-PUM còn một số hạn chế nhất định bao gồm:
+
+\begin{itemize}
+\item{Do một số packer như Themida, Fastpack, Armadillo sử dụng những API để xử lý tiến trình và luồng phức tạp cụ thể bao gồm: CreateProcess@kernel32.dll, SuspendThread@kernel32.dll, ResumeThread@kernel32.dll,...Do đó đối với những packer này hệ thống BE-PUM chưa hỗ trợ phân tích hoàn toàn.\\}
+\item{Do một số packer có kích thước sau khi đóng gói tập tin là rất lớn cụ thể là PEBundle và thời gian vượt quá thời gian timeout cho phép phân tích một tập tin của hệ thống BE-PUM do đó đối với PEBundle hệ thống BE-PUM chưa hỗ trợ phân tích hoàn toàn.\\}
+\item{Do một số kỹ thuật mới đòi hỏi xử lý phức tạp hơn và một số kỹ thuật anti-reversing, anti-debugging và một số packer nhận dạng môi trường thực thi ảo hoá do đó số lượng packer được hạn chế trong đề tài luận văn này là 27 packer.\\}
+\item{Với 27 packer này, hệ thống BE-PUM hỗ trợ phân tích 13 kỹ thuật được sử dụng chính yếu.}
+\end{itemize}
+
+\hspace{0.5cm}Cũng trong giới hạn đề tài, quá trình nhận dạng packer bằng việc kết hợp giữa hệ thống BE-PUM và công cụ NuSMV còn một số hạn chế và khó khăn nhất định sau:
+
+\begin{itemize}
+\item{Vấn đề giá trị thực của một thanh ghi: giả sử quá trình kiểm tra trên một mô hình của packer có thoả mãn tính chất rằng thanh ghi EAX có giá trị bằng 0 hay không, trong quá trình mô hình hoá hiện tại biểu diễn mô hình NuSMV thì giá trị của thanh ghi chưa được xét tới cụ thể do đó việc kiểm tra tính chất này là hạn chế lớn nhất của chương trình.\\}
+\item{Truy cập giá trị bộ nhớ gián tiếp: giả sử quá trình kiểm tra trên một mô hình của packer có thoả mãn tính chất rằng có sử dụng câu lệnh nhằm ghi vào giá trị bộ nhớ tại ví trị mà giá trị được lưu trong thanh ghi EAX hay không. Chính vì hạn chế giá trị thanh ghi không được xét tới trong mô hình của NuSMV, cũng như giá trị bộ nhớ cũng chưa được xét tới do đó việc kiểm tra tính chất này cũng là hạn chế của chương trình.\\}
+\item{Đối với một số kỹ thuật bao gồmm: ..., do trong giới hạn đề tài chưa thể mô tả được thông qua biểu thức CTL do đó việc xác định các kỹ thuật này sẽ được tiến hành song song với giải thuật On-the-fly của hệ thống BE-PUM.\\}
+\item{Đối với quá trình chạy thí nghiệm nhận dạng packer thì thời gian tối đa cho quá trình phân tích là 3600s do đó đối với những virus hay tập tin có kích thước đóng gói lớn hay quá trình phân tích tương đối lâu thì quá trình xây dựng mô hình của hệ thống BE-PUM sẽ dừng lại khi vượt quá timeout, quá trình nhận dạng packer vì thế cũng mang lại kết quả chính xác vì mô hình là chưa hoàn thiện.}
+\end{itemize}
+
+\hspace{0.5cm}Chính vì những hạn chế trên của hệ thống BE-PUM ta có thể kết luận về kết quả TRUE/FALSE được trả về khi nhận dạng một kỹ thuật của packer như sau:
+
+\begin{itemize}
+\item{Nếu kết quả trả về cho quá trình nhận dạng là TRUE: có thể kết luận được rằng virus hay tập tin ban đầu được kiểm tra thực sự thoã mãn tính chất cần nhận dạng.\\}
+\item{Nếu kết quả trả về cho quá trình nhận dạng là FALSE: chưa thể kết luận được rằng virus hay tập tin ban đầu được kiểm tra có thực sự thoã mãn tính chất cần nhận dạng hay không.}
+\end{itemize}
+
+\hspace{0.5cm}Ngoài ra, việc nhận dạng packer dựa trên sự thoã mãn một tập tính chất của packer đó do đó, một malware ngoài việc được mở gói của hệ thống BE-PUM, quá trình phân tích được tiến hành trên malware có thể thoã mãn một số tính chất khác, một malware không chỉ được nhận dạng bởi 1 packer mà còn được nhận dạng bởi rất nhiều packer khác.
+
 \section{Mục tiêu hướng tới trong tương lai}
+
+\hspace{0.5cm}Chính vì những hạn chế nhất định trong đề tài, công việc trong tương lai để có thể cải thiện quá trình nhận dạng packer sẽ bao gồm các công việc được đề xuất như sau:
+
+\begin{itemize}
+\item{Phân loại cụ thể các giá trị của thanh ghi, bộ nhớ và biểu diễn cụ thể trong mô hình NuSMV.\\}
+\item{Tăng số lượng packer được phân tích, qua đó thu thập các kỹ thuật mới của packer. Bổ sung và biểu diễn hình thức chính xác kỹ thuật của packer.\\}
+\item{Giải pháp được đưa ra để có thể nhận dạng chính xác được một packer đó là xác định cụ thể vị trí entry point thực sự của một tập tin nếu nghi ngờ tập tin này có sử dụng packer. Phân tách quá tình xây dựng mô hình của tập tin đó và tiến hành kiểm tra chỉ trên mô hình packer được phân tách.\\}
+\item{Giải pháp cụ thể để có thể xác định được vị trí entry point thực sự của một tập tin có thể được xác định thông qua tần số xuất hiện của kỹ thuật đó trong suốt quá trình phân tích. Nếu tần suất xuất hiện của kỹ thuật đó là thoã mãn tần suất xuất hiện trên packer đã được phân tích thì có thể kết luận được vị trí entry point thực sự đó.}
+\end{itemize}
 
