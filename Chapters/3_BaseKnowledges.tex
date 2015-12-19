@@ -736,8 +736,8 @@ CTLSPEC AF(s.mnem == pushl)
 \item{Self-Modification: Dynamic Code, Code Overwriting, Overlapping Block}
 \item{Instruction Obfuscation: Indirect Jump}
 \item{Anti-tracing: Structured Exception Handler và 2 Special APIs}
-\item{Arithmetic Operation: Obfuscated constants và Checksumming}
-\item{Anti-tampering: Checksumming, Timing check, Anti-debugging, Anti-rewriting và Hardware breakpoints}
+\item{Arithmetic Operation: Obfuscated Constants và Checksumming}
+\item{Anti-tampering: Checksumming, Anti-reversing, Anti-rewriting}
 \end{itemize}
 
 \subsection{Code placing obfuscation}\label{subsec:Packer1Tech}
@@ -810,6 +810,23 @@ CTLSPEC AF(s.mnem == pushl)
 \end{lstlisting}
 \end{code}
 }
+\item{Kỹ thuật Code Chunking: kỹ thuật này được packer sử dụng để có thể chia đoạn mã thực thi thành nhiều khối, mỗi khối là một tập với số lệnh câu lệnh xử lý rất ít hay nói cách khác mỗi khối có kích thước là dưới 20 bytes, mỗi khối này kết thúc với một câu lệnh nhảy. Hệ thống BE-PUM sử dụng kỹ thuật Dynamic symbolic execution để xử lý các câu lệnh nhảy do đó hệ thống BE-PUM cũng dễ dàng xử lý các kỹ thuật này. Đoạn mã \ref {lst:CCinYODA} mô tả kỹ thuật Code Chunking trong packer YODA, trong đó có thể thấy đoạn mã được chia nhỏ làm các khối 0x0040446E, 0x004474, 0x00404477, 0x0040447A.
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Code Chunking sử dụng trong packer YODA},label={lst:CCinYODA},frame=single]
+0040446B jmp 0x0040446E
+... 
+0040446E stc 
+... 
+00404474 jmp 0x00404477
+...
+00404477 jmp 0x0040447A
+...
+0040447A jmp 0x0040447D 
+... 
+0040447D nop
+\end{lstlisting}
+\end{code}
+}
 \end{itemize}
 }
 \end{enumerate}
@@ -841,6 +858,7 @@ CTLSPEC AF(s.mnem == pushl)
 \end{code}
 }
 \item{Kỹ thuật Two Special APIs: trong kỹ thuật này, packer sẽ không nạp tất cả API cần sử dụng mà thay vào đó, packer sẽ chỉ nạp 2 API đặc biệt là: LoadLibrary và GetProcAddress để có thể lấy được địa chỉ của các API sẽ sử dụng. Hệ thống BE-PUM đã hỗ trợ 2 API đặc biệt này nên dễ dàng xử lý kỹ thuật.
+\begin{code}
 \begin{lstlisting}[captionpos=b,caption={Kỹ thuật Two Special APIs sử dụng trong packer FSG},label={lst:TwoAPIinFSG},frame=single]
 004001C5  push eax
 004001C6  call kernel32.LoadLibrary
@@ -849,9 +867,87 @@ CTLSPEC AF(s.mnem == pushl)
 004001D5  push ebp
 004001D6  call kernel32.GetProcAddress
 \end{lstlisting}
+\end{code}
 }
 \end{itemize}
 
+\subsection{Arithmetic Operation}\label{subsec:Packer5Tech}
+\hspace{0.5cm}Nhóm kỹ thuật Arithmetic Operation bao gồm 2 kỹ thuật chính bao gồm: Obfuscated Constants và Checksumming.
 
+\begin{itemize}
+\item{Kỹ thuật Obfuscated Constants: trong kỹ thuật này, thay vào việc sử dụng trực tiếp một gía trị hằng số, hay một số giá trị hexa cụ thể thì packer sẽ sử dụng rất nhiều câu lệnh tính toán phức tạp nhưng vẫn cho ra một hằng số mong muốn. Mục đích cụ thể là nâng cao độ phức tạp trong tính toán và làm rối rắm quá trình xử lý. Hệ thống BE-PUM hiện tại hỗ trợ hơn 200 câu lệnh hợp ngữ do đó việc tính toán các câu lệnh này là khả thi, tuy sẽ còn một số hạn chế nếu như packer sử dụng những câu lệnh tính toán mà hệ thống BE-PUM chưa hỗ trợ. Đoạn mã \ref {lst:OCinTELOCK} cho thấy quá trình sử dụng những câu lệnh XOR và SUB để tính toán một giá trị hằng số và được lưu trong thanh ghi EAX. 
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Obfuscated Constants sử dụng trong packer TELOCK},label={lst:OCinTELOCK},frame=single]
+00404C4B  mov eax, ss:[ebp + 40D280] 
+00404C51  push eax
+00404C52  xor eax, 7DCC805B 
+00404C57  sub eax, 2A5DA2BD
+\end{lstlisting}
+\end{code}
+}
+\item{Kỹ thuật Checksumming: còn gọi là kỹ thuật CRC Checking, kỹ thuật này bao gồm 2 giai đoạn chính. Trong giai đoạn đầu, packer sẽ tính toán giá trị checksum với các giá trị xác định trong bộ nhớ, việc tính toán sẽ được tính toán qua các rất nhiều câu lệnh phức tạp cùng với số lần lặp là rất lớn. Trong giai đoạn tiếp theo, packer sẽ sử dụng một câu lệnh so sánh trực tiếp giá trị checksum này với một giá trị hằng số cụ thể để đảm bảo quá trình tính toán giá trị này cho ra một kết quả chính xác. Hệ thống BE-PUM hỗ trợ kỹ thuật Dynamic symbolic execution và phân tích trên giải thuật On-the-fly do đó hệ thống dễ dàng xử lý kỹ thuật này của packer. Đoạn mã \ref {lst:CSinTELOCK} biểu diễn hai quá trình của kỹ thuật Checksumming bao gồm việc tính toán giá trị checksum bắt đầu từ vị trí 0x004047F5 đến vị trí 00404806 và giai đoạn so sánh với giá trị hằng số 0x579122E6 tại vị trí 0x00404C57. 
+\begin{code}
+\begin{lstlisting} [captionpos=b,caption={Kỹ thuật Checksumming sử dụng trong packer TELOCK},label={lst:CSinTELOCK},frame=single]
+004047F5  xor eax, eax
+004047F7  lods ds:[edi]
+004047F8  xor al, dl
+004047FA  shr eax,0x1
+00404806  inc ecx
+00404812  jg 0x004047F5
+...
+00404C4B  mov eax, ss:[ebp + 40D280]
+00404C51  push eax
+00404C52  xor eax, 7DCC805B 
+00404C57  sub eax, 2A5DA2BD
+00404C63  jnz 0x0040527B
+\end{lstlisting}
+\end{code}
+}
+\end{itemize}
 
+\subsection{Anti-tampering}
+\hspace{0.5cm}Nhóm kỹ thuật Anti-tampering bao gồm các kỹ thuật chính: Anti-reversing, Anti-rewriting.
+
+\begin{enumerate}
+\item{\textbf{Anti-debugging}: Nhóm kỹ thuật Anti-debugging được sử dụng trong packer dưới dạng 3 kỹ thuật chính: Timming Check, Hardware Breakpoints, Anti-debugging.
+\begin{itemize}
+\item{Kỹ thuật Timing Check: trong kỹ thuật này, packer sẽ sử dụng những API có liên quan đến việc tính toán thời gian của hệ thống như: GetTickCount, GetSystemTime, GetLocalTime,...và những câu lệnh đặc biệt như RDTSC. Trong quá trình thực thi bình thường giá trị thời gian sẽ được tính toán bằng một hằng số cụ thể nhưng nếu tiến trình được xử lý trong môi trường debugger giá trị này sẽ được tính toán khác đi, do đó packer sẽ dễ dàng nhận dạng và kết thúc mở gói. Hệ thống BE-PUM đang dần mở rộng và hiện tại đã hỗ trợ hơn 400 API cũng như hỗ trợ nhiều hơn với các câu lệnh hợp ngữ do đó cũng sẽ xử lý được kỹ thuật này. Tuy nhiên sự tinh vi trong việc sử dụng này bằng cách sử dụng những API phức tạp hơn cũng chính là hạn chế mà hệ thống BE-PUM sẽ được mở rộng để hỗ trợ tốt hơn. Đoạn mã \ref {lst:TCinPECOMPACT} mô tả việc sử dụng API GetTickCount để lấy giá trị thời gian của hệ điều hành.
+\begin{code}
+\begin{lstlisting} [captionpos=b,caption={Kỹ thuật Timming Check sử dụng trong packer PECOMPACT},label={lst:TCinPECOMPACT},frame=single]
+00404600  xor eax, eax
+00404602  call GetTickCount
+00404605  cmp eax, 0
+00404608  jne 0x00404620
+\end{lstlisting}
+\end{code}
+}
+\item{Kỹ thuật Hardware Breakpoints: kỹ thuật này đã được trình bày như ví dụ cụ thể trong chương \ref {subsec:Example3}. Hệ thống BE-PUM được mở rộng để hỗ trợ thêm 8 thanh ghi debug do đó hệ thống BE-PUM cũng đã xử lý được kỹ thuật này.\\}
+\item{Kỹ thuật Anti-debugging: trong kỹ thuật này, packer sẽ sử dụng những API để nhận dạng nếu tiến trình đang được thực thi trong môi trường debug như: IsDebuggerPresent, CheckRemoteDebuggerPresent, NtQueryInformationProcess,  NtQuerySystemInformation và NtQueryObject. Hệ thống BE-PUM cũng đã hỗ trợ các API nên việc xử lý kỹ thuật này là khả thi. 
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Anti-debugging sử dụng trong packer YODA},label={lst:ADinYODA},frame=single]
+00404888 call kernel32.IsDebuggerPresent
+\end{lstlisting}
+\end{code}
+}
+\end{itemize}
+}
+\item{\textbf{Anti-rewriting}: Nhóm kỹ thuật Anti-rewriting được sử dụng trong packer dưới dạng 2 kỹ thuật chính: Checksumming và Stolen Bytes trong đó kỹ thuật Checksumming đã được trình bày cụ thể ở chương \ref {subsec:Packer5Tech}.
+\begin{itemize}
+\item{Kỹ thuật Stolen Bytes: trong kỹ thuật này, packer sẽ cấp phát một vùng nhớ ảo đặc biệt bằng việc sử dụng API VirtualAlloc và ghi các byte giá trị bộ nhớ, cũng như mở gói trên vùng nhớ ảo này thay vì sử dụng kỹ thuật SMC. Kết thúc quá trình xử lý này, vùng nhớ ảo này sẽ ghi trở lại vào vùng nhớ thực và tiếp tục xử lý. Hệ thống BE-PUM đã hỗ trợ API VirtualAlloc và hiện thực vùng nhớ ảo cho bộ nhớ và các thao tác dịch ngược trên vùng nhớ ảo sử dụng Jackstab do đó hệ thống BE-PUM đã có thể xử lý kỹ thuật này.
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Kỹ thuật Stolen Bytes sử dụng trong packer PECOMPACT},label={lst:SBinPECOMPACT},frame=single]
+00404899  push edx
+0040489A  mov ebp, eax
+0040489C  push 0x40
+0040489E  push 0x1000
+004048A3  push ds:[ebx + 4]
+004048A6  push 0
+...   
+004048AF  call kernel32.VirtualAlloc
+\end{lstlisting}
+\end{code}
+}
+\end{itemize}
+}
+\end{enumerate}
 
