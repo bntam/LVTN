@@ -13,7 +13,7 @@
 \item{Do một số packer như Themida, Fastpack, Armadillo sử dụng những API để xử lý tiến trình và luồng phức tạp cụ thể bao gồm: CreateProcess@kernel32.dll, SuspendThread@kernel32.dll, ResumeThread@kernel32.dll,...Do đó đối với những packer này hệ thống BE-PUM chưa hỗ trợ phân tích hoàn toàn.\\}
 \item{Do một số packer có kích thước sau khi đóng gói tập tin là rất lớn cụ thể là PEBundle và thời gian vượt quá thời gian timeout cho phép phân tích một tập tin của hệ thống BE-PUM do đó đối với PEBundle hệ thống BE-PUM chưa hỗ trợ phân tích hoàn toàn.\\}
 \item{Do một số kỹ thuật mới đòi hỏi xử lý phức tạp hơn và một số kỹ thuật anti-reversing, anti-debugging và một số packer nhận dạng môi trường thực thi ảo hoá do đó số lượng packer được hạn chế trong đề tài luận văn này là 27 packer.\\}
-\item{Với 27 packer này, hệ thống BE-PUM hỗ trợ phân tích 13 kỹ thuật được sử dụng chính yếu.}
+\item{Với 27 packer này, hệ thống BE-PUM hỗ trợ phân tích 14 kỹ thuật được sử dụng chính yếu.}
 \end{itemize}
 
 \hspace{0.5cm}Cũng trong giới hạn đề tài, quá trình nhận dạng packer bằng việc kết hợp giữa hệ thống BE-PUM và công cụ NuSMV còn một số hạn chế và khó khăn nhất định sau:
@@ -21,7 +21,7 @@
 \begin{itemize}
 \item{Vấn đề giá trị thực của một thanh ghi: giả sử quá trình kiểm tra trên một mô hình của packer có thoả mãn tính chất rằng thanh ghi EAX có giá trị bằng 0 hay không, trong quá trình mô hình hoá hiện tại biểu diễn mô hình NuSMV thì giá trị của thanh ghi chưa được xét tới cụ thể do đó việc kiểm tra tính chất này là hạn chế lớn nhất của chương trình.\\}
 \item{Truy cập giá trị bộ nhớ gián tiếp: giả sử quá trình kiểm tra trên một mô hình của packer có thoả mãn tính chất rằng có sử dụng câu lệnh nhằm ghi vào giá trị bộ nhớ tại ví trị mà giá trị được lưu trong thanh ghi EAX hay không. Chính vì hạn chế giá trị thanh ghi không được xét tới trong mô hình của NuSMV, cũng như giá trị bộ nhớ cũng chưa được xét tới do đó việc kiểm tra tính chất này cũng là hạn chế của chương trình.\\}
-\item{Đối với một số kỹ thuật bao gồmm: ..., do trong giới hạn đề tài chưa thể mô tả được thông qua biểu thức CTL do đó việc xác định các kỹ thuật này sẽ được tiến hành song song với giải thuật On-the-fly của hệ thống BE-PUM.\\}
+\item{Đối với một số kỹ thuật do trong giới hạn đề tài chưa thể mô tả được thông qua biểu thức CTL do đó việc xác định các kỹ thuật này sẽ được tiến hành song song với giải thuật On-the-fly của hệ thống BE-PUM.\\}
 \item{Đối với quá trình chạy thí nghiệm nhận dạng packer thì thời gian tối đa cho quá trình phân tích là 3600s do đó đối với những virus hay tập tin có kích thước đóng gói lớn hay quá trình phân tích tương đối lâu thì quá trình xây dựng mô hình của hệ thống BE-PUM sẽ dừng lại khi vượt quá timeout, quá trình nhận dạng packer vì thế cũng mang lại kết quả chính xác vì mô hình là chưa hoàn thiện.}
 \end{itemize}
 

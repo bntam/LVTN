@@ -6,6 +6,7 @@
 \usepackage{setspace}
 \usepackage{mathtools}
 \usepackage{subfig}
+\usepackage{booktabs, multicol, multirow}
 	
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -63,6 +64,9 @@
 \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black]
 \tikzstyle{arrow} = [thick,->,>=stealth]
 \tikzstyle{cfgstate} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black]
+
+\newcommand{\specialcell}[2][c]{
+  \begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 
 \input{Chapters/0_A_Cover}
 
