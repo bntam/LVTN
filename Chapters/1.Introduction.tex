@@ -1,4 +1,8 @@
 
+\begin{concept}[15cm]
+\textit{Nội dung chương này sẽ tập trung giới thiệu tổng quan về BE-PUM, điểm mạnh của công vụ này và so sánh với công cụ khác, những đòi hỏi trong quá trình hiện thực công cụ và yếu tố quyết  định để cho ra đề tài này; dẫn nhập về hợp ngữ assembly, dẫn nhập về Windows API, các thành phần sẽ được áp dụng để phát triển cho BE-PUM; nêu ra mục tiêu của đề tài và giới hạn trong phạm vi luận văn tốt nghiệp.}
+\end{concept}
+
 \section{Giới thiệu về BE-PUM}\
 
 	\subsection{BE-PUM là gì}
@@ -38,6 +42,10 @@ Trong BE-PUM, một địa chỉ trong chương trình được ánh xạ tươn
 
 \textit{On-the-fly model generation} là giải thuật chính trong hệ thống BE-PUM. Quá trình thực thi của tập tin mã nhị phân là một chuỗi thực thi động, bắt đầu từ một giá trị trong ở phân vùng mã (code section) của bộ nhớ, giá trị địa chỉ này được chỉ rõ bởi giá trị thanh ghi EIP. BE-PUM sẽ đặt khởi điểm từ đây, và lần dò theo từng câu lệnh hợp ngữ, tìm điểm kế tiếp sẽ được thực thi. Cứ như vậy, BE-PUM sẽ đi qua hết các nhánh có khả năng thực thi của chương trình và cho ra một đồ thị luồng điều khiển đầy đủ.
 
+	\subsection{Ví dụ đơn giản về sinh ra đồ thị CFG qua BE-PUM}
+
+Để hiểu rõ hơn về công việc của BE-PUM, ta cùng xem qua một ví dụ minh họa nhỏ về việc sinh ra đồ thị luồng điều khiển (Hình \ref{fig:imgexcfg}) với một đoạn mã hợp ngữ ở Bảng \ref{table:tblexcfg}.
+
 \begin{longtable}{ | m{3cm} | m{5cm} | }
 	\hline
 Địa chỉ câu lệnh & Nội dung câu lệnh\\
@@ -62,11 +70,11 @@ Trong BE-PUM, một địa chỉ trong chương trình được ánh xạ tươn
 0x00401015 & ret \\
 	\hline
 
-\caption{Ví dụ về nội dung của một tập tin nhị phân dưới dạng hợp ngữ}
+\caption{Nội dung của một tập tin nhị phân dưới dạng hợp ngữ (1)}
 \label{table:tblexcfg}
 \end{longtable}
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 [->,>=stealth',shorten >=1pt,auto,node distance=2cm,thick,main node/.style={circle,draw}]
@@ -92,7 +100,7 @@ Trong BE-PUM, một địa chỉ trong chương trình được ánh xạ tươn
 	(12)edge node[left] {} (15)
 	;
 \end{tikzpicture}
-\caption{Ví dụ mô hình luồng điều khiển được sinh ra từ tập tin ở Bảng \ref {table:tblexcfg}} 
+\caption{Đồ thị luồng điều khiển được sinh ra từ tập tin ở Bảng \ref {table:tblexcfg}} 
 \label{fig:imgexcfg}
 \end{figure}
 
@@ -101,11 +109,82 @@ Trong BE-PUM, một địa chỉ trong chương trình được ánh xạ tươn
 
 Đối với những tập tin nhị phân đơn giản, ta có thể dễ dàng quyết định được nút kế tiếp. Nhưng với những malware tinh vi, chúng sẽ có cách để ta không dễ dàng hiểu được ý định chúng sẽ làm gì, ra sao. Phương thức trên được gọi là làm rối mã (obfuscation). Một trong những cách điển hình có thể kể đến là nhảy gián tiếp (indirect jump -- thực hiện lệnh nhảy đến một giá trị không phải là hằng số như giá trị thanh ghi, giá trị ô nhớ...) và tự thay đổi mã (self-modification code -- trong quá trình thực thi sẽ tự ý thay đổi nội dung mã thực thi của chính mình).\\
 
-Và BE-PUM đã được dựng lên để có thể chống lại việc làm rối mã này. Đó là điểm mạnh và là ưu thế vượt trội của BE-PUM so với các công cụ phân tích tĩnh mã thực thi khác như Jackstab, IDA-Pro, Capstone, Unicorn, METASM, HOOPER bằng việc áp dụng phương pháp \textit{dynamic symbolic execution}.\\
+Và BE-PUM đã được dựng lên để có thể chống lại việc làm rối mã này. Đó là điểm mạnh và là ưu thế vượt trội của BE-PUM so với các công cụ phân tích tĩnh mã thực thi khác như Jackstab, IDA Pro, Capstone, Unicorn, METASM, HOOPER bằng việc áp dụng phương pháp \textit{dynamic symbolic execution}.\\
 
 \textit{Dynamic symbolic execution} là một phương pháp nhằm tính toán các giá trị thanh ghi và bộ nhớ ở một vị trí cụ thể, khi chúng ta không thể biết được điểm thực thi kế tiếp của chương trình là gì. Nhờ đó ta có thể giải quyết được các cách thức làm rối mã như nhảy gián tiếp, tự thay đổi mã như đã nói ở trên.\\
 
-Để có thể tính toán được các giá trị thanh ghi cũng như bộ nhớ, ta cần xây dựng một hệ thống mô phỏng các câu lệnh mà một tập tin nhị phân thực hiện được. Các câu lệnh đó bao gồm 2 phần chính đó là \textit{hợp ngữ} và \textit{Windows API}.
+Để có thể tính toán được các giá trị thanh ghi cũng như bộ nhớ, ta cần xây dựng một hệ thống mô phỏng các câu lệnh mà một tập tin nhị phân thực hiện được. Các câu lệnh đó bao gồm 2 phần chính đó là \textit{hợp ngữ} và \textit{Windows API}.\\
+
+\textbf{\textit{Đây là lý do chính hình thành nên đề tài luận văn này.}}
+
+	\subsection{Ví dụ so sánh giữa BE-PUM và IDA Pro}
+
+Đây là một ví du so sánh giữa BE-PUM và công cụ dịch ngược điển hình, rất nổi tiếng khác đó là IDA Pro, để cho thấy rõ được điểm mạnh và sự khác biệt của BE-PUM so với các công cụ khác.
+
+\begin{longtable}{ | m{3cm} | m{5cm} | }
+	\hline
+Địa chỉ câu lệnh & Nội dung câu lệnh\\
+	\hline
+	\hline
+0x00401000 & cmp eax, 0 \\
+	\hline
+0x00401003	& jne 0x00401015 \\
+	\hline
+0x00401005 & call 0x00401011 \\
+
+	\hline
+0x0040100a & add eax, 09h \\
+	\hline
+0x0040100d & inc eax \\
+	\hline
+0x0040100e & inc eax \\
+	\hline
+0x0040100f & jmp eax \\
+
+	\hline
+0x00401015 & push 0 \\
+	\hline
+0x00401017 & call  0x0040101c\\
+	\hline
+0x0040101c & jmp ExitProcess\\
+
+	\hline
+0x00401011 & mov eax, ss:[esp] \\
+	\hline
+0x00401014 & ret \\
+	\hline
+
+\caption{Nội dung của một tập tin nhị phân dưới dạng hợp ngữ (2)}
+\label{table:tblAsmEx2}
+\end{longtable}
+
+
+\newpage
+
+Nhìn vào đoạn mã ở Bảng \ref{table:tblAsmEx2}, ta nhận thấy tại địa chỉ \textit{0x0040100f} có thực hiện câu lệnh nhảy gián tiếp. Đối với các công cụ chạy trên mô hình phân tích tĩnh thì khi phân tích đến vị trí này, công cụ đó sẽ không thể tìm được điểm cần nhảy đến nữa và sẽ dừng việc phân tích ở đây lại. Ta có thể dễ dàng thấy được điều đó qua Hình \ref{fig:ModelReal} (b) ngay sau đây.\\
+
+Nhưng đối với BE-PUM, một công cụ hỗ trợ cả phân tích tĩnh và phân tích động, thì tại điểm này, BE-PUM có thể tính toán được giá trị cần nhảy đến và dễ dàng tìm được điểm đích cần xử lý tiếp theo. Hình \ref{fig:ModelReal} (a) đã miêu tả rõ ràng được điều đó qua việc nút \textit{0x0040100f} đã liên thông đến nút cần xử lý là \textit{0x00401015}.
+
+\newpage
+
+\begin{figure}[H]
+\centering
+\begin{tabular}[c]{cc}
+	\subfloat[BE-PUM]
+	{
+		\label{fig:BEPUMReal}
+		\includegraphics[width=0.4\textwidth]{bepum_sample}
+    }
+    &
+	\subfloat[IDA Pro]
+	{
+		\label{fig:IDAReal}
+        \includegraphics[width=0.6\textwidth]{ida_sample}
+	}
+\end{tabular}
+\caption{Mô hình của BE-PUM và IDA Pro được sinh ra từ đoạn mã ở Bảng \ref {table:tblAsmEx2}}
+\label{fig:ModelReal}
+\end{figure}
 
 \section{Tổng quan về hợp ngữ}
 Ngôn ngữ assembly (hay hợp ngữ) là ngôn ngữ cấp thấp được biên dịch để thực thi một chương trình nào đó. Ngôn ngữ assembly có tính gợi nhớ, mỗi câu lệnh thực thi một chức năng, hay nhiệm vụ riêng biệt tương ứng với một lệnh yêu cầu máy thực thi. \\
@@ -118,6 +197,7 @@ Với tên gọi đầy đủ là Microsoft Windows application programming inte
 
 Windows API là tên gọi chung của những dự án được triển khai cho những nền tảng khác nhau được áp dụng trong hệ điều hành Windows; mà thông thường chúng có những tên gọi riêng. Một số tên gọi và mô tả cho những phiên bản xin được trình bày trong Bảng \ref{table:tblwapiver}.\\
 
+\newpage
 
 \begin{longtable}{ | m{3cm} | m{11cm} | }
 	\hline
@@ -163,15 +243,15 @@ Bài báo cáo này bao gồm những đề mục sau đây:
 
 \begin{description}
   	\item[Chương 1] \hfill \\
-	Giới thiệu tổng quan về BE-PUM, yếu tố quyết  định để cho ra đề tài này; dẫn nhập về Windows API, thành phần sẽ được áp dụng để phát triển cho BE-PUM; dẫn nhập về hợp ngữ assembly, và cuối cùng nêu ra được mục đính chính của đề tài sẽ cần làm gì. \\
+	Giới thiệu tổng quan về BE-PUM, điểm mạnh của công vụ này và so sánh với công cụ khác, những đòi hỏi trong quá trình hiện thực công cụ và yếu tố quyết  định để cho ra đề tài này; dẫn nhập về hợp ngữ assembly, dẫn nhập về Windows API, các thành phần sẽ được áp dụng để phát triển cho BE-PUM; nêu ra mục tiêu của đề tài và giới hạn trong phạm vi luận văn tốt nghiệp. \\
  	\item[Chương 2] \hfill \\
 	Đem đến những cái nhìn về những vấn đề đã và đang được lưu tâm khi thực hiện đề tài này; sự phổ biến của Windows API trong những phần mềm độc hại để thấy sự cần thiết của việc xây dựng một bộ xử lý Windows API cho BE-PUM; những khó khăn khi thực hiện điều đó và giải pháp cho vấn đề. Đông thời phân tích vấn đề đặt ra là hiện thực các câu lệnh trong hợp ngữ assembly, giải thích tại sao sử dụng ngôn ngữ assembly để tiến hành phân tích chương trình.\\
 	\item[Chương 3] \hfill \\
 	Trình bày những kiến thức cần thiết cho quá trình thực hiện đề tài; từ những kiến thức phải nắm được về hệ thống BE-PUM do đây là một đề tài làm việc dựa trên đó; và mỗi khi làm việc với một thư viện bất kỳ, đòi hỏi ta phải tìm hiểu cách thức làm việc với thư viện đó và cả những kiến thức cần thiết do bộ thư viện ấy yêu cầu. Đồng thời cũng trình bày các kiến thức cơ bản về hợp ngữ assembly, từ đó có cái nhìn tổng quan về assembly để tiến hành xây dựng chương trình BE-PUM. \\
 	\item[Chương 4] \hfill \\
-	Mỗi chương trình bất kỳ đều cần một thiết kế tốt để giúp cho việc xây dựng dễ dàng và quy chuẩn hơn. Mục này sẽ trình bày cách mà bộ xử lý Windows API đã được hiện thực để tương tai sau này có thể dễ dàng sửa chữa, bảo trì và bổ sung thêm vào kiến trúc đó. Để hiểu rõ cấu chương trình mô phỏng câu lệnh assembly, sơ đồ class trình bày trong chương này thể hiện được mối quan hệ giữa các class, cấu trúc của chương trình BE-PUM được phát triển dựa trên dự án JakStab, giới thiệu các class quan trọng của chương trình BE-PUM\\
+	Mỗi chương trình bất kỳ đều cần một thiết kế tốt để giúp cho việc xây dựng dễ dàng và quy chuẩn hơn. Mục này sẽ trình bày cách mà bộ xử lý Windows API đã được hiện thực để tương tai sau này có thể dễ dàng sửa chữa, bảo trì và bổ sung thêm vào kiến trúc đó. Để hiểu rõ cấu chương trình mô phỏng câu lệnh assembly, sơ đồ class trình bày trong chương này thể hiện được mối quan hệ giữa các class, cấu trúc của chương trình BE-PUM được phát triển dựa trên dự án JakStab, giới thiệu các class quan trọng của chương trình BE-PUM.\\
 	\item[Chương 5] \hfill \\
-	 Trình bày về kết quả mà bộ xử Windows API đã đạt được với những Windows API đã được hỗ trợ cho hệ thống BE-PUM. Đông thời trình bày các bước để hiện thực một câu lệnh của hợp ngữ assembly, cách đánh giá kết quả đúng hay sai bằng cách so sánh kết quả với chương trình OnlyDbg, giới thiệu về công cụ MASM. \\
+	 Trình bày và phân tích, so sánh với các công cụ khác về kết quả mà đề tài đã đạt được sau khi tiến hành thực hiện công việc, kết quả tổng thể mà bộ xử lý đã được đóng góp để hỗ trợ cho hệ thống BE-PUM.\\
 	\item[Chương 6] \hfill \\
 	 Sau khi có được những kết quả ở thời điểm hiện tại của quá trình thực hiện đề tài, chương cuối này sẽ trình bày về những phương hướng cần tiếp tục phát triển trong tương lai đối với đề tài hiện tại.\\
 	\item[Phụ Lục] \hfill \\
