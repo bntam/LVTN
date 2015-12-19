@@ -7,9 +7,9 @@
 
 \begin{longtable}{|l|l|l|l|l|l|l|l|l|l|l|}
 \hline
-\multicolumn{1}{|c}{\multirow{2}{*}{\textbf{Example}}} & \multicolumn{1}{|c}{\multirow{2}{*}{\textbf{\specialcell{Size\\KB}}}} & 
-\multicolumn{3}{|c}{\textbf{JakStab}} & \multicolumn{3}{|c}{\textbf{IDA Pro}} & \multicolumn{3}{|c|}{\textbf{BE-PUM}} \\ \cline{3-11} 
-                                   \textbf{} & \textbf{}    & \textbf{Nodes}    & \textbf{Edges}    & \textbf{Time}   & \textbf{Nodes}   & \textbf{Edges}   & \textbf{Time} & \textbf{Nodes}   & \textbf{Edges}   & \textbf{Time}  \\ \hline
+	\multicolumn{1}{|c}{\multirow{2}{*}{\textbf{Example}}} & \multicolumn{1}{|c}{\multirow{2}{*}{\textbf{\specialcell{Size\\KB}}}} & 
+	\multicolumn{3}{|c}{\textbf{JakStab}} & \multicolumn{3}{|c}{\textbf{IDA Pro}} & \multicolumn{3}{|c|}{\textbf{BE-PUM}} \\ \cline{3-11} 
+                                   \textbf{} & \textbf{}    & \textbf{Nodes}    & \textbf{Edges}    & \textbf{Time}   & \textbf{Nodes}   & \textbf{Edges}   & \textbf{Time} & \textbf{Nodes}   & \textbf{Edges}   & \textbf{Time}   \\ \hline
                                      
 Virus.Artelad.2173	& 23 & 134 & 154 & 10 & 159	& 162	& 1133				& 1610	& 1611	& 236468 \\ \hline
 Email-Worm.LoveLetter.b	&	60	&	1027	&	1026	&	297	&	984	&	1011	&	10	&	7558	&	7602	&	1073984	\\ \hline
@@ -88,8 +88,43 @@ nddeapir.exe	& 4& 164	& 179 &	500 &	187 & 	215 & 	24 & 180 &	196 &	223297 \\ \hl
 \end{small}
 
 
-\section{Các câu lệnh hợp ngữ đã được hỗ trợ}
-
+		\section{Các câu lệnh hợp ngữ đã được hỗ trợ}
+		Trong quá trình mô phỏng các câu lệnh assmebly có sự chọn lọc và ưu tiên các câu lệnh được sử dụng phổ biến trước. Với rất nhiều câu lệnh assembly trong ngôn ngữ cấp thấp được phân ra thành hai nhóm dựa trên thao tác xử lý của câu lệnh bao gồm bộ xử lý số nguyên và bộ sử lý số thực. \\ 
+		
+	Tính tới thời điểm của bài báo cáo này, đã có khoảng 200 câu lệnh xử lý số nguyên và khoảng 50 câu lệnh xử lý số thực được mô phỏng trong BE-BUM. Bảng ~\ref{tb:ThongKeAss} thống kê danh sách câu lệnh assembly đã mô phỏng được. 
+	\begin{longtable}{|m{2cm}|m{3cm}|m{9cm}|}
+		\hline
+			\multicolumn{2}{|l|}{Bộ xử lý} & Câu lệnh assembly \\
+		\hline
+		\hline		
+			Bộ xử lý số nguyên & Lệnh toán học & ADD, AND, SUB, OR, XOR, IMUL, ROR, DIV, SBB, CLC, NOT, IDIV, XADD, ADC, DEC, SHR, SAR, SHL, SAL, DEC, INC, SHR, ROR, REP, MUL, SAR, RCR, ROL, RCL, SBB \\
+		\cline{2-3}
+			& Lệnh gọi & CALL \\
+		\cline{2-3}
+			& Lệnh điều kiện nhảy & JE, JNZ, JC, JC, JLE, JGE, JGE, JLNLE, JS, JNO, JMP, LOOP, JZ, JB, JNB, JNG, JA, JNL, JO, JNS, JNO, JPE, LOOPE, LOOPZ, JNE, JNAE, JAEM JNAEM JL, JNBE, JG, LOOP, JP, JECXZM LOOPNE, LOOPNZ \\
+		\cline{2-3}
+			& Lệnh nhảy & JUMP\\
+		\cline{2-3}
+			& Lệnh sao chép& MOV, XCHG, MOVZ, MOVSB, MOVSW, MOSX, MOVZB, MOVZW, CMOVA, CMOVB, CMOVBE, CMOVC, CMOVE, CMOVP, CMOVPE, CMOVG, CMOVL, CMOVNA, CMOVNAE, CMOVNBE, CMOVNE, CMOVNG, CMOVNGE, CMOVNL, CMOVNLE, CMOVNO, CMOVNS, CMOVNZ, CMOVPO, CMOVZ \\
+		\cline{2-3}
+			& Lênh trả giá trị& RET\\
+			\cline{2-3}
+			& Lênh điều khiển&CMP, INT, AAA, AAD, AAM, ASS, BSF, BSWAP, BT, BTC, BRT, BTS, CBW, CDQ, CLC, CLD, CLI, CLTD, CMC, OUT, POP, POPA, POPF, PUSH, PUSHA, PUSHF, RDTSC, SAHF, SCAS, SETA, SETAE, SETB, SETBE, SETC, SETE, SETG, SETGE, SETL, SETNA, SETNAE, SETNB, SETNBE, SETNC, SETNE, SETNG, SETNGE, SETNL, SETNLE, SETNO, SETNP, SETNS, SETO, SETP, SETPE, SETPO, SETS, SETZ, LODS, MOVS, NEG, NOP, SHLD, SHRD, STC, STOS, TEST, XLAT, CBW, CWDE, CMPS, CMPXCHG, CMPXCHG8B, CPUID, CWD, CWDE, CWT, DAA, DAS, ENTER, IN INT1, INT3, LAHF, LEA, LEAVE \\
+		\hline
+			Bộ xử lý số thực & Lệnh toán học &FADD, FADDP, FIADD, FSUB, FSUBP, FSUBR, FSUBRP, FISUB, FISUBR, FMUL, FMULP, FIMUL, FDIV, FDIVP, FIDIV, FDIVR, FDIVRP, FIDIVR, FABS, FCHS, FSQRT, FPREM, FPREM1, FRNDINT, FXTRACT, FSIN, FCOS, FSINCOS, FPTAN, FPATAN, FYL2X, FYL2XP1, F2XM1, FSCALE \\
+			\cline{2-3}
+			& Lệnh so sánh & FCOM, FCOMP, FCOMPP, FUCOM, FUCOMP, FUCOMPP, FICOM, FICOMP, FCONI, FCOMIP, FUCOMI, FUCOMIP, FTST, FXAM\\
+			\cline{2-3}
+			& Lệnh nạp giá trị& FLDZ, FLD1, FLDPI, FLDL2T, FLDL2E, FLDLG2, FLDLN2\\
+			\cline{2-3}
+			& Lệnh sao lưu &FLD, FST, FSTP, FXCH, FCMOVcc, FCMOVB, FCMOVNB, FCMOVE, FCMOVNE, FCMOVBE, FCMOVNBE, FCMOVU, FCMOVNU. \\
+			\cline{2-3}
+			& Lệnh điều khiển & FINIT, FNINIT, FLDCW, FSTCW, FNSTCW, FSTSW, FNSTSW, FCLEX, FNCLEX, FLDENV, FNSTENV, FRSTOR, FSAVE, FNSAVE, FINCSTP\\
+		\hline
+		\caption{Thống kê các câu lệnh assembly đã được hiện thực}
+		\label{tb:ThongKeAss}
+	\end{longtable}
+	
 \section{Các Windows API đã được hỗ trợ}
 
 Quá trình xây dựng có sự chọn lọc và ưu tiên cho các Windows API được dùng phổ biến trước tiên. Với rất nhiều Windows API của dịch vụ nền được các phần mềm độc hại cho máy tính sử dụng (được chứa bên trong tập tin kernel32.dll), đây là bộ thư viện đang được ưu tiên hỗ trợ hàng đầu cho hệ thống BE-PUM. Kế tiếp đó là các bộ thư viện giao diện người dùng (được chứa bên trong tập tin user32.dll), dịch vụ nâng cao (được chứa bên trong tập tin advapi32.dll) và cuối cùng là Windows Shell (được chứa bên trong tập tin shell32.dll).\\

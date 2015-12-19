@@ -44,6 +44,20 @@
 		
 		Class Environmet có nhiệm vụ liên kết các class Stack, Register, Memory, Flag, FPUStatusWord, FPURegister, FPUControlWord, để thao tác truy xuất trực tiếp lên các biến môi trường này. Class Enviroment hiện thực các hàm để hỗ trợ thao tác truy xuất thuận tiện hơn. Ngoài ra, hiện thực hàm equals() để so sánh biến môi trường của câu lệnh assembly này với biến môi trường của câu lệnh assembly khác. Từ đó hỗ trợ trong việc đánh giá, phân tích câu lệnh assembly.
 		
+	\newpage
+	Class Simulation Assebmbly là một class abstract dùng để gọi các class với tên câu lệnh assembly tương ứng	
+	\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassSimulation.png}
+				\end{center}
+				\caption{Class}	
+					\label{fig:}		
+			\end{figure}
+		\end{center}				
+		
+		Class Simulation Assembly có nhiệm vụ hash tìm câu lệnh tương ứng với class để thực thi. Hàm execute() dùng để gọi lệnh thực thi tương ứng với câu lệnh đầu vào. Ngoài ra còn có các hàm getGroupName() hỗ trợ trong quá trình tìm kiếm được tối ưu. Hàm getFullName() hỗ trợ tìm kiếm với tên câu lệnh đầy đủ, không bị thiếu ký tự trong quá trình tìm kiếm class tương ứng. Ngoài ra có các biến dest, src lần lượt là toán hạng tương ứng với từng câu lệnh assembly được thực thi. 
+		
 		\newpage
 	\subsection*{Môi trường xử lý số nguyên}
 	Class Environmet liên kết với class Stack, hình () thể hiện class Stack.
@@ -58,21 +72,7 @@
 		\end{center}		
 	
 	Class Stack gồm các hàm hỗ trợ thao tác trên stack của chương trinh. Hàm push() và pop() là hai hàm quan trọng có nhiệm vụ thao tác cơ bản trên stack là đưa vào ngăn xếp và lấy ngăn xếp ra. Ngoài ra còn có các hàm length() thể hiện kích thước stack, equals() để so sánh hai stack với nhau, việc này hỗ trợ rất nhiều trong qua trình phân tích hay so trùng được sử dụng trong các kỹ thuật phân tích virus. Ngoài ra còn có các hàm để hỗ trợ thao tác toán học như add() để cộng thêm một số, sub() để nhân với một số,…
-	
-	\newpage
-	Class Register được hiện thực như các thanh ghi Register trong hợp ngữ assembly. Hình () thể hiện class Register:
-	\begin{center}
-			\begin{figure}[htp]
-				\begin{center}
-					\includegraphics[scale=1.0]{ClassStack.png}
-				\end{center}
-				\caption{Class Stack}	
-					\label{fig:ClassStack}		
-			\end{figure}
-		\end{center}		
-		
-		Class Register gồm các biến được thể hiện là các thanh ghi Register được sử dụng trong hợp ngữ assembly. Các biến này sẽ lưu giá trị của thanh ghi trong quá trình thực thi chương trình cần phân tích. Mỗi giá trị của biến có thể bị thay đổi khi thực hiện phân tích từng câu lệnh assembly của chương trình cần phân tích. Class Resgister xây dựng các hàm hỗ trợ thao tác trên thanh ghi như getRegiterValue() có nhiệm vụ lấy giá trị của thanh ghi nào đó, setRegisterValue() có nhiệm vụ gán lại giá trị của một thanh ghi. Ngoài ra, class Register còn hiện thực một số hàm hỗ trợ thao tác toán học trên thanh ghi như: add() có nhiệm vụ cộng thêm một giá trị nào đó vào thanh ghi, and() có nhiệm vụ như thực hiện phép and (đại số Boole),.. những hàm này giúp hỗ trợ nhanh trong việc hiện thực câu lệnh sau này.
-		
+			
 		\newpage
 		Class Register được hiện thực như các thanh ghi Register trong hợp ngữ assembly. Hình () thể hiện class Register:
 		\begin{center}
@@ -131,9 +131,76 @@ Class Flag gồm các biến được phỏng theo các biến Flag được s�
 		
 	Class X86TransitionRule được hiện thực các hàm để hỗ trợ trong quá trình phân tích chương trình assembly. Mỗi đỉnh trong đồ thị phân tích là một câu lệnh, mỗi câu lệnh có nhiệm vụ, chức năng khác nhau. Do đó, cần phần nhóm các câu lệnh để hiện thực. Trong class X86TransitionRule, các hàm được chia theo nhóm câu lệnh như X86IntrustionInterprete() hiện thực các câu lệnh cơ bản thường dùng như STD (gán giá trị dFlag = 1) cmovcc (các điều kiện gán)… X86RetrunInterprete() hiện thực các câu lệnh trả kết quả về như RET (kết quả trả về khi kết thúc một hàm), X86MoveInterprete() hiện thực các câu liên quan đến gán giá trị như MOV, MOVZ,… tương tự như vậy các nhóm câu lệnh nhảy, biểu thức toán học, các câu lệnh gọi hàm được hiện thực. Ngoài ra còn có các hàm hỗ trợ trong việc phân tích và tính toán như hàm executeZ3() có nhiệm vụ gọi thư viện Z3 để tính toán. Đây làm class rất quan trọng vì class này đảm nhận nhiệm vụ phân tích chương trinh assmebly từ đó đưa ra kết quả.
 	
+	\newpage	
 	\subsection*{Môi trường xử lý số thực}
+	Class FPUControlWord mô phỏng thanh ghi Control Word FPU. Hình () biểu diễn các biến và hàm quan trọng trong để mô phỏng thanh ghi điều kiển FPU.	
+		\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassFCW.png}
+				\end{center}
+				\caption{Class FPUControlWord	}	
+					\label{fig:ClassFlag}		
+			\end{figure}
+		\end{center}		
+			
+		Class FPUControlWord chứa các biến IM, DM, ZM, ... tương ứng với các bit cờ trong thanh ghi điều khiển FPU. Mỗi biến biểu diễn một bit trong thanh ghi. Hàm getValueFCW() trả giá trị hex, việc trả giá trị hex giúp so sanh, kiểm tra kết quả nhanh hơn. Ngoài ra còn các hàm hỗ trợ truy xuất, thiết lập các biến IM, DM, ZM... giúp thuận tiện trong quá trình hiện thực các câu lệnh, thay đổi giá trị trong thanh ghi điều khiển FPU. Hàm inti() thiết lập các thông số ban đầu của thanh ghi điều khiển FPU. 
+		
+		\newpage
+		Class FPUStatusWord mô phỏng thanh ghi Status Word FPU. Hình () biểu diễn các biến và hàm quan trọng trong để mô phỏng thanh ghi trạng thái FPU.	
+	\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassFSW.png}
+				\end{center}
+				\caption{Class FPUStatusWord	}	
+					\label{fig:ClassFlag}		
+			\end{figure}
+		\end{center}			
+		
+		Class FPUStatusWord mô phỏng các bit được sử dụng trong thanh ghi trạng thái FPU tương ứng với các biên B, C3, TOP, C2, .... Mỗi biến biểu diễn một bit trong thanh ghi, riêng biến TOP tương ứng với giá trị đỉnh của stack được biểu diễn bằng số nguyên. Class FPUStatusWord có các hàm hỗ trợ trong việc truy xuất và thiết lập các biển getB(), setB(),... Hàm getValueFSW() trả về giá trị hex, việc trả giá trị hex giúp kiểm tra và so sánh kết quả của từng câu lệnh assembly sau khi thực hiện xong. Hàm inti() thiết lập các thông số ban đầu cho thanh ghi trạng thái FPU.
+		
+		\newpage
+		Class FPURegister mô phỏng stack thanh ghi dữ liệu FPU. Hình () biểu diễn các biến và hàm quan trọng trong để mô phỏng stack thanh ghi dữ liệu FPU.	
+	\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{ClassFPUReg.png}
+				\end{center}
+				\caption{Class	}	
+					\label{fig:ClassFlag}		
+			\end{figure}
+		\end{center}			
 	
-
+		Class FPURegister có các biến ST0, ST1, ST2,.. lần lượt tương ứng với các stack thanh ghi dữ liệu được dùng để thao tác trong xử lý dấu chấm động. Các biến tag0, tag1, tag2,... tương ứng với các biến trong thanh ghi Tag Word được mô phỏng lại. Các biến tag dùng để chỉ trạng thái thanh ghi dữ liệu đang lưu trữ số có hợp lệ hay không. Class có các hàm hỗ trợ trong việc thao tác trên stack thanh ghi dữ liệu FPU. Hàm pop() lấy thanh ghi đỉnh của stack ra ngoài. Hàm FLD() dùng để nạp giá trị vào stack thanh ghi dữ liệu. Các hàm FDIV(), FADD(), FSUB(), FMUL() hỗ trợ trong việc thao tác toán học trên stack thanh ghi dữ liệu FPU.
+		
+		\newpage
+		\subsection{Quy trình thực hiện}		
+		Với những biến môi trường được mô phỏng lại để hiện thực và kiểm tra kết quả chính xác của từng câu lệnh. Mỗi câu lệnh có những thao tác riêng trên những biến môi trường khác nhau vì vậy để đảm bảo tính chính xác khi hiện thực, trong quá trình hiện thực cần phải xây dựng các test-case để kiểm tra. Hình ~\ref{fig:HienThucAss} thể hiện quy trình hiện thực một câu lệnh assembly.
+		\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{HienThucAss.png}
+				\end{center}
+				\caption{Quy trình hiện thực một câu lệnh assembly}	
+					\label{fig:HienThucAss}		
+			\end{figure}
+		\end{center}		
+				
+		Mỗi câu lệnh được xây dựng và build thành một file thực thưc có đuôi file là .exe. Mỗi câu lệnh thao tác trên các môi trường khác nhau có thể là môi trường số nguyên hoặc môi trường số thực. Sau khi phân loại để xác định môi trường thay đổi của câu lệnh assembly cần, bước tiếp theo xây dựng mô phỏng quá trình thực thi của câu lệnh đó. Mỗi câu lệnh có thao tác khác nhau trên môi trường thực hiện do đó kết quả cũng khác nhau. Kết quả thu được là biến môi trường sẽ bị thay đổi.\\
+		
+		Để kiểm tra kết quả đó đúng hay sai cần sử dụng thêm công cụ Onlydbg \footnote{Xem trong phần phụ lục}. Hình ~\ref{fig:SoSanhAss} thể hiện quy trình kiểm tra kết quả của một câu lệnh assmebly.
+			\begin{center}
+			\begin{figure}[htp]
+				\begin{center}
+					\includegraphics[scale=1.0]{SoSanhAss.png}
+				\end{center}
+				\caption{So sánh kết quả với Onlydbg}	
+					\label{fig:SoSanhAss}		
+			\end{figure}
+		\end{center}			
+		
+		Khi một file thực thi .exe tương ứng với một câu lệnh assmebly là đầu vào cho công cụ Onlydbg. Kết quả Onlydbg cho biết sự thay đổi môi trường mà câu lệnh assembly đó thực hiện. Giả sử kết quả Onlydbg hoàn toàn chính xác và lấy kết quả đó làm chuẩn cho kết quả mà BE-PUM mô phỏng lại. Nếu kết quả BE-PUM trả về sai so với kết quả Onlđbg, sẽ hiện thực lại câu lệnh đó trong BE-BUM. Ngược lại, nếu đúng thì thực hiện tiếp các câu lệnh assembly khác
 		
 \newpage
 \section{Windows API} \label{sec:wapi_design}

@@ -99,6 +99,22 @@ toc          %show listings as entries in table of contents
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 \lstset{frame=ltrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
 
+\usepackage{multirow}
+
+% kiểu trang phẳng là có số trang ở giữa
+%\pagestyle{plain}
+
+%Canh lề trong list
+\usepackage{enumitem}
+\setlist{leftmargin=1.5cm}
+
+%Canh lề từng dòng
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+
+% đóng khung
+\usepackage{boxedminipage}
+
 \begin{document} %Bắt đầu văn bản
 
 % Format page number
@@ -170,6 +186,15 @@ toc          %show listings as entries in table of contents
 
 \chapter{Hướng Phát Triển Trong Tương Lai}
 \input{Chapters/6.FutureWorks}
+
+\newpage
+\input{Chapters/7.Appendix1}
+
+\newpage
+\input{Chapters/7.Appendix2}
+
+\newpage
+\input{Chapters/7.Appendix3}
 
 \newpage
 \input{Chapters/7.Appendix}

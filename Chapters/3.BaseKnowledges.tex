@@ -24,9 +24,10 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 				\begin{center}
 					\includegraphics[scale=0.5]{ThanhGhi.png}
 				\end{center}
-				\caption{Thanh ghi (trính dẫn hình ảnh trong sách Assembly Language)}
+				\caption{Các thanh ghi \protect\footnotemark}
 				\label{fig:Flow}
 			\end{figure}
+			\footnotetext{ Trích dẫn hình ảnh trong sách Assembly Language}
 		\end{center}
 		
 		Trong đó các thanh ghi General-Purpose gồm những thanh ghi có số bit nhỏ hơn:	
@@ -35,12 +36,13 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 				\begin{center}
 					\includegraphics[scale=0.5]{ThanhGhi32bit.png}
 				\end{center}
-				\caption{Thanh ghi (trính dẫn hình ảnh trong sách Assembly Language)}
+				\caption{ Các thanh ghi \protect\footnotemark}
 				\label{fig:Flow}
 			\end{figure}
+			\footnotetext{Trích dẫn hình ảnh trong sách Assembly Language}
 		\end{center}
 		
-		Ví dụ: thanh ghi EAX(32 bit địa chỉ) có thể được chia ra gồm thanh ghi AX(16 bit địa chỉ). Thanh ghi AX tiếp tục chia địa chỉ thành AH(8 bit) và AL(8 bit). Việc chia địa chỉ như thế giúp tối ưu bộ nhớ khi sử dụng.\\
+		Ví dụ: thanh ghi EAX(32 bit địa chỉ) có thể được chia ra gồm thanh ghi AX(16 bit địa chỉ). Thanh ghi AX tiếp tục chia địa chỉ thành AH(8 bit) và AL(8 bit). Việc chia địa chỉ như thế giúp tối ưu bộ nhớ khi sử dụng.
 		\begin{longtable}{ | m{3cm} | m{3cm} | m{3cm}  | m{3cm}| }
 			\hline
 				32 Bit & 16 Bit & 8Bit & 8 Bit\\
@@ -407,10 +409,11 @@ Hướng dẫn \textit{.Model} được đạt ngay trên đầu của cấu tr�
 Hướng dẫn \textit{.Stack} đặt ở đầu chương trình mục đích để khai báo kích thước stack được sử dụng để thực thi chương trình. Kích thước stack thường được khai báo là 100h (256) byte.\\
 
 Ví dụ chương trình được viết theo cấu trúc EXE:\\
-	\begin{normalsize}
-			\setlength{\parindent}{1cm}		
-			\renewcommand{\rmdefault}{cmss}
+
+\begin{boxedminipage}{15cm}
+	\begin{normalsize}						
 				\textit {.model small}
+				\begin{changemargin}{1cm}{0.5cm} 
      			\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc}  \\  
 				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
 				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
@@ -419,30 +422,37 @@ Ví dụ chương trình được viết theo cấu trúc EXE:\\
 				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
 				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
 				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
-				\textit {stack 100h}\\
-				\textit {.data}\\
-				\textit {var1 WORD  200}\\
+				\textit {stack 100h}
+				\end{changemargin}				
+				\textit {.data}
+				\begin{changemargin}{1cm}{0.5cm} 
+						\textit {var1 WORD  200}
+				\end{changemargin}				
 				\textit {.code}\\
-				\textit {start: }\\
-    			\textit {main proc}\\
-        		\textit {mov ax, 775}\\
-       			 \textit {aad   }\\
-        		\textit {	mov eax, 100 }\\
-       			\textit { aad}\\
-        		\textit {	mov bl, 5}\\
-        		\textit {	div bl   }\\
-				\textit {mov eax, 10}\\
-   				\textit {bsf eax, var1}		\\
-		  		\textit {ret}\\
-     			\textit {main endp}\\
-				\textit {end start}\\
+				\textit {start: }
+					\begin{changemargin}{1cm}{0.5cm} 
+    							\textit {main proc}
+    								\begin{changemargin}{1.5cm}{0.5cm} 
+        								\textit {mov ax, 775}\\
+       							 		\textit {aad   }\\
+        								\textit {	mov eax, 100 }\\
+       									\textit { aad}\\
+        								\textit {	mov bl, 5}\\
+        								\textit {	div bl   }\\
+										\textit {mov eax, 10}\\
+   										\textit {bsf eax, var1}		\\
+		  								\textit {ret}
+		  							\end{changemargin}	
+     						\textit {main endp}
+     				\end{changemargin}				
+				\textit {end start}
 	\end{normalsize}
+	\end{boxedminipage}
 	
 		Ở phần đầu chương trình có khai báo các đường dẫn thư viện hỗ trợ chương trình bằng cú pháp:
 		\begin{center}
 			\textit { include <đường dẫn>} \\
 		\end{center}
-					
 	Có thể thấy đoạn chương trình trên sử dụng chế độ bộ nhớ Small. Khai báo kích thước Stack là 100h byte. Trong phần khai báo dữ liệu Data chỉ khai báo một biến duy nhất là var1 có kiểu dữ liệu là word, giá trị của biến là 200. Trong phần Code, tên thủ tục là main, tên thủ tục có thể được đặt tùy ý.\\
 
 
@@ -602,7 +612,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
-					\includegraphics[scale=0.5]{FPUQuanHe.png}
+					\includegraphics[scale=1.0]{FPUQuanHe.png}
 				\end{center}
 				\caption{Mối quan hệ giữa bộ xử lý FPU và bộ xử lý Integer}				
 				\label{fig:FPUQuanHe}				
@@ -621,7 +631,8 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		\end{itemize}
 		
 	Những thanh ghi này được miêu tả trong phần tiếp theo.
-
+	
+	\newpage
 		\subsection*{Thanh ghi dữ liệu FPU}
 	Các thanh ghi dữ liệu FPU (hình ~\ref{fig:MoiTruongFPU}) bao gồm 8 thanh ghi 80-bit. Giá trị được lưu trữ trong các thanh ghi theo định dạng mở rộng. Khi các số thực, số nguyên hoặc giá trị BCD được nén được nạp vào từ bộ nhớ vào trong thanh ghi dữ liệu FPU, các giá trị sẽ tự động chuyển về định dạng mở rộng. Khi tính toán, kết quả được chuyển lại vào bộ nhớ từ bất kỳ thanh ghi FPU, kết quả có thể đã được định dạng mở rộng hoặc được chuyển về định dạng FPU khác (số thực, số nguyên, giá trị BCD được nén).\\
 
@@ -668,13 +679,14 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
-					\includegraphics[scale=1]{VDFPU.png}
+					\includegraphics[scale=0.75]{VDFPU.png}
 				\end{center}
 				\caption{Ví dụ xử lý câu lệnh trong stack của FPU}				
 				\label{fig:VDFPU}				
 			\end{figure}
 		\end{center}	
 		
+		\newpage
 		\subsection*{ Thanh ghi trạng thái FPU}
 	Thanh ghi trạng thái FPU 16 bit (hình ~\ref{fig:TrangThaiFPU} ) chỉ ra trạng thái hiện tại của FPU. Bit cờ của thanh ghi trạng thái bao gồm các cờ báo của FPU, con trỏ đỉnh stack, mã điều kiện, cờ báo lỗi, cờ báo lỗi ngoại lệ và cờ báo lỗi stack. FPU thiết lập những bit cờ trong thanh ghi để chỉ ra kết của của phép toán được thực hiện.\\
 
@@ -732,7 +744,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		\subsubsection*{ Cờ ngoại lệ}
 	Sáu bit ngoại lệ (bit 0 đến 5) của thanh ghi trạng thái thể hiện một hoặc nhiều trường hợp ngoại lệ xử lý dấu chấm động sẽ được phát hiện từ khi giá trị cuối cùng của bit được chưa bật. (Cờ ngoại lệ sẽ được mô tả trong phần Xử lý ngoại lệ dấu chấm động). \\
 
-	Bit cờ tóm tắt trạng thái ngoại lệ (ES bit 7) được bật khi có bất kỳ cờ ngoại ngoại lệ nào đã được bật. Khi cờ ES được bật, FPU xử lý ngoại lệ được gọi sử dụng phầm mềm sử lý ngoại lệ để xử lý. (Lưu ý, nếu một cờ xử lý ngoại lệ được bật, FPU sẽ vẫn tiếp tục bật những cờ xử lý ngoại lệ nếu có ngoại lệ xảy ra, nhưng cờ ES sẽ vẫn không được bật). 
+	Bit cờ tóm tắt trạng thái ngoại lệ (ES bit 7) được bật khi có bất kỳ cờ ngoại ngoại lệ nào đã được bật. Khi cờ ES được bật, FPU xử lý ngoại lệ được gọi sử dụng phầm mềm sử lý ngoại lệ để xử lý. (Lưu ý, nếu một cờ xử lý ngoại lệ được bật, FPU sẽ vẫn tiếp tục bật những cờ xử lý ngoại lệ nếu có ngoại lệ xảy ra, nhưng cờ ES sẽ vẫn không được bật). \\
 	
 	Khi cờ ngoại lệ được bật, những cờ được bật sẽ vẫn được bật đến khi cờ được tắt. Để tắt cờ xử lý ngoại lệ có thể xử dụng câu lệnh FCLEX/FNCELX, khởi tạo FPU với câu lệnh FINIT/FNINIT hoặc ghi đè cờ với câu lệnh FRSTOR, FLDENV. \\
 		
@@ -847,6 +859,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	Kết quả được làm tròn được gọi là kết quả không chính xác. Khi kết quả không chính xác của câu lệnh FPU được tạo ra, cờ chính xác (PE) trong thanh ghi trạng thái FPU được bật.\\	
 	
 	Khi cờ xử lý ngoại lệ overflow được bật, kết quả chính xác nằm giữa giá trị cụ thể  và dương vô cực, FPU sẽ làm tròn kết quả theo bảng ~\ref{tb:RCOverflow}.
+	\\ \\ \\
 		\begin{longtable} {|m{6cm}|m{6cm}|}
 			\hline
 				Phương thức làm tròn & Kết quả \\			
@@ -880,12 +893,11 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 			\hline			
 			\caption{Làm tròn số dương khi Underflow xảy ra}
 			\label{tb:RCUnderflow}
-		\end{longtable}
-		
+		\end{longtable}		
 		Phương thức làm tròn không ảnh hưởng đến câu lệnh so sánh, câu lệnh sử dụng kết quả chính xác, hoặc câu lệnh có kết quả là NaN.
 		
-		\subsection*{Cờ điều khiển vô cực}
-		Cờ điều khiển vô cực (bit 10 của thanh ghi điều khiển FPU) được cung cấp cho bộ xử lý toán học Intel 281, không có ý nghĩa với bộ xử lý FPU của Pentium Pro hoặc bộ xử lý FPU của Intel 486, hoặc bộ xử lý Intel 387 NPX.
+		\subsection*{Cờ điều khiển vô cùng}
+		Cờ điều khiển vô cùng (bit 10 của thanh ghi điều khiển FPU) được cung cấp cho bộ xử lý toán học Intel 281, không có ý nghĩa với bộ xử lý FPU của Pentium Pro hoặc bộ xử lý FPU của Intel 486, hoặc bộ xử lý Intel 387 NPX.
 		
 		\subsection*{Thẻ FPU}
 		Thanh ghi thẻ 16-bit ( hình ~\ref{fig:TagFPU} ) chỉ ra nội dung của 8 thanh ghi dữ liệu FPU (2-bit một biểu diễn cho một thanh ghi). Mỗi thẻ cho biết một thanh ghi chứa một số hợp lệ, bằng không, hoặc một số dấu chấm động đặc biệt (NaN, số vô cùng, denormal, hoặc không hỗ trợ định dạng), hoặc rỗng. Các thẻ FPU được lưu trữ trong FPU trong thanh ghi thẻ FPU. Khi FPU được khởi tạp bằng câu lệnh FINIT/FNINIT hoặc FSAV/FNSAVE, thẻ FPU của mỗi thanh ghi được thiết lập là FFFFh, thể hiện tất cả dữ liệu hiện có trong thanh ghi là rỗng.
@@ -908,11 +920,9 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	Phần mềm không thể trực tiếp tải hoặc sửa đổi giá trị trong thanh ghi thẻ. Câu lệnh FLDENV và FRSTOR tảu một hình ảnh của thanh ghi thẻ vào trong FPU. Tuy nhiên, FPU sử dụng giá trị thanh ghi thẻ để xác định xem các thanh thi dữ liệu là rỗng (11b) hoặc không rỗng (00b, 01b hoặc 10b). Nếu hình ảnh thanh ghi thẻ thể hiện các dữ lệu troang thanh ghi là không rỗng, FPU đọc các giá trị trong thanh ghi dữ liệu và thiết lập thanh ghi thẻ. Hành động này ngăn chẳn một chương trình thiết lập các giá trị trong thanh ghi thẻ biểu diễn không chính xác nội dung hiện tại của thanh ghi dữ liệu.
 	
 		\subsection*{Con trỏ câu lệnh FPU và con trỏ toán hạng (dữ liệu)}
-	Con trỏ lưu trữ trong lệnh FPU và toán hạng (dữ liệu) cho câu lệnh không điều khiển được thực thi trong thanh ghi 48-bit: con trỏ lệnh FPU và con trỏ trỏ tới thanh ghi toán hạng FPU (dữ liệu). (Thông tin được lưu để cung cấp trạng thái thông tin cho xử lý ngoại lệ). \\
+	Con trỏ lưu trữ trong lệnh FPU và toán hạng (dữ liệu) cho câu lệnh không điều khiển được thực thi trong thanh ghi 48-bit: con trỏ lệnh FPU và con trỏ trỏ tới thanh ghi toán hạng FPU (dữ liệu). (Thông tin được lưu để cung cấp trạng thái thông tin cho xử lý ngoại lệ). 	Con trỏ lưu trữ trong lệnh FPU và thanh ghi con trỏ toán hạng bao gồm một offset (lưu trữ trong bit 0 đến bit 31) và một bộ lọc câu lệnh (lưu trong bits 32 đến 41).\\
 	
 	Nội dung của câu lệnh FPU và thanh ghi con trỏ toán hạng được giữ nguyên khi có bất kỳ câu lệnh nào của câu lệnh điều khiển (FINIT/FNINIT, FCLEX/FNCLEX, FLDCW, FSTCW/FNSTCW, FSTSW/FNSTSW, FSTENV/FNSTENV, FLDENV, FSAVE/FNSAVE, FRSTOR, và WAIT/FWAIT) được thực thi. Nội dung của thanh ghi toán hạng FPU không xác định được nếu như câu lệnh điều khiển không có bộ nhớ toán hạng.\\
-	
- 	Con trỏ lưu trữ trong lệnh FPU và thanh ghi con trỏ toán hạng bao gồm một offset (lưu trữ trong bit 0 đến bit 31) và một bộ lọc câu lệnh (lưu trong bits 32 đến 41). \\
  	
 	Những thanh ghi này có thể truy cập bởi các câu lệnh FSTENV/FNSTENV, FLDENV, FINIT/FNINIT, FSAVE/ FNSAVE và FRSTOR. Lệnh FINIT/FNINIT và FSAVE/FNSAVE sẽ xóa nội dung của những thanh ghi này.\\
 	
@@ -992,9 +1002,11 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		
 		Khi lưu trữ trong bộ nhớ, byte thấp của một dữ liệu kiểu giá trị FPU được lưu trữ trong địa chỉ đầu tiên chỉ định giá trị đó. Các byte tiếp theo sau đó được lưu trữ trong các địa chỉ cao hơn trong bộ nhớ. Câu lệnh của dấu chấm động nạp và lưu bộ nhớ toán hạng chỉ sử dụng địa chỉ đầu của toán hạng.
 		
+		\newpage
 		\subsection*{Số thực}
 		Ba loại dữ liệu số thực của FPU (single-real, double-real, và extended-real) tương ứng với chính xác đơn, đôi chính xác, và định chính xác mở rộng trong các định dạng chuẩn IEEE. Định dạng chính xác mở rộng là định dạng được sử dụng bởi các thanh ghi dữ liệu trong FPU. Bảng () đưa ra độ chính xác và phạm vi của các kiểu dữ liệu và hình () đưa ra các định dạng. Đối với các định dạng single-real và double-real, chỉ có một phần phân số của phần định trị được mã hóa. Số nguyên được giả định là 1 cho tất cả các số trừ 0 và số denormalized hữu hạn. Đối với các định dạng extended-real, các số nguyên được chứa trong bit 63. Ở đây, các số nguyên được thiết lập thành 1 cho số normalized, infinities, và NaNs, và 0 cho số không và số denormalized. \\	 
 		
+		\newpage
 		\begin{longtable}{|l|l|p{2cm}|l|l|}
 		 \hline
 		 	Kiểu dữ liệu & Độ dài & Chính xác (Bits) & \multicolumn{2}{l|}{Phạm vi giá trị}\\
@@ -1030,6 +1042,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	Quy luật chung, giá trị nên được lưu trữ trong bộ nhớ ở định dạng double-real. Định dạng này cung cấp đầy đủ kích thước và độ chính xác để đưa ra kết quả chính xác tối thiểu mà lập trình viên quan tâm. Các định dạng single-real thích hợp cho các ứng dụng bị hạn chế bởi bộ nhớ. Tuy nhiên, single-real cung cấp độ chính xác ít hơn và có thể bị tràn số. Các định dạng single-real hữu ích khi gỡ lỗi các thuật toán, vì làm tròn sẽ thực hiện một cách nhanh chóng ở định dạng này. Các định dạng extended-real thường dành riêng để giữ kết quả trung gian trong các thanh ghi FPU và hằng số. Chiều dài chính xác được thiết kế để đưa ra kết quả cuối cùng từ những phép toán bị ảnh hưởng của làm tròn số và tràn trên hoặc tràn dưới trong các phép tính trung gian. Tuy nhiên, khi một ứng dụng yêu cầu giới hạn chính xác và độ chính xác của các FPU (để lưu trữ dữ liệu, phép toán, và kết quả), các giá trị có thể được lưu trữ trong bộ nhớ ở định dạng mở rộng thực.\\
 	
 	Các giá trị số thực không xác định là một QNaN được mã hóa và lưu giữ bởi câu lệnh dấu chấm động để đáp ứng với một dấu chấm động không hợp lệ tác ngoại lệ được đánh dấu (xem bảng () ).	
+	\newpage
 		\begin{longtable}{|l|l|l|l|l|l|}
 			\hline
 				\multicolumn{2}{|l|}{Loại} & Bit dấu & Bit số mũ & \multicolumn{2}{l|}{Phần định trị} \\
@@ -1141,6 +1154,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		Các định dạng extended-real cho phép mã hóa mà không giống với bất kỳ các cách thể hiện trong Bảng (). Bảng () cho thấy các mã hóa không được hỗ trợ. Một số các mã hóa được hỗ trợ bởi bộ xử lý toán học Intel 287. Tuy nhiên, hầu hết trong các bộ xử lý không được hỗ trợ bởi các bộ xử lý toán học Intel 387, hoặc các FPU trong bộ vi xử lý Intel486, Pentium, hay bộ xử lý Pentium Pro. Những mã hóa không còn được hỗ trợ do những thay đổi trong phiên bản cuối cùng của chuẩn IEEE 754 mà loại bỏ các bảng mã.\\
 	
 		Các loại mã hóa trước đây gọi là pseudo-Nans, pseudo-infinities, và số un-normal không được hỗ trợ. Bộ xử lý toán học Intel 387 và FPU trong bộ vi xử lý Intel486, Pentium, và bộ xử lý  Pentium Pro tạo ra các ngoại lệ và được đánh dấu khi đang gặp phải giống như xử lý toán hạng không hơp lệ.
+		\newpage
 		\begin{longtable}{|m{2cm}|l|l|l|l|l|l|l|l|}
 			\hline
 				Lớp dữ liệu & Bit dấu &  & \multicolumn{6}{l|}{Độ lớn} \\
@@ -1236,7 +1250,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	Tất cả các câu lệnh trong câu lệnh của FPU được thiết lập vào một nhóm các lệnh gọi là câu lệnh thoát (ESC). Tất cả các câu lệnh có một định dạng mã thông thường, nhưng một chút khác nhau từ các định dạng được sử dụng bởi các câu lệnh số nguyên và hệ điều hành.
 	
 		\subsection*{Câu lệnh FPU sử dụng toán hạng}
-		Hầu hết các câu lệnh xử lý dấu chấm động cầu một hoặc hai toán hạng, được lưu trữ trong các thanh ghi dữ liệu FPU hoặc trong bộ nhớ. (Không có câu lệnh xử lý dấu chấm động lấy toạn hạng trực tiếp)
+		Hầu hết các câu lệnh xử lý dấu chấm động cầu một hoặc hai toán hạng, được lưu trữ trong các thanh ghi dữ liệu FPU hoặc trong bộ nhớ. (Không có câu lệnh xử lý dấu chấm động lấy toạn hạng trực tiếp).
 		
 		\subsection*{ Câu lệnh sao lưu dữ liệu}
 		Các câu lệnh sao lưu dữ liệu (xem Bảng ~\ref{tb:CauLenhSaoLuu} ) các bước thực hiệnsau đây:
@@ -1245,9 +1259,8 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 			\item Nạp toán hạng là số thực, số nguyên, hoặc gói BCD từ bộ nhớ vào thanh ghi ST (0).
 			\item Lưu trữ các giá trị trong thanh ghi ST (0)  từ bộ nhớ theo định dạng số thực, số nguyên, hoặc gói BCD.
 			\item  Di chuyển các giá trị giữa các thanh ghi trong các thanh ghi dữ liệu FPU.
-		\end{itemize}
-		
-		\begin{longtable}{|l|m{4cm}|l|m{2cm}|l|m{2cm}|}
+		\end{itemize}		
+		\begin{longtable}{|l|m{4cm}|l|m{3cm}|l|m{3cm}|}
 			\hline
 				\multicolumn{2}{|l|}{Số thực} & \multicolumn{2}{l|}{Số thực} & \multicolumn{2}{l|}{Gói số nguyên}\\
 			\hline
@@ -1337,7 +1350,8 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 			\item	FRNDINT Round to integral value
 			\item	FXTRACT Extract exponent and significand
 		\end{itemize}
-
+		
+		\newpage
 	Các câu lệnh cộng, trừ, nhân và chia thực hiện trên các loại toán hạng sau đây:
 		\begin{itemize}
 			\item[•]	Hai giá trị thanh ghi dữ liệu FPU.
@@ -1398,7 +1412,7 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 		
 		Câu lệnh FICOM và FICOMP cũng thực hiện giống như các hướng dẫn FCOM và FCOMP, ngoại trừ các toán hạng nguồn là một giá trị số nguyên trong bộ nhớ. Giá trị số nguyên được tự động chuyển đổi thành định dạng extened-real trước khi so sánh. Câu lệnh FICOMP thực hiện pop stack thanh ghi dữ liệu FPU sau khi thực hiện hoạt động so sánh xong.\\
 		
-		Câu lệnh FTST thực hiện các hoạt động tương tự như câu lệnh FCOM, ngoại trừ các giá trị trong thanh ghi ST (0) luôn luôn được so sánh với giá trị 0.0.\\
+		Câu lệnh FTST thực hiện các hoạt động tương tự như câu lệnh FCOM, ngoại trừ các giá trị trong thanh ghi ST (0) luôn luôn được so sánh với giá trị 0.0.
 		
 		Câu lệnh FCOMI và FCOMIP là câu lệnh mới trong bộ xử lý Intel Pro Pentium. Câu lệnh thực hiện phép so sánh tương tự như hướng dẫn FCOM và FCOMP, ngoại trừ việc câu lệnh thiết lập các cờ trạng thái (ZF, PF và CF) trong thanh ghi EFLAGS để chỉ ra kết quả của phép so sánh (xem Bảng ~\ref{tb:EFLAGS} ) thay vì các cờ điều kiện FPU. Câu lệnh FCOMI và FCOMIP cho phép lệnh rẽ nhánh điều kiện (JCC) được thực hiện trực tiếp từ kết quả so sánh.
 		\begin{longtable}{|l|l|l|l|}
@@ -1428,7 +1442,7 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 				\item[1] 	Kiểm tra kết quả không có thứ tự. Sử dụng câu lệnh TEST để so sánh nội dung của thanh ghi AX với hằng số 0400H (xem Bảng ~\ref{tb:CLTest} ). Thao tác này sẽ xóa cờ ZF trong thanh ghi EFLAGS nếu mã cờ điều kiện đánh dấu kết quả là không có thứ tự; ngược lại cờ ZF sẽ được thiết lập. Câu lệnh JNZ sau đó được sử dụng để chuyển giao điều khiển (nếu cần thiết) để câu lệnh xử lý các toán hạng có thứ tự.								
 				\item[2]	Câu lệnh kiểm tra so sánh kết quả. Sử dụng các hằng số được đưa ra trong Bảng ~\ref{tb:CLTest} câu lệnh TEST để kiểm tra cho một số nhỏ hơn, bằng hoặc lớn hơn so với kết quả, sau đó sử dụng lệnh rẽ nhánh có điều kiện tương ứng để chuyển điều khiển chương trình tới đoạn mã thích hợp. 
 		\end{itemize}
-		
+			\newpage
 				\begin{longtable}{|l|l|l|}
 					\hline
 							Điều kiện & Hằng số & Câu lệnh rẽ nhánh \\
@@ -1680,7 +1694,7 @@ Các thuật ngữ của " \# " biểu tượng theo một hoặc hai chữ cái
 					\caption{Điều kiện xảy ra ngoại lệ chia cho số 0 và kết quả trả về}					
 					\label{tb:ChiaCho0}
 		\end{longtable}		
-		
+		\newpage
 		\subsubsection*{Toán hạng là số denormal (\#D)}
 		FPU báo hiệu ngoại lệ toán hạng là số denormal dựa vào điều kiện sau đây:
 			\begin{itemize}
@@ -1722,15 +1736,14 @@ Khi ngoại lệ toán hạng là số denormal xảy ra và các bit xử lý n
 				\caption{Kết quả khi trán trên số học xảy ra}
 				\label{tb:NumberOver}
 		\end{longtable}
-
+		\newpage
 		Các thao tác mà FPU khi xảy ra tràn trên số học và cờ xử lý tràn trên số học không đánh dâu, phụ thuộc vào các câu lệnh mà kết quả được lưu trong bộ nhớ hoặc trong các stack thanh ghi dữ liệu.\\
 		
 		Nếu toán hạng đích là một bộ nhớ, cờ OE được bật và phần mềm xử lý ngoại lệ được gọi top-of-stack pointer (TOP), toán hạng nguồn, đích không thay đổi.\\
 		
 		Nếu toán hạng đích là thanh ghi trong stack, số mũ của kết quả làm tròn được chia cho $2^{24576}$ và kết quả được lưu giữ cùng với phần định trị trong toán hạng đích. Cờ điều kiện bit C1 trong thanh ghit trạng thái FPU (gọi là trong tình huống này "làm tròn lên") được thiết lập nếu phần định trị được làm tròn lên và xóa nếu kết quả đã làm tròn. Sau khi kết quả được lưu trữ, cờ OE được bật và phần mềm xử lý ngoại lệ được gọi.\\
 		
-	Khi sử dụng câu lệnh FSCALE, tràn trên có thể xảy ra, mà kết quả là quá lớn để được biểu diễn, ngay cả với một số mũ được điều chỉnh. Ở đây, nếu tràn trên xảy ra một lần nữa, kết quả là một $\mathbb{\infty}$ (vô cùng) được lưu vào trong toán hạng đích.
-	
+	Khi sử dụng câu lệnh FSCALE, tràn trên có thể xảy ra, mà kết quả là quá lớn để được biểu diễn, ngay cả với một số mũ được điều chỉnh. Ở đây, nếu tràn trên xảy ra một lần nữa, kết quả là một $\mathbb{\infty}$ (vô cùng) được lưu vào trong toán hạng đích.	
 		\subsection*{Tràn dưới số học (\#U)}
 		FPU xảy ra ngoại lệ tràn dưới số học (\#U) bất cứ khi nào kết quả làm tròn của các câu lệnh là một số "rất nhỏ" (có nghĩa là số nhỏ so với bình thường, giá trị hữu hạn nhỏ nhất có thể mà sẽ phù hợp với các định dạng số thực của toán hạng đích ). Ví dụ, nếu định dạng toán hạng đích là extended-real (80 bit), tràn dưới xảy ra khi kết quả được làm tròn xuống trong khoảng giới hạn $-1.0 \times 2^{-16.382}$ tới $1,0 \times 2^{16.382}$. Giống như tràn trên số học, tràn dưới số học có thể xảy ra trên các phép tính mà kết quả được lưu trữ trong thanh ghi dữ liệu FPU. Ngoại lệ này cũng có thể xảy ra khi thực hiện thao tác lưu (câu lệnh FST,FSTP),  một giá trị trong thanh ghi dữ liệu được lưu trữ vào trong bộ nhớ ở định dạng single-real hoặc double-real. Giới hạn tràn dưới của định dạng single-real là$-1.0 \times 2^{-126}$ tới $1,0 \times 2^{126}$; giới hạn tràn dưới của định double-real là $-1.0 \times 2^{-1022}$ tới $1,0 \times 2^{1022}$. (Ngoại lệ tràn dưới số học không có thể xảy ra khi lưu trữ các giá trị trong một định dạng số nguyên hoặc BCD.)\\
 		
@@ -1783,14 +1796,8 @@ Khi ngoại lệ toán hạng là số denormal xảy ra và các bit xử lý n
 		\end{itemize}
 
 	Toán hoạng không hợp lệ, chia cho số 0, và trường hợp ngoại lệ toán hạng là số denormal được phát hiện trước khi bắt đầu thao tác câu lệnh xử lý dấu chấm động, trong khi tràn trên, tràn dưới, và kết quả không chính xác được phát hiện sau khi đã được tính toán và cho ra kết quả. Khi một ngoại lệ trước thao tác được phát hiện, stack thanh ghi dữ liệu FPU và bộ nhớ chưa được cập nhật và được đánh dấu trước khi thực hiện các câu lệnh, đông thời câu lệnh đó không được thực hiện. Khi một ngoại lệ phát hiện sau khi thực hiện câu lệnh, stack thanh ghi dữ liệu FPU và bộ nhớ có thể được cập nhật với một kết quả (tùy thuộc vào loại ngoại lệ xảy ra).
-
-
-
-
-
-		
 	
-
+\newpage
 \section{Windows API}
 
 	\subsection{Một vài bộ thư viện cần hỗ trợ}
@@ -1798,7 +1805,7 @@ Khi ngoại lệ toán hạng là số denormal xảy ra và các bit xử lý n
 Ở những bước xây dựng đầu của đề tài, cần ưu tiên tiến hành cho những bộ thư viện phổ biến và được dùng rộng rãi trước tiên. Bảng 2 sau đây sẽ mô tả thông tin những bộ thư viện đã được hỗ trợ bởi BE-PUM:
 
 
-\begin{longtable}{ | m{3cm} | m{11cm} | }
+\begin{longtable}{ | m{3cm} | m{12cm} | }
 	\hline
 Tên & Chức năng\\
 	\hline
@@ -1897,7 +1904,7 @@ Căn bản việc ánh xạ kiểu dữ liệu trong JNA được đáp ứng b�
  
 Điểm hỗ trợ mạnh trong JNA đó là sử dụng và truy cập con trỏ của C thông qua đối tượng kiểu Pointer, dù rằng đang làm việc trong ngôn ngữ Java. Và nếu muốn lấy giá trị của một vùng nhớ thay vì chỉ một giá trị ô nhớ như Pointer, ta có thể sử dụng đối tượng kiểu Buffer để JNA đưa giá trị vùng nhớ đó vào trong đối tượng.
 
-
+	\newpage
 	\subsection{Dữ liệu kiểu cấu trúc (structure)} \label{sec:structure}
 
 Một trong những lợi thế to lớn nhất mà JNA mang lại đó là nạp dữ liệu kiểu cấu trúc (structure) vào trong C mà ngôn ngữ Java không có. Điều này được hỗ trợ qua việc tạo ra một lớp mới, kế thừa từ lớp Structure của JNA.\\
