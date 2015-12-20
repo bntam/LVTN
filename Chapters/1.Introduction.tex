@@ -41,7 +41,7 @@ Trong BE-PUM, một địa chỉ trong chương trình được ánh xạ tươn
 
 \textit{On-the-fly model generation} là giải thuật chính trong hệ thống BE-PUM. Quá trình thực thi của tập tin mã nhị phân là một chuỗi thực thi động, bắt đầu từ một giá trị trong ở phân vùng mã (code section) của bộ nhớ, giá trị địa chỉ này được chỉ rõ bởi giá trị thanh ghi EIP. BE-PUM sẽ đặt khởi điểm từ đây, và lần dò theo từng câu lệnh hợp ngữ, tìm điểm kế tiếp sẽ được thực thi. Cứ như vậy, BE-PUM sẽ đi qua hết các nhánh có khả năng thực thi của chương trình và cho ra một đồ thị luồng điều khiển đầy đủ.
 
-	\subsection{Ví dụ đơn giản về sinh ra đồ thị CFG qua BE-PUM}
+	\subsection{Ví dụ đơn giản về sinh ra đồ thị CFG bằng BE-PUM}
 
 Để hiểu rõ hơn về công việc của BE-PUM, ta cùng xem qua một ví dụ minh họa nhỏ về việc sinh ra đồ thị luồng điều khiển (Hình \ref{fig:imgexcfg}) với một đoạn mã hợp ngữ ở Bảng \ref{table:tblexcfg}.
 
