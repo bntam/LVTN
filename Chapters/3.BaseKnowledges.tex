@@ -3,6 +3,7 @@
 \textit{Nội dung chương này sẽ tập trung trình bày những kiến thức cần thiết cho quá trình thực hiện đề tài; từ những kiến thức phải nắm được về hệ thống BE-PUM do đây là một đề tài làm việc dựa trên đó; và mỗi khi làm việc với một thư viện bất kỳ, đòi hỏi ta phải tìm hiểu cách thức làm việc với thư viện đó và cả những kiến thức cần thiết do bộ thư viện ấy yêu cầu. Đồng thời cũng trình bày các kiến thức cơ bản về hợp ngữ assembly, từ đó có cái nhìn tổng quan về assembly để tiến hành xây dựng chương trình BE-PUM.}
 \end{concept}
 
+\newpage
 \section{Làm việc với BE-PUM}
 
 Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm việc tương tự như trên một hệ thống máy tính khởi chạy ngoài thực tế; chúng bao gồm các thành phần chính mà đề tài sẽ ảnh hưởng đến như sau:
@@ -15,31 +16,32 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 \item 	\textbf{Thanh ghi (register)} là một vùng nhớ có dung lượng nhỏ nhưng lại có khả năng truy xuất rất nhanh, chúng được dùng để làm vùng nhớ tạm, trung gian cho các câu lệnh chạy trong hệ thống. Mỗi khi gọi một hàm bất kỳ, nếu như kiểu trả về khác void thì giá trị trả về sẽ được lưu trữ vào thanh ghi EAX.\\
 \end{itemize}
 
-
+\newpage
 \section{Các câu lệnh hợp ngữ}
-
+	Dựa trên mã định nghĩa câu lệnh được chia thành hai nhóm câu lệnh chính: câu lệnh xử lý số nguyên và câu lệnh sử lý số thực dấu chấm động(FPU).
 	\subsection{Assembly}
-	
+	Nội dung phần này giới thiệu về bộ xử lý số nguyên, những thanh ghi bộ nhớ cơ bản thường được sử dung trong bộ xử lý số nguyên này.
 		\subsubsection{Bộ nhớ assembly}	
-		 Biến và hằng trong assembly có tính chất và mục đích sử dụng khác nhau. Thông qua các câu lệnh liên kết chặn chẽ với bộ nhớ là các thanh ghi bộ nhớ, trạng thai, các cờ được đánh dấu mà thông qua đó để thực thi chương trình.\\
+		 Biến và hằng trong assembly có tính chất và mục đích sử dụng khác nhau. Thông qua các câu lệnh liên kết chặn chẽ với bộ nhớ là các thanh ghi bộ nhớ, trạng thái, các cờ được đánh dấu mà thông qua đó để thực thi chương trình.\\
 
 		Các thanh ghi bộ nhớ:		
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
-					\includegraphics[scale=0.5]{ThanhGhi.png}
+					\includegraphics[scale=0.75]{ThanhGhi.png}
 				\end{center}
 				\caption{Các thanh ghi \protect\footnotemark}
 				\label{fig:Flow}
 			\end{figure}
 			\footnotetext{ Trích dẫn hình ảnh trong sách Assembly Language}
-		\end{center}
-		
+		\end{center} 
+	
+	\newpage
 		Trong đó các thanh ghi General-Purpose gồm những thanh ghi có số bit nhỏ hơn:	
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
-					\includegraphics[scale=0.5]{ThanhGhi32bit.png}
+					\includegraphics[scale=0.75]{ThanhGhi32bit.png}
 				\end{center}
 				\caption{ Các thanh ghi \protect\footnotemark}
 				\label{fig:Flow}
@@ -65,7 +67,7 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 			\label{table:tbthanhghi}
 		\end{longtable}
 		
-			Đối với một số thanh ghi có 32-bit địa chỉ có thể chia ra 16-bit địa chỉ, không thể chia nhỏ hơn. Bảng chi bộ nhơ thanh ghi có thể chia ra 16-bit địa chỉ.\\
+			Đối với một số thanh ghi có 32-bit địa chỉ có thể chia ra 16-bit địa chỉ, không thể chia nhỏ hơn. Bảng chi bộ nhơ thanh ghi có thể chia ra 16-bit địa chỉ.
 			\begin{longtable}{ | m{3cm} | m{3cm} | }
 			\hline
 				32 Bit & 16 Bit\\
@@ -128,7 +130,7 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 
 	Ví dụ 1: xét câu lệnh sau đây: 
 	 \begin{center}		 
-		VD1: mov ax, bx	;lưu giá trị thanh ghi ax từ thanh ghi bx
+		\textit{VD1: mov ax, bx	;lưu giá trị thanh ghi ax từ thanh ghi bx }
 	\end{center}
 	Trong đó:
 	\begin{itemize}
@@ -139,6 +141,7 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 	\item $;$ lưu giá trị thanh ghi ax từ thanh ghi bx : lời giải thích, chú thích thêm.
 	\end{itemize}
 	
+	\newpage
 	Xem các câu lệnh sau đây:
 	\begin{itemize}
 	\renewcommand{\labelitemi}{\textbullet}		
@@ -187,6 +190,7 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 	\end{longtable}
 	
 		Phân tích câu lệnh mov: \\
+		
 		Cú pháp: 
 		\begin{itemize}
 			\renewcommand{\labelitemi}{\textbullet}	
@@ -214,16 +218,17 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 			\item $[$ Toán hạng nguồn $]$: có thể là hằng số, biến, thanh ghi, ô nhớ.
 	\end{itemize}
 
-	Xem ví dụ sau:
+	\newpage
+	Một số ví dụ:
 		\begin{itemize}
 		\renewcommand{\labelitemi}{\textbullet}	
-		\item	Mov ax, bx 		; đặt giá trị của thanh ghi bx vào ax.
-		\item Mov ax, 5		; đặt giá trị 5 vào thanh ghi ax.
-		\item	Mov bx, 5*3 		; đặt giá trị 5*3 vào thanh ghi bx.
-		\item Mov DI, ‘A’		; đặt mã ASCII của ‘A’ vào thanh ghi DI
-		\item Mov ch, var		; đặt giá trị của biến var kiểu byte vào thanh ghi ch.
-		\item	Mov bh, 300		; giá trị không hợp lệ vì bh có kiểu byte giới hạn 255 nên không thể gán giá trị 300 vào bh.
-		\item	Mov ch, ax		; giá trị không hợp lệ vì giá trị thanh ghi ax (16 bit) không thể gán giá trị vào thanh ghi ch (16 bit).  
+		\item	Mov ax, bx 		; đặt giá trị của thanh ghi \textit{bx} vào \textit{ax}.
+		\item Mov ax, 5		; đặt giá trị 5 vào thanh ghi \textit{ax}.
+		\item	Mov bx, 5*3 		; đặt giá trị 5*3 vào thanh ghi \textit{bx}.
+		\item Mov DI, ‘A’		; đặt mã ASCII của\textit{ ‘A’} vào thanh ghi \textit{DI}
+		\item Mov ch, var		; đặt giá trị của biến var kiểu byte vào thanh ghi \textit{ch}.
+		\item	Mov bh, 300		; giá trị không hợp lệ vì \textit{bh} có kiểu byte giới hạn 255 nên không thể gán giá trị 300 vào\textit{ bh}.
+		\item	Mov ch, ax		; giá trị không hợp lệ vì giá trị thanh ghi \textit{ax} (16 bit) không thể gán giá trị vào thanh ghi \textit{ch} (16 bit).  
 		\end{itemize}
 
 		\subsubsection{Tập giá trị}
@@ -263,7 +268,7 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 		\end{longtable}
 		
 		Ngoài ra còn có một số ký hiệu kiểu số tự nhiên.
-		\begin{longtable}{ | m{3cm} | m{6cm} | }
+		\begin{longtable}{ | m{3cm} | m{8cm} | }
 			\hline
 				Kiểu & Cách sử dụng\\
 			\hline
@@ -282,7 +287,7 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 					\label{table:tbkieudulieutn}
 		\end{longtable}
 		
-		Trên cở sở các đơn vị dữ liệu được lưu trên kiến trúc X86, một byte tưng ứng với 8-bit, tưng tự word tưng ứng với 16-bit (2 byte), doubleword tưng ứng với 32-bit (4 byte), quadword tưng ứng với 64-bit (8 byte). Từ đó ta tính toán được phạm vi giới hạn số học của các kiểu số nguyên không dấu và có dấu: 
+		Trên cở sở các đơn vị dữ liệu được lưu trên kiến trúc X86, một byte tưng ứng với 8-bit, tưng tự word tưng ứng với 16-bit (2 byte), doubleword tưng ứng với 32-bit (4 byte), quadword tưng ứng với 64-bit (8 byte). Từ đó ta tính toán được phạm vi giới hạn số học của các kiểu số nguyên không dấu (bảng ~\ref{tb:DLKoDau})và có dấu (bảng~\ref{tb:DLCoDau} ): 
 			\begin{longtable}{ | m{5cm} | m{6cm} | m{3cm} |}
 			\hline
 				Kiểu lưu trữ &	Phạm vi (từ thấp đến cao)&	Dung lượng\\
@@ -296,7 +301,8 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 			\hline
 				Quadword không dấu	&0 đến 18,446,744,073,709,551,615&	8 bytes\\
 			\hline
-				\caption{Bảng phạm vi kiểu dữ liệu số không dấu}				
+				\caption{Bảng phạm vi kiểu dữ liệu số không dấu}		
+				\label{tb:DLKoDau}		
 			\end{longtable}
 		
 			\begin{longtable}{ | m{5cm} | m{7cm} |}
@@ -312,7 +318,8 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 			\hline	
 				Quadword có dấu	 & -9,223,372,036,854,775,808 đến +9,223,372,036,854,775,807 \\
 			\hline
-			\caption{Bảng phạm vi kiểu dữ liệu số có dấu}				
+			\caption{Bảng phạm vi kiểu dữ liệu số có dấu}		
+			\label{tb:DLCoDau}		
 			\end{longtable}		
 		
 		\subsubsection{Kiếu giá trị}
@@ -343,7 +350,9 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 	\end{itemize}	
 	
 	\subsubsection*{Biểu thức số nguyên}
-	Biểu thức số nguyên là các biểu thức toán học mà các toán hạng thuộc kiểu số nguyên. Các biểu thức toán học được xếp theo thứ tự ưu tiên, việc xếp thứ tự này khá quan trọng vì nó ảnh hưởng đến kết quả của một biểu thức. Dưới đây là bảng biểu thức toán học được sắp thứ tự ưu tiên cao nhất là 1 và thấp nhất là 4:	\\
+	Biểu thức số nguyên là các biểu thức toán học mà các toán hạng thuộc kiểu số nguyên. Các biểu thức toán học được xếp theo thứ tự ưu tiên, việc xếp thứ tự này khá quan trọng vì nó ảnh hưởng đến kết quả của một biểu thức. Bảng ~\ref{tb:BTToan} biểu diễn biểu thức toán học được sắp thứ tự ưu tiên cao nhất là 1 và thấp nhất là 4:	\\
+	
+	\newpage
 	\begin{longtable}{ | m{3cm} | m{5cm} |m{5cm} |}
 			\hline
 				Toán tử &	Tên &	Thứ tự ưu tiên\\
@@ -360,6 +369,7 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 			$+,-$	&	Cộng, trừ	&	4\\
 			\hline
 			\caption{Thứ tự ưu tiên biểu thức toán}
+			\label{tb:BTToan}
 	\end{longtable}
 	Xem các ví dụ dưới đây để hiểu rõ hơn:
 	\begin{itemize}
@@ -384,19 +394,21 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 		\item	‘123456’ 
 	\end{itemize}	
 		
+		\newpage
 		\subsubsection{Cấu trúc một chương trình assembly}
 			Hiện này, hầu hết các hệ điều hành hiện nay, đặc biệt là hệ điều hành Microsoft đều hỗ trợ hai dạng cấu trúc tập tin thực thi là COM và EXE. Nhưng trong BE-PUM tập trung phân tích cấu trúc tập tin EXE. Cấu trúc tập tin EXE và COM có sự khác biệt rất lớn. Cấu trúc tập tin EXE được chia thành ba đoạn: Mã lệnh (Code), dữ liệu (Data), ngăn xếp (Stack). Trong khi đó cấu trúc tập tin COM chỉ có một đoạn mã lệnh được gom từ ba đoạn trong cấu trúc tập tin EXE. \\
 
 Ngoài ra, cấu trúc tập tin EXE có thể bố trí hơn ba đoạn bộ nhớ. Do đó, khi thiết kế chương trình, hay gặp phải chương trình được bố trí hơn ba đoạn thì cần phải quan tâm đến các modun của chương trình, sự liên kết giữa các đoạn với nhau. \\
 
 Cấu trúc chương trình được giới thiệu, phân tích dưới đây là cấu trúc tập tin thực thi EXE, nêu lên những khái niệm cơ bản của một chương trình assembly. \\
-	\begin{normalsize}
+	\begin{boxedminipage}{15cm}
+		\begin{normalsize}
 			\setlength{\parindent}{1cm}		
 			\renewcommand{\rmdefault}{cmss}
 			\textit {$.$ Model	$<$ chế độ bộ nhớ $>$	}		\\	
-			\indent  \textit{.Stack 100h } \\			
+			\textit{.Stack 100h } \\			
 			\indent \textit{<khai báo dữ liệu>} \\			
-			\indent \textit{.Code}\\
+			 \textit{.Code}\\
 			\indent \textit{<Thủ tục chính > PROC}\\ \\
 			\indent \textit{<các câu lệnh của chương trình>}\\ \\
 			\indent \textit{< Thủ tục chính> } \\
@@ -404,29 +416,37 @@ Cấu trúc chương trình được giới thiệu, phân tích dưới đây l
 			\indent \textit{<Các thủ tục khác được khai>}\\
 			\indent \textit{END}\\
 	\end{normalsize}
+\end{boxedminipage}
 	
 	Trong cấu trúc được đưa ra, các từ \textit {.Model, .Stack, .Data, .Code, PROC, Endp, END} là các từ để hướng dẫn thực thi một chương trình assembly. \\
 
-Nhìn vào cấu trúc chương trình, ta thấy rõ một chương trình assembly được phân tích ra gồm 3 đoạn chính: đoạn \textit{Code}, chứa toàn bộ mã lệnh, nơi thực thi của chương trình, đoạn \textit{Data} nơi chứa các biến dữ liệu được khai báo của chương trình, đoạn Stack nơi chứa stack của chương trinh khi chương trình được nạp vào bộ nhớ để thực thi.\\
+Nhìn vào cấu trúc chương trình, ta thấy rõ một chương trình assembly được phân tích ra gồm 3 đoạn chính: đoạn \textit{Code}, chứa toàn bộ mã lệnh, nơi thực thi của chương trình, đoạn \textit{Data} nơi chứa các biến dữ liệu được khai báo của chương trình, đoạn Stack nơi chứa stack của chương trinh khi chương trình được nạp vào bộ nhớ để thực thi.
 
-Hướng dẫn \textit{.Model} được đạt ngay trên đầu của cấu trúc chương trình nhằm mục đích khai báo chế độ nhớ mà chương trình sử dụng để thực thi.\\
+Hướng dẫn \textit{.Model} được đạt ngay trên đầu của cấu trúc chương trình nhằm mục đích khai báo chế độ nhớ mà chương trình sử dụng để thực thi.
 
-Hướng dẫn \textit{.Stack} đặt ở đầu chương trình mục đích để khai báo kích thước stack được sử dụng để thực thi chương trình. Kích thước stack thường được khai báo là 100h (256) byte.\\
+Hướng dẫn \textit{.Stack} đặt ở đầu chương trình mục đích để khai báo kích thước stack được sử dụng để thực thi chương trình. Kích thước stack thường được khai báo là 100h (256) byte.
 
-Ví dụ chương trình được viết theo cấu trúc EXE:\\
+	Trong ví dụ 2 ở phần đầu chương trình có khai báo các đường dẫn thư viện hỗ trợ chương trình bằng cú pháp:
+		\begin{center}
+			\textit { include <đường dẫn>} 
+		\end{center}
+		
+	Có thể thấy đoạn chương trình trên sử dụng chế độ bộ nhớ Small. Khai báo kích thước Stack là 100h byte. Trong phần khai báo dữ liệu Data chỉ khai báo một biến duy nhất là var1 có kiểu dữ liệu là word, giá trị của biến là 200. Trong phần Code, tên thủ tục là main, tên thủ tục có thể được đặt tùy ý.
+
+\newpage
+Ví dụ 2:  chương trình được viết theo cấu trúc EXE:
 
 \begin{boxedminipage}{15cm}
 	\begin{normalsize}						
 				\textit {.model small}
 				\begin{changemargin}{1cm}{0.5cm} 
      			\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc}  \\  
-				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
-				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
-				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\ \\
-				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\ 
-				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
-				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
-				\textit { include \textbackslash masm32 \textbackslash include \textbackslash windows.inc} \\
+				\textit { include \textbackslash masm32 \textbackslash include \textbackslash user32.inc } \\
+				\textit { include \textbackslash masm32 \textbackslash include \textbackslash kernel32.inc } \\
+				\textit { include \textbackslash masm32 \textbackslash include \textbackslash gdi32.inc} \\ \\
+				\textit { include \textbackslash masm32 \textbackslash lib \textbackslash user32.lib} \\ 
+				\textit { include \textbackslash masm32 \textbackslash lib \textbackslash kernel32.lib } \\
+				\textit { include \textbackslash masm32 \textbackslash lib \textbackslash gdi32.lib} \\				
 				\textit {stack 100h}
 				\end{changemargin}				
 				\textit {.data}
@@ -454,43 +474,41 @@ Ví dụ chương trình được viết theo cấu trúc EXE:\\
 	\end{normalsize}
 	\end{boxedminipage}
 	
-		Ở phần đầu chương trình có khai báo các đường dẫn thư viện hỗ trợ chương trình bằng cú pháp:
-		\begin{center}
-			\textit { include <đường dẫn>} \\
-		\end{center}
-	Có thể thấy đoạn chương trình trên sử dụng chế độ bộ nhớ Small. Khai báo kích thước Stack là 100h byte. Trong phần khai báo dữ liệu Data chỉ khai báo một biến duy nhất là var1 có kiểu dữ liệu là word, giá trị của biến là 200. Trong phần Code, tên thủ tục là main, tên thủ tục có thể được đặt tùy ý.\\
-
-
+	
 	\subsection{Floating-Point Unit (FPU)}
-	Kiên trúc Floating-Point Unit (FPU) của Intel cung cấp hiệu quả cao trong khả năng xử lý floating-point. Kiến trúc FPU hỗ trọ xử lý các số nguyên, số thực và Biniary Coded Decimal (BCD)-số nguyên kiểu dữ liệu, và các floating-point được sử lý bằng thuật toán được định nghĩa theo tiêu chuẩn IEEE 754 và 854. Các câu lệnh FPU được thực hiện từ bộ vi sử lý của các dòng lệnh bình thường và được cải thiện đáng kể hiệu quả của các bộ vi xử lý Intel trong xử lý các phép tính có độ chính xác cao, các hoạt động xử lý dấu chấm động.\\
+	Kiên trúc Floating-Point Unit (FPU) của Intel cung cấp hiệu quả cao trong khả năng xử lý floating-point. Kiến trúc FPU hỗ trọ xử lý các số nguyên, số thực và Biniary Coded Decimal (BCD)-số nguyên kiểu dữ liệu, và các floating-point được sử lý bằng thuật toán được định nghĩa theo tiêu chuẩn IEEE 754 và 854. Các câu lệnh FPU được thực hiện từ bộ vi sử lý của các dòng lệnh bình thường và được cải thiện đáng kể hiệu quả của các bộ vi xử lý Intel trong xử lý các phép tính có độ chính xác cao, các hoạt động xử lý dấu chấm động.
+	
 		\subsubsection{Số thực và định dạng Floating-point}	
 		Phần này sẽ mô tả cách các số thực được biểu diễn ở dạng dấu chấm động của FPU trong kiến trúc Intel. Đồng thời giới thiệu các thuật ngữ như số normalized, số denormalized, số mũ, số không, và NaN (not a number). 
 		
 		\subsubsection*{Hệ thống số thực}
-		Như thể hiện trong hình 3, hệ thống số thực bao gồm sự liên tục của các số thực từ trừ vô cực (-$\mathbb{\infty}$)  đến cộng vô cực (+$\mathbb{\infty}$) .\\
+		Như thể hiện trong hình ~\ref{fig:HeThongMaNPhan}, hệ thống số thực bao gồm sự liên tục của các số thực từ trừ vô cực (-$\mathbb{\infty}$)  đến cộng vô cực (+$\mathbb{\infty}$) .
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
-					\includegraphics[scale=0.8]{MaNhiPhan.png}
+					\includegraphics[scale=0.55]{MaNhiPhan.png}
 				\end{center}
-				\caption{Hệ thống mã nhị phân biểu diễn số thực}				
+				\caption{Hệ thống mã nhị phân biểu diễn số thực  \protect\footnotemark}			
+				\label{fig:HeThongMaNPhan}	
 			\end{figure}
+			\footnotetext{Trích dẫn sách  Intel Architecture Software Developer’s Manual}
 		\end{center}		
 		
 		Bởi vì kích thước và số lượng thanh ghi của bất kỳ máy tính nào có thể có hạn chế, chỉ có một đoạn mã nhị phân của số thực có thể được sử dụng trong tính toán số thực. Hình 3, phần số thực mà FPU hỗ trợ biểu diễn một giá trị xấp xỉ của một số thực. Phạm vi và độ chính xác của các phần mã nhị phân của số thực được biểu diễn theo định dạng FPU sử dụng để hiện thi cho số thực được sử dụng.
 		
 		\subsubsection*{Định dạng Floating-point}
-		Để tăng tốc độ và hiệu quả của các phép tính số thực, các FPU hiện thị đại diện cho một số thực mà được biểu diễn theo định dạng floating-point. Trong định dạng này, một số thực có ba phần: bit dấu, định trị và số mũ. Định dạng này phù hợp với chuẩn IEEE.\\
+		Để tăng tốc độ và hiệu quả của các phép tính số thực, các FPU hiện thị đại diện cho một số thực mà được biểu diễn theo định dạng floating-point. Trong định dạng này, một số thực có ba phần: bit dấu, định trị và số mũ. Định dạng này phù hợp với chuẩn IEEE.
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
-					\includegraphics[scale=0.8]{DinhDangMNP.png}
+					\includegraphics[scale=1]{DinhDangMNP.png}
 				\end{center}
-				\caption{Định dạng mã nhị phân của Floating-point}				
-			\end{figure}
+				\caption{Định dạng mã nhị phân của Floating-point  \protect\footnotemark}				
+			\end{figure}		
+			\footnotetext{Xem thêm trong Phụ lục 1}	
 		\end{center}		
 		
-		Bit dấu là một giá trị nhị phân cho biết xem số đó là số âm (1) hay số dương (0). Phần định trị gồm hai phần: bit số nguyên (J-bit) và phần phân số. Phần bit số nguyên thường không được hiện thị, nhưng thay vào đó có giá trị mặc định. Phần số mũ là một số nguyên biểu diễn lũy thừa 2, điều này làm cho phần định trị được tăng lên.
+		Bit dấu là một giá trị nhị phân cho biết xem số đó là số âm (1) hay số dương (0). Phần định trị gồm hai phần: bit nguyên (J-bit) và phần phân số. Phần bit số nguyên thường không được hiện thị, nhưng thay vào đó có giá trị mặc định. Phần số mũ là một số nguyên biểu diễn lũy thừa 2, điều này làm cho phần định trị được tăng lên.
 		
 		\subsubsection*{Số thông thường (normalized)}	
 		Trong hầu hết mọi trường hợp, thanh ghi FPU hiển thị giá trị số thực định dạng thông thường. Ngoại trừ số 0 thì phần định trị luôn được tạo bởi một số thực và theo sau là phần phân số.
@@ -498,7 +516,7 @@ Ví dụ chương trình được viết theo cấu trúc EXE:\\
 			\item[•	]1.fff…fff
 		\end{itemize}
 				
-	\begin{longtable}{ | m{7cm} | m{7cm} | }
+	\begin{longtable}{ | m{7cm} | m{9cm} | }
 		\hline
 				Ký hiệu & Giá trị\\
 		\hline
@@ -513,6 +531,7 @@ Ví dụ chương trình được viết theo cấu trúc EXE:\\
 		\hline
 			Đinh dạng số thực & 0(Bit dấu)  10000110(Phần mũ)	 011001000100000000000001(Phần định trị)\\
 		\hline
+			\caption{Ví dụ biểu diễn giá trị}
 	\end{longtable}		
 		
 		Đối với các giá trị thấp hơn 1 thì số 0 ở phia trước được loại bỏ (mỗi số 0 được loại bỏ, số mũ được tăng lên 1).\\
@@ -522,6 +541,7 @@ Ví dụ chương trình được viết theo cấu trúc EXE:\\
 		\subsubsection*{Số mũ (baised expoment)}
 			Thanh ghi FPU biểu diễn số mũ theo định dạng cơ bản. Có nghĩa là một hằng số sẽ được thêm vào số mũ được biểu diễn vì vậy số mũ luôn là một số dương. Giá trị hằng số phụ thuộc vào số lượng bit được dùng để biểu diễn số thực trong định dạng dấu chấm phẩy động được sử dụng. Hằng số được chọn sao cho có thể thay đổi giá trị nhưng vẫn không bị tràn số.
 			
+			\newpage
 			\subsubsection*{Số thực và mã hóa phi số thực}
 			Có nhiều loại số thực và giá trị đặc biệt có thể được mã hóa theo định dạng dấu phẩy động của FPU:\\
 			
@@ -543,8 +563,9 @@ Ví dụ chương trình được viết theo cấu trúc EXE:\\
 		\subsubsection*{Số 0}
 		Số 0 có thể được biểu diễn là +0 và  -0 phụ thuộc vào bit dấu. Việc mã hóa +0 và -0 tương đương nhau về mặt giá trị. Bít dấu của số 0 phụ thuộc vào phép toán được thực thi và cách thức làm tròn được sử dụng. Bit dấu số 0 có thể xác định tràn số dưới có đang xảy ra hay không, ngoài ra còn xác định bit dấu của giá trị vô cực. 
 		
+		\newpage
 		\subsubsection*{Số normalized và denormalized}
-		Trừ số 0, số thực được chia thành 2 dạng: normalized (bình thường) và denormalized (không bình thường). Số normalized bao gồm các giá trị khác 0, có thể mã hóa theo định dạng IEEE trong phạm vi từ số 0 đến vô cực. Trong hình 5, định dạng chính xác đơn với chỉ số mũ từ 0 đến 254 (phạm vi tham số -126 đến 126).
+		Trừ số 0, số thực được chia thành 2 dạng: normalized (bình thường) và denormalized (không bình thường). Số normalized bao gồm các giá trị khác 0, có thể mã hóa theo định dạng IEEE trong phạm vi từ số 0 đến vô cực. Trong hình ~\ref{fig:SothucNaN}, định dạng chính xác đơn với chỉ số mũ từ 0 đến 254 (phạm vi tham số -126 đến 126).
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
@@ -553,15 +574,16 @@ Ví dụ chương trình được viết theo cấu trúc EXE:\\
 				\caption{Số thực và NaN}				
 				\label{fig:SothucNaN}
 			\end{figure}
-		\end{center}		
+		\end{center}	
 
-	Khi số thực càn gần về số 0, chiều dài bit dùng để biểu diễn số thực không đủ dài để biểu diễn. Bởi vì chỉ số mũ (trong ví dụ này là 32-bit) không đủ lớn để biểu diễn bit dịch phải để loại bỏ các bit 0 ở đầu (xem thêm phụ lục IEEE).\\
+	Khi số thực càng gần về số 0, chiều dài bit dùng để biểu diễn số thực không đủ dài để biểu diễn. Bởi vì chỉ số mũ (trong ví dụ này là 32-bit) không đủ lớn để biểu diễn bit dịch phải để loại bỏ các bit 0 ở đầu (xem thêm phụ lục IEEE).\\
 
 	Khi số mũ là số 0, những số nhỏ có thể được biểu diễn bằng những bit số nguyên (và những chuỗi bit ở đầu) của số 0. Số thực trong phạm vi này được gọi là denormalized (hay số rất nhỏ). Việc sử dụng các bit 0 ở đầu cho phép biểu diễn các số rất nhỏ nhưng những số rất nhỏ này là nguyên nhân mất đi sự chính xác (số bit trong phần định trị được giảm đi sẽ được tính toán dựa trên số bit 0 ở phần số mũ).\\
 
+	\newpage
 	Khi thực hiện các phép tính trên dấu chấm động, mỗi thanh ghi FPU thực hiện phép toán với số normalized và đưa ra kết quả là một số normalized. Số denormalized biểu diễn cho điều kiện tràn số dưới.\\
 	
-	Số denormalized được tính bằng kỹ thuật “gradual underflow”. Bảng () sẽ đưa ra một ví dụ của kỹ thuật “gradual underflow” trong xử lý tính toán số denormalized. Ở đây, sử dụng định dạng đơn nên số nhỏ nhất của số mũ là -126. Kết quả trong ví dụ này yêu cầu số mũ là -129. Nếu nhỏ hơn -129 là nằm ngoài phạm vi số mũ cho phép, kết quả của số denormalized bằng cách thêm các bit 0 ở đầu đến khi số mũ nhỏ nhất là -129.\\
+	Số denormalized được tính bằng kỹ thuật “gradual underflow”. Bảng~\ref{tb:XuLySoDenormal} sẽ đưa ra một ví dụ của kỹ thuật “gradual underflow” trong xử lý tính toán số denormalized. Ở đây, sử dụng định dạng đơn nên số nhỏ nhất của số mũ là -126. Kết quả trong ví dụ này yêu cầu số mũ là -129. Nếu nhỏ hơn -129 là nằm ngoài phạm vi số mũ cho phép, kết quả của số denormalized bằng cách thêm các bit 0 ở đầu đến khi số mũ nhỏ nhất là -129.\\
 		
 		\begin{longtable}{ | m{4cm} | m{2cm} |  m{2cm} | m{4cm} | }
 			\hline
@@ -579,6 +601,7 @@ Ví dụ chương trình được viết theo cấu trúc EXE:\\
 				Kết quả Denormalize & 0 & -126 & 0.00101011100..00\\
 			\hline
 			\caption{Xử lý số denormalized}
+				\label{tb:XuLySoDenormal}
 		\end{longtable}
 		
 	
@@ -612,7 +635,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		Đối với mỗi loại dữ liệu của FPU, có một cách để mã hóa giá trị đặc biệt được gọi là giá trị không định nghĩa. Ví dụ, khi tính toán trên trường số thực, số không được định nghĩa là số QNaNs. FPU tạo ra giá trị không định nghĩa khi giá trị được đánh dấu xử lý ngoại lệ.
 		
 		\subsubsection{Kiến trúc FPU}
-		Nhìn tổng quan kiến trúc, FPU là một bộ xử lý các thao tác hoạt động song song với bộ xử lý số nguyên. FPU có các câu lệnh cũng giống như các mã lệnh khác và được thực hiện tuần tự như bộ xử lý số nguyên và chia sẻ đường truyền với bộ xử lý số nguyên. Bộ xử lý FPU, bộ xử lý số nguyên hoạt động độc lập nhau và song song. 
+		Nhìn tổng quan kiến trúc (hình~\ref{fig:FPUQuanHe}), FPU là một bộ xử lý các thao tác hoạt động song song với bộ xử lý số nguyên. FPU có các câu lệnh cũng giống như các mã lệnh khác và được thực hiện tuần tự như bộ xử lý số nguyên và chia sẻ đường truyền với bộ xử lý số nguyên. Bộ xử lý FPU, bộ xử lý số nguyên hoạt động độc lập nhau và song song. 
 		
 		\begin{center}
 			\begin{figure}[htp]
@@ -624,6 +647,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 			\end{figure}
 		\end{center}		
 		
+		\newpage
 		Những câu lệnh được thực thi trong môi trường của FPU hình ~\ref{fig:FPUQuanHe} bao gồm 8 thanh ghi dữ liệu (gọi là thanh ghi dữ liệu FPU) và sau đây là những thanh ghi với mục đích khác:
 		\begin{itemize}
 			\renewcommand{\labelitemi}{\textbullet}	
@@ -637,50 +661,35 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		
 	Những thanh ghi này được miêu tả trong phần tiếp theo.
 	
-	\newpage
 		\subsection*{Thanh ghi dữ liệu FPU}
-	Các thanh ghi dữ liệu FPU (hình ~\ref{fig:MoiTruongFPU}) bao gồm 8 thanh ghi 80-bit. Giá trị được lưu trữ trong các thanh ghi theo định dạng mở rộng. Khi các số thực, số nguyên hoặc giá trị BCD được nén được nạp vào từ bộ nhớ vào trong thanh ghi dữ liệu FPU, các giá trị sẽ tự động chuyển về định dạng mở rộng. Khi tính toán, kết quả được chuyển lại vào bộ nhớ từ bất kỳ thanh ghi FPU, kết quả có thể đã được định dạng mở rộng hoặc được chuyển về định dạng FPU khác (số thực, số nguyên, giá trị BCD được nén).\\
+	Các thanh ghi dữ liệu FPU (hình ~\ref{fig:MoiTruongFPU}) bao gồm 8 thanh ghi 80-bit. Giá trị được lưu trữ trong các thanh ghi theo định dạng mở rộng. Khi các số thực, số nguyên hoặc giá trị BCD được nén được nạp vào từ bộ nhớ vào trong thanh ghi dữ liệu FPU, các giá trị sẽ tự động chuyển về định dạng mở rộng. Khi tính toán, kết quả được chuyển lại vào bộ nhớ từ bất kỳ thanh ghi FPU, kết quả có thể đã được định dạng mở rộng hoặc được chuyển về định dạng FPU khác (số thực, số nguyên, giá trị BCD được nén).\\	
 
-	Những tập lệnh của FPU sẽ xử lý 8 thnh ghi dữ liệu nhưu là một ngăn xếp (stack) các thanh ghi (hình ~\ref{fig:MoiTruongFPU} ) tất cả địa chỉ ác thanh ghi dữ liệu là tương đối so với thanh ghi đỉnh của ngăn xếp. Số lượng thanh ghi ở đỉnh ngăn xếp hiện tại được lưu trữ trong trường TOP (stack TOP) trong thanh ghi trạng thái của FPU. Khi có 1 thao tác nạp thì TOP giảm đi 1 và nạp 1 giá trị vào thanh ghi ở đỉnh mới của ngăn xếp, và thao tác lưu trữ sẽ lưu trữ giá trị thanh ghi từ thanh ghi TOP hiện tại vào bộ nhớ.
+	Những tập lệnh của FPU sẽ xử lý 8 thanh ghi dữ liệu nhưu là một ngăn xếp (stack) các thanh ghi (hình ~\ref{fig:MoiTruongFPU} ) tất cả địa chỉ ác thanh ghi dữ liệu là tương đối so với thanh ghi đỉnh của ngăn xếp. Số lượng thanh ghi ở đỉnh ngăn xếp hiện tại được lưu trữ trong trường TOP (stack TOP) trong thanh ghi trạng thái của FPU. Khi có 1 thao tác nạp thì TOP giảm đi 1 và nạp 1 giá trị vào thanh ghi ở đỉnh mới của ngăn xếp, và thao tác lưu trữ sẽ lưu trữ giá trị thanh ghi từ thanh ghi TOP hiện tại vào bộ nhớ.
+		
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=0.75]{MoiTruongFPU.png}
 				\end{center}
-				\caption{Môi trường thực thi FPU}				
+				\caption{Môi trường thực thi FPU \protect\footnotemark}				
 				\label{fig:MoiTruongFPU}				
 			\end{figure}
+			\footnotetext{Trích dẫn trong sách Intel Architecture Software Developer’s Manual}
 		\end{center}		
-		
+	
+	\newpage	
 	Nếu hoạt động nạp giá trị được thực hiện khi TOP = 0 giá trị mới của TOP được thiết lập là 7. Ngoại lệ ngăn xếp bị tràn trên xảy ra giá trị được nạp không được ghi đè lên thanh ghi.			
 			\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=0.75]{StackFPU.png}
 				\end{center}
-				\caption{Ngăn xếp thanh ghi dữ liệu FPU}				
+				\caption{Ngăn xếp thanh ghi dữ liệu FPU }				
 				\label{fig:StackFPU}				
 			\end{figure}
 		\end{center}		
 			
-			Có nhiều câu lệnh xử lý dấu chấm động cho phép người lập trình thao tác hoàn toàn trên đỉnh stack hoặc thao tác trên các thanh ghi cụ thể mà có quan hệ với đỉnh stack. Assembly hỗ trợ hóa địa chỉ thanh ghi, việc sử dụng thanh ghi ST(0) hoặc đơn giản là ST để biểu diễn thanh ghi hiện tại và ST(i) dùng để biểu diễn thanh ghi thứ i kể từ đỉnh stack (0 $\mathbb{\le}$ i  $\mathbb{\le}$ 7). Ví dụ, nêu đỉnh stack hiện tại là 011B (thanh ghi thứ 3 là đỉnh của stack), khi thực hiện câu lệnh toán học cộng thì nội dung của đỉnh stack sẽ thay đổi theo phép tính cộng hai thanh ghi trong stack ( thanh ghi 3 và 5).
-			
-	\textit{	FADD ST, ST(2);} \\
-	
-	Hình ~\ref{fig:VDFPU} cho thấy một ví dụ về cấu trúc ngăn xếp của thanh ghi FPU và câu lệnh thường được sử dụng để thực hiện một phép toán. 
-	\begin{itemize}
-		\item[1]	Lệnh đầu tiên (FLD value1) tăng thanh ghi con trỏ của stack (hiện tại là đỉnh stack) và nạp giá trị 5.6 từ bộ nhớ vào ST(0). Kết quả của câu lệnh này được chỉ ra ở hình (a).
-		\item[2]	Lệnh thứ 2 nhân giá trị trong ST(0) với 2.4 từ bộ nhớ và lưu kết quả vào trong ST(0) như hình (b).
-		\item[3] Lệnh thứ 3 tăng đỉnh stack lên và nạp giá trị 3.8 vào ST(0).
-		\item[4]	Lệnh thứ 4 nhân giá trị trong ST(0) với 10.3 từ bộ nhớ chính và lưu trữ kết quả trong ST(0) như hình (c).
-		\item[5]	Lệnh thứ 5 cộng thêm giá trị của đỉnh stack ST(0) với giá trị trong ST(1) và lưu kết quả vào trong ST(0) như hình (d).
-	\end{itemize}
-	
-		Đây là một ví dụ trong việc thực thi một câu lệnh tính toán xử lý dấu chấm động.
-	
-	\subsubsection*{Truyền tham số vào stack của thanh ghi FPU}	
-	Cũng giống như các thanh ghi xử lý số nguyên, thanh ghi dữ liệu FPU không bị ảnh hưởng bởi các lời gọi thủ tục, hay cách gọi khác, các giá trị được giữ nguyên đến khi có câu lệnh muốn thực thi trên thanh ghi dữ liệu này. Một thủ tục có thể gọi để sử dụng giá trị cho một thủ tục hay câu lệnh khác. Việc gọi thanh ghi bằng cách thông qua con trỏ đỉnh stack hiện tại và cách đặt tên ST(0) và ST(i). Đây là cách gọi thông thường nhất khi muốn lấy giá trị của một thanh ghi trong stack và trả về kết quả trong đỉnh ST(0) khi thực thi câu lệnh hoặc của chương trình.
-	
+			Có nhiều câu lệnh xử lý dấu chấm động cho phép người lập trình thao tác hoàn toàn trên đỉnh stack hoặc thao tác trên các thanh ghi cụ thể mà có quan hệ với đỉnh stack. Assembly hỗ trợ hóa địa chỉ thanh ghi, việc sử dụng thanh ghi ST(0) hoặc đơn giản là ST để biểu diễn thanh ghi hiện tại và ST(i) dùng để biểu diễn thanh ghi thứ i kể từ đỉnh stack (0 $\mathbb{\le}$ i  $\mathbb{\le}$ 7). Ví dụ, nêu đỉnh stack hiện tại là 011B (thanh ghi thứ 3 là đỉnh của stack), khi thực hiện câu lệnh toán học cộng thì nội dung của đỉnh stack sẽ thay đổi theo phép tính cộng hai thanh ghi trong stack ( thanh ghi 3 và 5). \textit{	FADD ST, ST(2);} 	
 	\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
@@ -689,37 +698,53 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\caption{Ví dụ xử lý câu lệnh trong stack của FPU}				
 				\label{fig:VDFPU}				
 			\end{figure}
-		\end{center}	
+		\end{center}		
+	
+	Hình~\ref{fig:VDFPU} cho thấy một ví dụ về cấu trúc ngăn xếp của thanh ghi FPU và câu lệnh thường được sử dụng để thực hiện một phép toán. 
+	\begin{itemize}
+		\item[1]	Lệnh đầu tiên \textit{FLD value1} tăng thanh ghi con trỏ của stack (hiện tại là đỉnh stack) và nạp giá trị 5.6 từ bộ nhớ vào \textit{ST(0)}. Kết quả của câu lệnh này được chỉ ra ở hình (a).
+		\item[2]	Lệnh thứ 2 nhân giá trị trong \textit{ST(0)} với 2.4 từ bộ nhớ và lưu kết quả vào trong \textit{ST(0)} như hình (b).
+		\item[3] Lệnh thứ 3 tăng đỉnh stack lên và nạp giá trị 3.8 vào \textit{ST(0)}.
+		\item[4]	Lệnh thứ 4 nhân giá trị trong \textit{ST(0)} với 10.3 từ bộ nhớ chính và lưu trữ kết quả trong \textit{ST(0)}như hình (c).
+		\item[5]	Lệnh thứ 5 cộng thêm giá trị của đỉnh stack \textit{ST(0)} với giá trị trong \textit{ST(1)} và lưu kết quả vào trong \textit{ST(0)} như hình (d).
+	\end{itemize}
+	
+		Đây là một ví dụ trong việc thực thi một câu lệnh tính toán xử lý dấu chấm động.
+	
+	\newpage
+	\subsubsection*{Truyền tham số vào stack của thanh ghi FPU}	
+	Cũng giống như các thanh ghi xử lý số nguyên, thanh ghi dữ liệu FPU không bị ảnh hưởng bởi các lời gọi thủ tục, hay cách gọi khác, các giá trị được giữ nguyên đến khi có câu lệnh muốn thực thi trên thanh ghi dữ liệu này. Một thủ tục có thể gọi để sử dụng giá trị cho một thủ tục hay câu lệnh khác. Việc gọi thanh ghi bằng cách thông qua con trỏ đỉnh stack hiện tại và cách đặt tên ST(0) và ST(i). Đây là cách gọi thông thường nhất khi muốn lấy giá trị của một thanh ghi trong stack và trả về kết quả trong đỉnh ST(0) khi thực thi câu lệnh hoặc của chương trình.	
 		
-		\newpage
 		\subsection*{ Thanh ghi trạng thái FPU}
 	Thanh ghi trạng thái FPU 16 bit (hình ~\ref{fig:TrangThaiFPU} ) chỉ ra trạng thái hiện tại của FPU. Bit cờ của thanh ghi trạng thái bao gồm các cờ báo của FPU, con trỏ đỉnh stack, mã điều kiện, cờ báo lỗi, cờ báo lỗi ngoại lệ và cờ báo lỗi stack. FPU thiết lập những bit cờ trong thanh ghi để chỉ ra kết của của phép toán được thực hiện.\\
 
-	Nội dung của thanh ghi trạng thái FPU có thể được lưu vào bộ nhớ bằng cách sử dụng câu lệnh FSTSW/FNSTSW, FSTEN/FNSTENV và FSAVE/FNSAVE. Cũng có thể lưu trữ trong thanh ghi AX của bộ xử lý số nguyên bằng cách sử dụng câu lệnh FSTSW/FNSTSW.\\
+	Nội dung của thanh ghi trạng thái FPU có thể được lưu vào bộ nhớ bằng cách sử dụng câu lệnh FSTSW/FNSTSW, FSTEN/FNSTENV và FSAVE/FNSAVE. Cũng có thể lưu trữ trong thanh ghi AX của bộ xử lý số nguyên bằng cách sử dụng câu lệnh FSTSW/FNSTSW.
 
 		\subsubsection*{Con trỏ đỉnh stack (TOP)}
 	Con trỏ trỏ tới thanh ghi dữ liệu hiện tại ở đỉnh stack được chứa trong bit 11 đến 13 của thanh ghi trạng thái FPU. Con trỏ thường được gọi là TOP (đỉnh stack) có giá trị từ 0 đến 7.
 
 		\subsubsection*{ Cờ điều kiện}
-	Bốn bit cờ điều kiện của thanh ghi FPU (từ C0 đến C3) chỉ ra kết quả của sự so sánh dấu chấm động và thao tác toán học. Bảng () tóm tắt các loại lệnh mà dấu chấm động sẽ thiết lập bit cờ điều kiện phục vụ cho việc phân loại xử lý ngoại lệ.
+	Bốn bit cờ điều kiện của thanh ghi FPU (từ C0 đến C3) chỉ ra kết quả của sự so sánh dấu chấm động và thao tác toán học. Bảng ~\ref{tb:SuThayDoiCode} tóm tắt các loại lệnh mà dấu chấm động sẽ thiết lập bit cờ điều kiện phục vụ cho việc phân loại xử lý ngoại lệ.
 	
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=1]{TrangThaiFPU.png}
 				\end{center}
-				\caption{Thanh ghi trạng thái FPU}				
+				\caption{Thanh ghi trạng thái FPU \protect\footnotemark }				
 				\label{fig:TrangThaiFPU}				
 			\end{figure}
+			\footnotetext{ Trích dẫn Intel Architecture Software Developer’s Manual}
 		\end{center}	
 		
-		Như thể hiện trong bảng (), bit cờ điểu kiện C1 được sử dụng trong nhiều câu lệnh. Khi bit cờ IE và SF được bật, để chỉ ra lỗi tràn trên hoặc tràn dưới của stack (IS), bit C1 sẽ giúp phân biệt giữa tràn trên (C1 = 1) và tràn dưới (C1 = 0). Khi bit cờ PE trong thanh ghi trạng thái được bật, để cho thấy kết quả đã được làm tròn, bit C1 sẽ được bật nếu số được làm tròn bằng cách làm tròn lên. Câu lệnh FXAM bật C1 theo bit dấu của giá trị được kiểm tra\\.
+		Như thể hiện trong bảng~\ref{tb:SuThayDoiCode}, bit cờ điểu kiện C1 được sử dụng trong nhiều câu lệnh. Khi bit cờ IE và SF được bật, để chỉ ra lỗi tràn trên hoặc tràn dưới của stack (IS), bit C1 sẽ giúp phân biệt giữa tràn trên (C1 = 1) và tràn dưới (C1 = 0). Khi bit cờ PE trong thanh ghi trạng thái được bật, để cho thấy kết quả đã được làm tròn, bit C1 sẽ được bật nếu số được làm tròn bằng cách làm tròn lên. Câu lệnh FXAM bật C1 theo bit dấu của giá trị được kiểm tra\\.
 
 	Bit cờ điều kiện C2 được sử dụng bởi câu lệnh FPREM và FPREM1 để thể hiện phép tính khi sử dụng câu lệnh này không thực hiện được. Khi thực hiện được phép tính này, các bit cờ điệu kiện C0, C1 và C3 sẽ được thay đổi theo kết quả của phép tính, dựa vào các bit cuối của kết quả tính được. \\
 
 	Các câu lệnh FPTAN, FSIN, FCOS và FSINCOS bật bit điều kiện C2 khi toán hạng được sử dụng trong câu lệnh này vượt quá phạm vi cho phép từ -263 đến +263. 
-	
-		\begin{longtable}{ | m{5cm} | m{2cm} |  m{2cm} | m{3cm} | m{2cm}| }
+		
+		\newpage
+		\begin{longtable}{ | m{5cm} | m{2cm} |  m{2cm} | m{2cm} | m{2cm}| }
 			\hline
 				Câu lệnh &  C0 & C1 & C2& C3\\
 			\hline
@@ -744,15 +769,17 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\hline
 				FINIT/FNINIT, FSAVE/FNSAVE & 0 & 0 &0 & 0\\
 			\hline
+				\caption{Sự thay đổi cờ điều khiển trong thanh ghi trạng thái FPU}
+				\label{tb:SuThayDoiCode}
 		\end{longtable}	
 			
 		\subsubsection*{ Cờ ngoại lệ}
-	Sáu bit ngoại lệ (bit 0 đến 5) của thanh ghi trạng thái thể hiện một hoặc nhiều trường hợp ngoại lệ xử lý dấu chấm động sẽ được phát hiện từ khi giá trị cuối cùng của bit được chưa bật. (Cờ ngoại lệ sẽ được mô tả trong phần Xử lý ngoại lệ dấu chấm động). \\
+	Sáu bit ngoại lệ (bit 0 đến 5) của thanh ghi trạng thái thể hiện một hoặc nhiều trường hợp ngoại lệ xử lý dấu chấm động sẽ được phát hiện từ khi giá trị cuối cùng của bit được chưa bật. (Cờ ngoại lệ sẽ được mô tả trong phần Xử lý ngoại lệ dấu chấm động). 
 
 	Bit cờ tóm tắt trạng thái ngoại lệ (ES bit 7) được bật khi có bất kỳ cờ ngoại ngoại lệ nào đã được bật. Khi cờ ES được bật, FPU xử lý ngoại lệ được gọi sử dụng phầm mềm sử lý ngoại lệ để xử lý. (Lưu ý, nếu một cờ xử lý ngoại lệ được bật, FPU sẽ vẫn tiếp tục bật những cờ xử lý ngoại lệ nếu có ngoại lệ xảy ra, nhưng cờ ES sẽ vẫn không được bật). \\
 	
-	Khi cờ ngoại lệ được bật, những cờ được bật sẽ vẫn được bật đến khi cờ được tắt. Để tắt cờ xử lý ngoại lệ có thể xử dụng câu lệnh FCLEX/FNCELX, khởi tạo FPU với câu lệnh FINIT/FNINIT hoặc ghi đè cờ với câu lệnh FRSTOR, FLDENV. \\
-		
+	Khi cờ ngoại lệ được bật, những cờ được bật sẽ vẫn được bật đến khi cờ được tắt. Để tắt cờ xử lý ngoại lệ có thể xử dụng câu lệnh FCLEX/FNCELX, khởi tạo FPU với câu lệnh FINIT/FNINIT hoặc ghi đè cờ với câu lệnh FRSTOR, FLDENV. 
+			
 		B-bit (bit 15) phản ánh nội dung của cờ ES. 
 				
 		\subsubsection*{ Cờ lỗi stack}
@@ -773,12 +800,13 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\begin{center}
 					\includegraphics[scale=1]{SaoLuu.png}
 				\end{center}
-				\caption{Sao lưu có điều kiện}				
+				\caption{Sao lưu có điều kiện \protect\footnotemark}				
 				\label{fig:SaoLuu}				
 			\end{figure}
+			\footnotetext{ Trích dẫn sach  Intel Architecture Software Developer’s Manual}
 		\end{center}	
 		
-		Kỹ thuật mới chỉ có trong bộ vi xử lý Pentium Pro. Kỹ thuật này sử dụng các câu lệnh () để so sánh hai giá trị dấu dấm dộng và thiết lập cờ ZF, PF và ZF của thanh ghi EFLAGS một cahs trực tiếp. Để thực hiện việc thay đổi này cần một câu lệnh sử dụng kỹ thuật mới, nếu dùng kỹ thuật cũ cần tới ba câu lệnh. \\
+		Kỹ thuật mới chỉ có trong bộ vi xử lý Pentium Pro. Kỹ thuật này sử dụng các câu lệnh (FCOMI, FCOMIP, FUCOMI, và FUCOMIP) để so sánh hai giá trị dấu dấm dộng và thiết lập cờ ZF, PF và ZF của thanh ghi EFLAGS một cách trực tiếp. Để thực hiện việc thay đổi này cần một câu lệnh sử dụng kỹ thuật mới, nếu dùng kỹ thuật cũ cần tới ba câu lệnh. \\
 		
 	Lưu ý rằng các câu lệnh FCMOVcc (chỉ có trong bộ xử lý Pentium Pro) cho phép sao lưu có điều kiện các giá trị dấu chấm động (giá trị này nằm trong thanh ghi dữ liệu FPU) . Để sao lưu có điệu kiện các giá trị dấu chấm động thì những câu lệnh này không xét đến cờ IF.
 	
@@ -791,9 +819,10 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\begin{center}
 					\includegraphics[scale=1]{DieuKhienFPU.png}
 				\end{center}
-				\caption{Thanh ghi điều khiển FPU}				
+				\caption{Thanh ghi điều khiển FPU \protect\footnotemark}				
 				\label{fig:DieuKhienFPU}				
 			\end{figure}
+			\footnotetext{ Trích dẫn sach  Intel Architecture Software Developer’s Manual}
 		\end{center}	
 
 		\subsubsection*{ Cờ ngoại lệ}
@@ -826,7 +855,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 
 		\subsubsection*{Cờ điều khiển làm tròn}
 		Cờ điều khiển làm tròn (RC) trong thanh ghi điều khiển FPU (bit 10 và 11) sẽ điều khiển cách kết quả của câu lệnh dấu phẩy động được làm tròn. Có 4 phương thức làm tròn được hỗ trợ (bảng ~\ref{tb:LamTron} ): làm tròn đến số gần nhất, làm tròn lên, làm tròn xuống, làm tròn gần tới 0. Làm tròn đến số gần nhất là phương thức mặc định và phù hợp với hầu hết các ứng dụng, ước lượng được kết quả gần chính xác nhất.
-		\begin{longtable}{|m{6cm}|m{2cm}|m{6cm}|}
+		\begin{longtable}{|m{6cm}|m{2cm}|m{7cm}|}
 		\hline
 			Phương thức làm tròn & Cờ RC & Mô tả\\
 		\hline
@@ -864,7 +893,6 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	Kết quả được làm tròn được gọi là kết quả không chính xác. Khi kết quả không chính xác của câu lệnh FPU được tạo ra, cờ chính xác (PE) trong thanh ghi trạng thái FPU được bật.\\	
 	
 	Khi cờ xử lý ngoại lệ overflow được bật, kết quả chính xác nằm giữa giá trị cụ thể  và dương vô cực, FPU sẽ làm tròn kết quả theo bảng ~\ref{tb:RCOverflow}.
-	\\ \\ \\
 		\begin{longtable} {|m{6cm}|m{6cm}|}
 			\hline
 				Phương thức làm tròn & Kết quả \\			
@@ -882,6 +910,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 			\label{tb:RCOverflow}
 		\end{longtable}
 
+	\newpage
 	Khi cờ xử lý ngoại lệ overflow được bật, kết quả chính xác nằm giữa giá trị cụ thể  và âm vô cực, FPU sẽ làm tròn kết quả theo bảng ~\ref{tb:RCUnderflow}
 		\begin{longtable} {|m{6cm}|m{6cm}|}
 			\hline
@@ -905,8 +934,10 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		Cờ điều khiển vô cùng (bit 10 của thanh ghi điều khiển FPU) được cung cấp cho bộ xử lý toán học Intel 281, không có ý nghĩa với bộ xử lý FPU của Pentium Pro hoặc bộ xử lý FPU của Intel 486, hoặc bộ xử lý Intel 387 NPX.
 		
 		\subsection*{Thẻ FPU}
-		Thanh ghi thẻ 16-bit ( hình ~\ref{fig:TagFPU} ) chỉ ra nội dung của 8 thanh ghi dữ liệu FPU (2-bit một biểu diễn cho một thanh ghi). Mỗi thẻ cho biết một thanh ghi chứa một số hợp lệ, bằng không, hoặc một số dấu chấm động đặc biệt (NaN, số vô cùng, denormal, hoặc không hỗ trợ định dạng), hoặc rỗng. Các thẻ FPU được lưu trữ trong FPU trong thanh ghi thẻ FPU. Khi FPU được khởi tạp bằng câu lệnh FINIT/FNINIT hoặc FSAV/FNSAVE, thẻ FPU của mỗi thanh ghi được thiết lập là FFFFh, thể hiện tất cả dữ liệu hiện có trong thanh ghi là rỗng.
-		\begin{center}
+		Thanh ghi thẻ 16-bit ( hình ~\ref{fig:TagFPU} ) chỉ ra nội dung của 8 thanh ghi dữ liệu FPU (2-bit một biểu diễn cho một thanh ghi). Mỗi thẻ cho biết một thanh ghi chứa một số hợp lệ, bằng không, hoặc một số dấu chấm động đặc biệt (NaN, số vô cùng, denormal, hoặc không hỗ trợ định dạng), hoặc rỗng. Các thẻ FPU được lưu trữ trong FPU trong thanh ghi thẻ FPU. Khi FPU được khởi tạp bằng câu lệnh FINIT/FNINIT hoặc FSAV/FNSAVE, thẻ FPU của mỗi thanh ghi được thiết lập là FFFFh, thể hiện tất cả dữ liệu hiện có trong thanh ghi là rỗng.		
+
+	Mỗi thẻ trong thanh ghi thẻ FPU tương ứng với một thanh ghi vật lý (từ 0 đến 7). Đỉnh stack hiện tại (TOP) được lưu trong thanh ghi trạng thái FPU được sử dụng để kết hợp với thanh ghi thẻ liên quan đến ST(0). 	
+	\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=1]{TagFPU.png}
@@ -914,9 +945,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\caption{Thanh ghi điều khiển FPU}				
 				\label{fig:TagFPU}				
 			\end{figure}
-		\end{center}	
-
-	Mỗi thẻ trong thanh ghi thẻ FPU tương ứng với một thanh ghi vật lý (từ 0 đến 7). Đỉnh stack hiện tại (TOP) được lưu trong thanh ghi trạng thái FPU được sử dụng để kết hợp với thanh ghi thẻ liên quan đến ST(0). \\
+		\end{center}		
 	
 	FPU sử dụng giá trị của thẻ để phát hiện điều kiện tràn trên và tràn dưới của stack. Stack bị tràn trên khi con trỏ TOP giảm đi (do tải dữ liệu vào một thanh ghi hoặc một phép toán được thêm vào) trỏ đến một thanh ghi có giá trị không rỗng. Stack bị tràn dưới khi con trỏ TOP tăng lên (do sao lưu dữ liêu hoặc phép toán lấy dữ liệu ra) trỏ tới một thanh ghi rỗng hoặc thanh ghi rỗng được tham chiếu là một toán hạng. Thanh ghi không rỗng được xác định trong thanh ghi thẻ có chứa nội dung biểu diễn giá trị số 0 (01b), giá trị hợp lệ là (00b), hoặc một giá trị đặc biêt (10b).\\
 	
@@ -934,39 +963,43 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	Tất cả kiến trúc Intel FPU và NPX trừ bộ xử lý 8087, con trỏ lệnh FPU trở tới bất kỳ tiền tố nào mà nó đứng trước câu lệnh. Đối với bộ xử lý 8087, con trỏ lệnh FPU chỉ trỏ tới opcode hiện tại.
 	
  		\subsection*{Thanh ghi opcode}
-	FPU lưu trữ các opcode của câu lệnh không điều khiển trước khi thực hiện trong thanh ghi opcode 11-bits. (Thông tin này cung cấp trạng thái thông tin cho các xử lý ngoại lệ). Chỉ bytes thứ 1 và 2 của opcode (trước tất cả tiền tố) được lưu trữ trong thanh ghi opcode FPU. Hình () chỉ ra việc mã hóa những byte này.
+	FPU lưu trữ các opcode của câu lệnh không điều khiển trước khi thực hiện trong thanh ghi opcode 11-bits. (Thông tin này cung cấp trạng thái thông tin cho các xử lý ngoại lệ). Chỉ bytes thứ 1 và 2 của opcode (trước tất cả tiền tố) được lưu trữ trong thanh ghi opcode FPU. Hình~\ref{fig:OpFPU} chỉ ra việc mã hóa những byte này.
 	
 		\subsection*{ Lưu trạng thái FPU}
 	Các câu lệnh FSTENV/FNSTENV và FSAVE/FNSAVE lưu các thông tin FPU trong bộ nhớ để sử dụng xử lý ngoại lệ và sử dụng hệ thống khác hay ứng dụng. Câu lệnh FSTENV/FNSTENV lưu nội dung các thanh ghi trạng thái, thanh ghi điều khiển, thanh ghi thẻ, con trỏ lệnh FPU, con trỏ toán hạng FPU và thanh ghi opcode. Câu lệnh FSAVE/FNSAVE lưu thông tin và nội dung của thanh ghi dữ liệu. Lưu ý rằng câu lệnh FSAVE/FNSAVE khởi tạo FPU với các giá trị mặc định (giống như câu lệnh FINIT/FNINIT) sau khi hoàn thành lưu trữ trạng thái của FPU.
 	\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
-					\includegraphics[scale=0.75]{OpcodeFPU.png}
+					\includegraphics[scale=0.7]{OpcodeFPU.png}
 				\end{center}
-				\caption{Nội dung thanh ghi opcode FPU}				
+				\caption{Nội dung thanh ghi opcode FPU \protect\footnotemark}				
 				\label{fig:OpFPU}				
 			\end{figure}
+			\footnotetext{ Trích dẫn sach  Intel Architecture Software Developer’s Manual}
 		\end{center}	
 
-	Cách mà thông tin được lưu trữ trong bộ nhớ phụ thuộc vào chế độ hoạt động của bộ xử lý (chế bộ bảo vệ hoặc chế độ địa chỉ thưc) và kích thước giá trị của toán hạng (32-bit hay 16-bit). Từ hình ()  đến hình (). Trong chế độ virtual-8086 hoặc SMM, địa chỉ thực thể hiện trong hình ().
+	Cách mà thông tin được lưu trữ trong bộ nhớ phụ thuộc vào chế độ hoạt động của bộ xử lý (chế bộ bảo vệ hoặc chế độ địa chỉ thưc) và kích thước giá trị của toán hạng (32-bit hay 16-bit). Từ hình~\ref{fig:ProtectedFPU} đến hình~\ref{fig:ProtectedFPU16}. Trong chế độ virtual-8086 hoặc SMM, địa chỉ thực thể hiện trong hình ().
 	\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=0.75]{ProtectedFPU.png}
 				\end{center}
-				\caption{Chế độ bảo vệ (protected) FPU trong bộ nhớ, định dạng 32-bit}				
-				\label{fig:ProtectedFPU}				
+				\caption{Chế độ bảo vệ (protected) FPU trong bộ nhớ, định dạng 32-bit  \protect\footnotemark}				
+				\label{fig:ProtectedFPU32}				
 			\end{figure}
+			\footnotetext{ Trích dẫn sách  Intel Architecture Software Developer’s Manual}
 		\end{center}	
 
+\newpage
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=0.75]{RealFPU.png}
 				\end{center}
-				\caption{Chế độ địa chỉ thực FPU trong bộ nhớ , định dạng 32-bit}				
-				\label{fig:ProtectedFPU}				
+				\caption{Chế độ địa chỉ thực FPU trong bộ nhớ , định dạng 32-bit  \protect\footnotemark}				
+				\label{fig:RealFPU32}				
 			\end{figure}
+			\footnotetext{ Trích dẫn sách  Intel Architecture Software Developer’s Manual}
 		\end{center}	
 		
 		\begin{center}
@@ -974,25 +1007,28 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\begin{center}
 					\includegraphics[scale=0.75]{ProtectedFPU16.png}
 				\end{center}
-				\caption{Chế độ bảo vệ (protected) FPU trong bộ nhớ, định dạng 16-bit}				
-				\label{fig:ProtectedFP16U}				
+				\caption{Chế độ bảo vệ (protected) FPU trong bộ nhớ, định dạng 16-bit  \protect\footnotemark}				
+				\label{fig:ProtectedFPU16}				
 			\end{figure}
+			\footnotetext{ Trích dẫn sách  Intel Architecture Software Developer’s Manual}
 		\end{center}	
 
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
-					\includegraphics[scale=0.75]{RealFPU16.png}
+					\includegraphics[scale=0.7]{RealFPU16.png}
 				\end{center}
-				\caption{Chế độ địa chỉ thực FPU trong bộ nhớ , định dạng 16-bit}				
+				\caption{Chế độ địa chỉ thực FPU trong bộ nhớ , định dạng 16-bit  \protect\footnotemark}				
 				\label{fig:ProtectedFPU16}				
 			\end{figure}
+			\footnotetext{ Trích dẫn sách  Intel Architecture Software Developer’s Manual}
 		\end{center}	
 		
 	Các câu lệnh FLDENV và FRSTOR cho phép thông tin trạng thái FPU được tủa từ bộ nhớ vào FPU. Câu lệnh FLDENV chỉ tải trạng thái, điều khiển, thẻ con trỏ lệnh FPU, con trỏ toán hạng và thanh ghi opcode. Câu eelnhj FRSTOR tải tất cả thanh ghi FPU bao gồm cả thanh ghi dữ liệu.		
-		
+	
+		\newpage	
 		\subsubsection{Loại dữ liệu dấu chấm động và định dạng}
-		Kiến trúc Intel FPU thao tác trên bảy loại dữ liệu, chia thành ba nhóm: số thực, số nguyên, và số nguyên gói BCD . Hình () cho thấy các định dạng dữ liệu cho mỗi loại dữ liệu FPU. Bảng () cho chiều dài, độ chính xác, và phạm vi bình thường gần đúng có thể được đại diện của từng loại dữ liệu FPU. Giá trị Denormal cũng được hỗ trợ trong mỗi loại thực sự, theo chuẩn của IEEE 854.\\
+		Kiến trúc Intel FPU thao tác trên bảy loại dữ liệu, chia thành ba nhóm: số thực, số nguyên, và số nguyên gói BCD . Hình~\ref{fig:DinhDangLoaiDL} cho thấy các định dạng dữ liệu cho mỗi loại dữ liệu FPU. Bảng () cho chiều dài, độ chính xác, và phạm vi bình thường gần đúng có thể được đại diện của từng loại dữ liệu FPU. Giá trị Denormal cũng được hỗ trợ trong mỗi loại thực sự, theo chuẩn của IEEE 854.\\
 		
 	Với định dạng mở rộng 80-bit biểu diễn ngoại lệ, tất cả các loại dữ liệu chỉ tồn tại trong bộ nhớ. Khi chúng được nạp vào thanh ghi FPU dữ liệu, chúng được chuyển đổi sang định dạng mở rộng-thực và thao tác trên trong định dạng đó.
 	\begin{center}
@@ -1001,7 +1037,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 					\includegraphics[scale=0.75]{DinhDangFPU.png}
 				\end{center}
 				\caption{Định dạng loại dữ liệu dấu chấm động}				
-				\label{fig:ProtectedFPU16}				
+				\label{fig:DinhDangLoaiDL}				
 			\end{figure}
 		\end{center}	
 		
@@ -1009,9 +1045,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		
 		\newpage
 		\subsection*{Số thực}
-		Ba loại dữ liệu số thực của FPU (single-real, double-real, và extended-real) tương ứng với chính xác đơn, đôi chính xác, và định chính xác mở rộng trong các định dạng chuẩn IEEE. Định dạng chính xác mở rộng là định dạng được sử dụng bởi các thanh ghi dữ liệu trong FPU. Bảng () đưa ra độ chính xác và phạm vi của các kiểu dữ liệu và hình () đưa ra các định dạng. Đối với các định dạng single-real và double-real, chỉ có một phần phân số của phần định trị được mã hóa. Số nguyên được giả định là 1 cho tất cả các số trừ 0 và số denormalized hữu hạn. Đối với các định dạng extended-real, các số nguyên được chứa trong bit 63. Ở đây, các số nguyên được thiết lập thành 1 cho số normalized, infinities, và NaNs, và 0 cho số không và số denormalized. \\	 
-		
-		\newpage
+		Ba loại dữ liệu số thực của FPU (single-real, double-real, và extended-real) tương ứng với chính xác đơn, đôi chính xác, và định chính xác mở rộng trong các định dạng chuẩn IEEE. Định dạng chính xác mở rộng là định dạng được sử dụng bởi các thanh ghi dữ liệu trong FPU. Bảng~\ref{tb:DLFPU} đưa ra độ chính xác và phạm vi của các kiểu dữ liệu và hình~\ref{fig:DinhDangLoaiDL} đưa ra các định dạng. Đối với các định dạng single-real và double-real, chỉ có một phần phân số của phần định trị được mã hóa. Số nguyên được giả định là 1 cho tất cả các số trừ 0 và số denormalized hữu hạn. Đối với các định dạng extended-real, các số nguyên được chứa trong bit 63. Ở đây, các số nguyên được thiết lập thành 1 cho số normalized, infinities, và NaNs, và 0 cho số không và số denormalized. 		
 		\begin{longtable}{|l|l|p{2cm}|l|l|}
 		 \hline
 		 	Kiểu dữ liệu & Độ dài & Chính xác (Bits) & \multicolumn{2}{l|}{Phạm vi giá trị}\\
@@ -1027,26 +1061,22 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 			Word integer &16 &15 & $-2 ^{15} $ tới  $ 2^{15} $ -1  &  –32,768   tới 32,767 \\
 			Short integer &32 &31 &$ -2^{31} $ tới  $ 2^{31} $  -1 & –2.14 x $10 ^{9 } $ tới 2.14 x $10 ^{9} $\\
 			Long integer &64 &63  &$ -2^{63} $ tới  $ 2^{63} $ -1  & -9.22 $ 10^{18} $ tới 9.22  $10 ^{18} $\\
-		 \hline					
-		 		\caption{Làm tròn số dương khi Underflow xảy ra}
+		 \hline		
+		  Gói số nguyên & 80 & 18(cớ số 10) &Không phù hợp & (-$10^{18}$ + 1) tới $(10^{18}$– 1)  \\
+		 \hline			
+		 		\caption{Độ dài, độ chính xác và phạm vị kiểu của từng dữ liệu}
 				 \label{tb:DLFPU}
 		\end{longtable}
 		
-		Giải thích 
-		Binary Real
-		Single real
-		Double real 
-		Extended real		
-		
 	Số mũ của từng loại dữ liệu thực được mã hóa ở định dạng cơ bản. Hằng số cơ bản là 127 cho các định dạng single-real, 1023 cho các định dạng doubler-real, và 16.383 cho các định dạng extended-real.\\
 	
-	Bảng () cho thấy các mã hóa cho tất cả các lớp của các số thực (zero, denormalized-finite, normalized-finite, và vô cùng $\mathbb{\infty}$) và NaNs cho ba loại dữ liệu số thực. Bảng () cũng cung cấp cho các định dạng cho các số thực không xác định.\\
+	Bảng~\ref{tb:MaHoaSoThuc} cho thấy các mã hóa cho tất cả các lớp của các số thực (zero, denormalized-finite, normalized-finite, và vô cùng $\mathbb{\infty}$) và NaNs cho ba loại dữ liệu số thực. Bảng~\ref{tb:MaHoaSoThuc} cũng cung cấp cho các định dạng cho các số thực không xác định.\\
 
 	Khi lưu trữ các giá trị thực sự trong bộ nhớ, giá trị single-real được lưu trữ trong 4 byte liên tiếp trong bộ nhớ, giá trị double-real được lưu trữ trong 8 byte liên tiếp, và các giá trị extended-real được lưu trữ trong 10 byte liên tiếp.\\
 
 	Quy luật chung, giá trị nên được lưu trữ trong bộ nhớ ở định dạng double-real. Định dạng này cung cấp đầy đủ kích thước và độ chính xác để đưa ra kết quả chính xác tối thiểu mà lập trình viên quan tâm. Các định dạng single-real thích hợp cho các ứng dụng bị hạn chế bởi bộ nhớ. Tuy nhiên, single-real cung cấp độ chính xác ít hơn và có thể bị tràn số. Các định dạng single-real hữu ích khi gỡ lỗi các thuật toán, vì làm tròn sẽ thực hiện một cách nhanh chóng ở định dạng này. Các định dạng extended-real thường dành riêng để giữ kết quả trung gian trong các thanh ghi FPU và hằng số. Chiều dài chính xác được thiết kế để đưa ra kết quả cuối cùng từ những phép toán bị ảnh hưởng của làm tròn số và tràn trên hoặc tràn dưới trong các phép tính trung gian. Tuy nhiên, khi một ứng dụng yêu cầu giới hạn chính xác và độ chính xác của các FPU (để lưu trữ dữ liệu, phép toán, và kết quả), các giá trị có thể được lưu trữ trong bộ nhớ ở định dạng mở rộng thực.\\
 	
-	Các giá trị số thực không xác định là một QNaN được mã hóa và lưu giữ bởi câu lệnh dấu chấm động để đáp ứng với một dấu chấm động không hợp lệ tác ngoại lệ được đánh dấu (xem bảng () ).	
+	Các giá trị số thực không xác định là một QNaN được mã hóa và lưu giữ bởi câu lệnh dấu chấm động để đáp ứng với một dấu chấm động không hợp lệ tác ngoại lệ được đánh dấu (xem bảng~\ref{tb:InvalidAr} ).	
 	\newpage
 		\begin{longtable}{|l|l|l|l|l|l|}
 			\hline
@@ -1103,7 +1133,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	\end{itemize}
 
 		\subsection*{ Số nguyên được mã hóa nhị phân}
-	Có ba loại số nguyên (word, short và long) có định dạng giống hệt nhau, ngoại trừ chiều dài. Bảng () cho độ chính xác và giới hạn của các kiểu dữ liệu và hình () đưa ra các định dạng. Bảng () đưa ra bảng mã của ba loại nguyên dạng nhị phân.
+	Có ba loại số nguyên (word, short và long) có định dạng giống hệt nhau, ngoại trừ chiều dài. Bảng~\ref{tb:DLFPU} cho độ chính xác và giới hạn của các kiểu dữ liệu và hình~\ref{fig:DinhDangLoaiDL} đưa ra các định dạng. Bảng~\ref{tb:MaHoaSoNguyen} đưa ra bảng mã của ba loại nguyên dạng nhị phân.
 		\begin{longtable}{|l|l|l|l|}
 			\hline
 				\multicolumn{2}{|l|}{Lớp dữ liệu} & Bit dấu & Độ lớn \\
@@ -1129,7 +1159,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\multicolumn{2}{l}{} & Short Integer & $\leftarrow$ 31 bits $\to $ \\
 				\multicolumn{2}{l}{} & Long Integer & $\leftarrow$ 63 bits $\to $ \\
 				\caption{Mã hóa nhị phân số nguyên}
-				\label{tb:MaHoaSoNguye}
+				\label{tb:MaHoaSoNguyen}
 		\end{longtable}	
 
 	Hầu hết các bit phần định trị của mỗi định dạng là bit dấu (0 là số dương và 1 số âm). Giá trị âm được biểu diễn trong chuẩn bù hau. Số 0 được biểu diễn với tất cả các bit (kể cả bit dấu) thiết lập là bit 0. Lưu ý rằng kiểu dữ liệu word-integer của FPU là giống với kiểu dữ liệu word-integer được sử dụng trong bộ xử lý số nguyên và các định dạng short-integer là giống kiểu dữ liệu doubleword-integer.\\
@@ -1147,7 +1177,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		Nếu số nguyên không xác định được lưu trữ trong bộ nhớ và sau đó được nạp lại vào một thanh ghi dữ liệu FPU, nó được hiểu là số âm lớn nhất theo định dạng được hỗ trợ.
 		
 		\subsection*{Số nguyên cơ số 10}
-		Số nguyên cơ số 10 được lưu trữ 10-byte theo định dạng gói BCD. Bảng () cho biết độ chính xác và phạm vi của kiểu dữ liệu này và hình() hiển thị định dạng. Trong định dạng này, 9 byte đầu tiên giữ 18 số BCD, 2 số cho mỗi byte. Các chữ số phần định trị được chứa trong nửa-byte thấp từ byte 0 và chữ số nhất có ý nghĩa được chứa ở nửa byte cao từ byte 9. Phần định trị của byte10 chứa bit dấu (0 số dương và 1 số âm). (Bits 0 đến 6 trong byte 10 không quan tâm bit.) Giá trị âm của số nguyên không được lưu trữ ở dạng bù hai; chúng được phân biệt với các số nguyên thập phân dương bởi các bit dấu.\\
+		Số nguyên cơ số 10 được lưu trữ 10-byte theo định dạng gói BCD. Bảng~\ref{tb:DLFPU} cho biết độ chính xác và phạm vi của kiểu dữ liệu này và hình() hiển thị định dạng. Trong định dạng này, 9 byte đầu tiên giữ 18 số BCD, 2 số cho mỗi byte. Các chữ số phần định trị được chứa trong nửa-byte thấp từ byte 0 và chữ số nhất có ý nghĩa được chứa ở nửa byte cao từ byte 9. Phần định trị của byte10 chứa bit dấu (0 số dương và 1 số âm). (Bits 0 đến 6 trong byte 10 không quan tâm bit.) Giá trị âm của số nguyên không được lưu trữ ở dạng bù hai; chúng được phân biệt với các số nguyên thập phân dương bởi các bit dấu.\\
 		
 		Bảng () biểu diễn mã hóa giá trị có thể có trong kiểu dữ liệu số nguyên thập phân.\\
 	

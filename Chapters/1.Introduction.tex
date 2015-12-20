@@ -3,8 +3,7 @@
 \textit{Nội dung chương này sẽ tập trung giới thiệu tổng quan về BE-PUM, điểm mạnh của công vụ này và so sánh với công cụ khác, những đòi hỏi trong quá trình hiện thực công cụ và yếu tố quyết  định để cho ra đề tài này; dẫn nhập về hợp ngữ assembly, dẫn nhập về Windows API, các thành phần sẽ được áp dụng để phát triển cho BE-PUM; nêu ra mục tiêu của đề tài và giới hạn trong phạm vi luận văn tốt nghiệp.}
 \end{concept}
 
-\section{Giới thiệu về BE-PUM}\
-
+\section{Giới thiệu về BE-PUM}
 	\subsection{BE-PUM là gì}
 
 BE-PUM tên đầy đủ là Binary Emulation for Pushdown Model generation, là một công cụ dùng để phân tích động mã nhị phân của một chương trình bất kỳ chạy trên kiến trúc X86 của hệ điều hành Microsoft Windows nền tảng 32-bit. Sau khi phân tích, BE-PUM sẽ sinh ra hợp ngữ – mã assembly và đồ thị luồng điều khiển (control flow graph – CFG) của chương trình đầu vào.\\
@@ -103,7 +102,6 @@ Trong BE-PUM, một địa chỉ trong chương trình được ánh xạ tươn
 \caption{Đồ thị luồng điều khiển được sinh ra từ tập tin ở Bảng \ref {table:tblexcfg}} 
 \label{fig:imgexcfg}
 \end{figure}
-
 
 	\subsection{Những đòi hỏi trong quá trình hiện thực}
 
@@ -221,13 +219,13 @@ Trong phạm vi của đề tài luận tốt nghiệp, mục tiêu nhắm tới
 
 Với số lượng các API rất lớn hiện có trong hệ điều hành Windows, hiện tại đề tài đang tập trung vào xử lý các API ở phiên bản Win32 API, do hầu hết các phần mềm độc hại mà BE-PUM hướng tới vẫn đang dùng bộ API này; với sự ưu tiên từng bước xây dựng cho các API được dùng phổ biến trước.\\
 
-Bên cạnh việc nhận thông tin đầu vào từ vùng nhớ đã được xây dựng của BE-PUM và trả về kết quả sau khi gọi API vào đúng địa chỉ cần thiết, điều quan trọng là phải đảm bảo không gây ngắt quãng cũng như tránh nguy hại hệ thống đang chạy.
-Và như vậy với những tương tác vật lý từ lời gọi API (bộ lưu trữ máy tính, cơ sở dữ liệu registry…) hay tương tác người dùng (API tạo cửa sổ message box, lệnh cho một thread “ngủ đông” trong một khoảng thời gian,…) cần được kiểm soát để không làm ảnh hưởng tới kết quả thực thi của BE-PUM.\\
+Bên cạnh việc nhận thông tin đầu vào từ vùng nhớ đã được xây dựng của BE-PUM và trả về kết quả sau khi gọi API vào đúng địa chỉ cần thiết, điều quan trọng là phải đảm bảo không gây ngắt quãng cũng như tránh nguy hại hệ thống đang chạy. Và như vậy với những tương tác vật lý từ lời gọi API (bộ lưu trữ máy tính, cơ sở dữ liệu registry…) hay tương tác người dùng (API tạo cửa sổ message box, lệnh cho một thread “ngủ đông” trong một khoảng thời gian,…) cần được kiểm soát để không làm ảnh hưởng tới kết quả thực thi của BE-PUM.\\
 
 \textit{Lưu ý: do nội dung đề tài tập trung vào xử lý cho Win32 API, nên kể từ đây, khi báo cáo nhắc đến Windows API tức là nói đến Win32 API.}\\
 
 Việc hiện thực các câu lệnh hợp ngữ góp phần phân tích một số loại malware đang nghiên cứu. Dựa trên một số bộ malware hiện nay và những câu lệnh phổ biến thường gặp, BE-PUM sẽ hỗ trợ tốt công việc phân tích đúng môi trường làm việc của từng câu lệnh từ đó xác định chính xác và phân tính đúng các kỹ thuật mà malware đang tiến hành.
 
+\newpage
 \section{Giới hạn đề tài}
 
 Trong phạm vi của đề tài luận văn tốt nghiệp, mục tiêu nhắm tới là hiện thực các câu lệnh hợp ngữ và Windows API với số lượng đạt mức như sau:
