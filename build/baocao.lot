@@ -1,0 +1,48 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1.1}{\ignorespaces V\IeC {\'\i } d\IeC {\d u} v\IeC {\`\ecircumflex } n\IeC {\d \ocircumflex }i dung c\IeC {\h u}a m\IeC {\d \ocircumflex }t t\IeC {\d \acircumflex }p tin nh\IeC {\d i} ph\IeC {\^a}n d\IeC {\uhorn }\IeC {\'\ohorn }i d\IeC {\d a}ng h\IeC {\d \ohorn }p ng\IeC {\~\uhorn }}}{4}{table.1.1}
+\contentsline {table}{\numberline {1.2}{\ignorespaces M\IeC {\d \ocircumflex }t s\IeC {\'\ocircumflex } phi\IeC {\^e}n b\IeC {\h a}n ch\IeC {\'\i }nh c\IeC {\h u}a Windows API}}{7}{table.1.2}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces B\IeC {\h a}ng chia b\IeC {\d \ocircumflex } nh\IeC {\'\ohorn } 32-bit, 16-bit, 8-bit}}{18}{table.3.1}
+\contentsline {table}{\numberline {3.2}{\ignorespaces B\IeC {\h a}ng chia b\IeC {\d \ocircumflex } nh\IeC {\'\ohorn } 32-bit,16-bit}}{18}{table.3.2}
+\contentsline {table}{\numberline {3.3}{\ignorespaces B\IeC {\h a}ng k\IeC {\'y} hi\IeC {\d \ecircumflex }u to\IeC {\'a}n h\IeC {\d a}ng:}}{21}{table.3.3}
+\contentsline {table}{\numberline {3.4}{\ignorespaces B\IeC {\h a}ng ki\IeC {\h \ecircumflex }u d\IeC {\~\uhorn } li\IeC {\d \ecircumflex }u:}}{23}{table.3.4}
+\contentsline {table}{\numberline {3.5}{\ignorespaces B\IeC {\h a}ng k\IeC {\'y} hi\IeC {\d \ecircumflex }u ki\IeC {\h \ecircumflex }u s\IeC {\'\ocircumflex } t\IeC {\d \uhorn } nhi\IeC {\^e}n:}}{23}{table.3.5}
+\contentsline {table}{\numberline {3.6}{\ignorespaces B\IeC {\h a}ng ph\IeC {\d a}m vi ki\IeC {\h \ecircumflex }u d\IeC {\~\uhorn } li\IeC {\d \ecircumflex }u s\IeC {\'\ocircumflex } kh\IeC {\^o}ng d\IeC {\'\acircumflex }u}}{24}{table.3.6}
+\contentsline {table}{\numberline {3.7}{\ignorespaces B\IeC {\h a}ng ph\IeC {\d a}m vi ki\IeC {\h \ecircumflex }u d\IeC {\~\uhorn } li\IeC {\d \ecircumflex }u s\IeC {\'\ocircumflex } c\IeC {\'o} d\IeC {\'\acircumflex }u}}{24}{table.3.7}
+\contentsline {table}{\numberline {3.8}{\ignorespaces Th\IeC {\'\uhorn } t\IeC {\d \uhorn } \IeC {\uhorn }u ti\IeC {\^e}n bi\IeC {\h \ecircumflex }u th\IeC {\'\uhorn }c to\IeC {\'a}n}}{25}{table.3.8}
+\contentsline {table}{\numberline {3.10}{\ignorespaces X\IeC {\h \uhorn } l\IeC {\'y} s\IeC {\'\ocircumflex } denormalized}}{34}{table.3.10}
+\contentsline {table}{\numberline {3.12}{\ignorespaces \IeC {\DJ }\IeC {\d \ocircumflex } ch\IeC {\'\i }nh x\IeC {\'a}c trong thanh ghi \IeC {\dj }i\IeC {\`\ecircumflex }u khi\IeC {\h \ecircumflex }n FPU}}{46}{table.3.12}
+\contentsline {table}{\numberline {3.13}{\ignorespaces B\IeC {\h a}ng gi\IeC {\'a} tr\IeC {\d i} ph\IeC {\uhorn }\IeC {\ohorn }ng th\IeC {\'\uhorn }c l\IeC {\`a}m tr\IeC {\`o}n}}{47}{table.3.13}
+\contentsline {table}{\numberline {3.14}{\ignorespaces L\IeC {\`a}m tr\IeC {\`o}n s\IeC {\'\ocircumflex } d\IeC {\uhorn }\IeC {\ohorn }ng khi overflow x\IeC {\h a}y ra}}{49}{table.3.14}
+\contentsline {table}{\numberline {3.15}{\ignorespaces L\IeC {\`a}m tr\IeC {\`o}n s\IeC {\'\ocircumflex } d\IeC {\uhorn }\IeC {\ohorn }ng khi Underflow x\IeC {\h a}y ra}}{49}{table.3.15}
+\contentsline {table}{\numberline {3.16}{\ignorespaces L\IeC {\`a}m tr\IeC {\`o}n s\IeC {\'\ocircumflex } d\IeC {\uhorn }\IeC {\ohorn }ng khi Underflow x\IeC {\h a}y ra}}{56}{table.3.16}
+\contentsline {table}{\numberline {3.17}{\ignorespaces M\IeC {\~a} h\IeC {\'o}a s\IeC {\'\ocircumflex } th\IeC {\d \uhorn }c v\IeC {\`a} NaN}}{58}{table.3.17}
+\contentsline {table}{\numberline {3.18}{\ignorespaces M\IeC {\~a} h\IeC {\'o}a nh\IeC {\d i} ph\IeC {\^a}n s\IeC {\'\ocircumflex } nguy\IeC {\^e}n}}{59}{table.3.18}
+\contentsline {table}{\numberline {3.19}{\ignorespaces M\IeC {\~a} h\IeC {\'o}a s\IeC {\'\ocircumflex } nguy\IeC {\^e}n \IeC {\dj }\IeC {\~a} \IeC {\dj }\IeC {\uhorn }\IeC {\d \ohorn }c n\IeC {\'e}n (BCD)}}{62}{table.3.19}
+\contentsline {table}{\numberline {3.20}{\ignorespaces M\IeC {\~a} h\IeC {\'o}a s\IeC {\'\ocircumflex } kh\IeC {\^o}ng \IeC {\dj }\IeC {\uhorn }\IeC {\d \ohorn }c h\IeC {\~\ocircumflex } tr\IeC {\d \ohorn } theo \IeC {\dj }\IeC {\d i}nh d\IeC {\d a}ng extended-real}}{64}{table.3.20}
+\contentsline {table}{\numberline {3.21}{\ignorespaces C\IeC {\^a}u l\IeC {\d \ecircumflex }nh sao l\IeC {\uhorn }u d\IeC {\~\uhorn } li\IeC {\d \ecircumflex }u}}{65}{table.3.21}
+\contentsline {table}{\numberline {3.22}{\ignorespaces C\IeC {\^a}u l\IeC {\d \ecircumflex }nh sao ch\IeC {\'e}p c\IeC {\'o} \IeC {\dj }i\IeC {\`\ecircumflex }u ki\IeC {\d \ecircumflex }n}}{66}{table.3.22}
+\contentsline {table}{\numberline {3.23}{\ignorespaces Thi\IeC {\'\ecircumflex }t l\IeC {\d \acircumflex }p c\IeC {\`\ohorn } \IeC {\dj }i\IeC {\`\ecircumflex }u ki\IeC {\d \ecircumflex }n FPU theo ph\IeC {\'e}p so s\IeC {\'a}nh s\IeC {\'\ocircumflex } th\IeC {\d \uhorn }c}}{70}{table.3.23}
+\contentsline {table}{\numberline {3.24}{\ignorespaces Thi\IeC {\'\ecircumflex }t l\IeC {\d \acircumflex }p thanh ghi tr\IeC {\d a}ng th\IeC {\'a}i EFLAGS theo ph\IeC {\'e}p so s\IeC {\'a}nh s\IeC {\'\ocircumflex } th\IeC {\d \uhorn }c}}{70}{table.3.24}
+\contentsline {table}{\numberline {3.25}{\ignorespaces H\IeC {\`\abreve }ng s\IeC {\'\ocircumflex } c\IeC {\^a}u l\IeC {\d \ecircumflex }nh Test cho l\IeC {\d \ecircumflex }nh r\IeC {\~e} nh\IeC {\'a}nh}}{72}{table.3.25}
+\contentsline {table}{\numberline {3.26}{\ignorespaces Thao t\IeC {\'a}c s\IeC {\'\ocircumflex } h\IeC {\d o}c kh\IeC {\^o}ng h\IeC {\d \ohorn }p l\IeC {\d \ecircumflex } v\IeC {\`a} k\IeC {\'\ecircumflex }t qu\IeC {\h a} tr\IeC {\h a} v\IeC {\`\ecircumflex }}}{80}{table.3.26}
+\contentsline {table}{\numberline {3.27}{\ignorespaces \IeC {\DJ }i\IeC {\`\ecircumflex }u ki\IeC {\d \ecircumflex }n x\IeC {\h a}y ra ngo\IeC {\d a}i l\IeC {\d \ecircumflex } chia cho s\IeC {\'\ocircumflex } 0 v\IeC {\`a} k\IeC {\'\ecircumflex }t qu\IeC {\h a} tr\IeC {\h a} v\IeC {\`\ecircumflex }}}{80}{table.3.27}
+\contentsline {table}{\numberline {3.28}{\ignorespaces K\IeC {\'\ecircumflex }t qu\IeC {\h a} khi tr\IeC {\'a}n tr\IeC {\^e}n s\IeC {\'\ocircumflex } h\IeC {\d o}c x\IeC {\h a}y ra}}{82}{table.3.28}
+\contentsline {table}{\numberline {3.29}{\ignorespaces Nh\IeC {\~\uhorn }ng b\IeC {\d \ocircumflex } th\IeC {\uhorn } vi\IeC {\d \ecircumflex }n \IeC {\dj }\IeC {\uhorn }\IeC {\d \ohorn }c h\IeC {\~\ocircumflex } tr\IeC {\d \ohorn } b\IeC {\h \ohorn }i BE-PUM}}{88}{table.3.29}
+\contentsline {table}{\numberline {3.30}{\ignorespaces M\IeC {\d \ocircumflex }t s\IeC {\'\ocircumflex } \IeC {\'a}nh x\IeC {\d a} ki\IeC {\h \ecircumflex }u d\IeC {\~\uhorn } li\IeC {\d \ecircumflex }u c\IeC {\ohorn } b\IeC {\h a}n}}{90}{table.3.30}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces M\IeC {\d \ocircumflex }t s\IeC {\'\ocircumflex } k\IeC {\'\ecircumflex }t qu\IeC {\h a} c\IeC {\h u}a th\IeC {\'\i } nghi\IeC {\d \ecircumflex }m sinh m\IeC {\^o} h\IeC {\`\i }nh}}{119}{table.5.1}
+\contentsline {table}{\numberline {5.2}{\ignorespaces Th\IeC {\'\ocircumflex }ng k\IeC {\^e} c\IeC {\'a}c c\IeC {\^a}u l\IeC {\d \ecircumflex }nh assembly \IeC {\dj }\IeC {\~a} \IeC {\dj }\IeC {\uhorn }\IeC {\d \ohorn }c hi\IeC {\d \ecircumflex }n th\IeC {\d \uhorn }c}}{121}{table.5.2}
+\contentsline {table}{\numberline {5.3}{\ignorespaces Th\IeC {\'\ocircumflex }ng k\IeC {\^e} c\IeC {\'a}c Windows API \IeC {\dj }\IeC {\~a} \IeC {\dj }\IeC {\uhorn }\IeC {\d \ohorn }c x\IeC {\^a}y d\IeC {\d \uhorn }ng}}{126}{table.5.3}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces C\IeC {\'a}c ki\IeC {\h \ecircumflex }u \IeC {\dj }\IeC {\d i}nh d\IeC {\d a}ng chu\IeC {\h \acircumflex }n IEEE}}{130}{table.6.1}
+\contentsline {table}{\numberline {6.3}{\ignorespaces V\IeC {\'\i } d\IeC {\d u} bi\IeC {\h \ecircumflex }u di\IeC {\~\ecircumflex }n s\IeC {\'\ocircumflex } d\IeC {\'\acircumflex }u ch\IeC {\'\acircumflex }m \IeC {\dj }\IeC {\d \ocircumflex }ng}}{131}{table.6.3}
+\contentsline {table}{\numberline {6.4}{\ignorespaces V\IeC {\'\i } d\IeC {\d u} v\IeC {\`\ecircumflex } expoment}}{132}{table.6.4}
+\contentsline {table}{\numberline {6.5}{\ignorespaces V\IeC {\'\i } d\IeC {\d u} bi\IeC {\h \ecircumflex }u di\IeC {\~\ecircumflex }n s\IeC {\'\ocircumflex } mantissa}}{133}{table.6.5}
+\contentsline {table}{\numberline {6.6}{\ignorespaces V\IeC {\'\i } d\IeC {\d u} chu\IeC {\h a}n IEEE}}{133}{table.6.6}
+\contentsline {table}{\numberline {6.7}{\ignorespaces B\IeC {\h a}ng k\IeC {\'\ecircumflex } ho\IeC {\d a}ch nghi\IeC {\^e}n c\IeC {\'\uhorn }u hi\IeC {\d \ecircumflex }n th\IeC {\d \uhorn }c c\IeC {\^a}u l\IeC {\d \ecircumflex }nh assembly}}{144}{table.6.7}

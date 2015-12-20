@@ -49,6 +49,7 @@ toc          %show listings as entries in table of contents
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{subfig}
+\usepackage{multirow}
 \captionsetup{belowskip=0pt,aboveskip=8pt}
 %\renewcommand{\arraystretch}{1.5}
 \setlength\tabcolsep{10pt}
@@ -96,8 +97,8 @@ toc          %show listings as entries in table of contents
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{%
   \parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-4pt}}
-\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
-\lstset{frame=ltrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
+%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+%\lstset{frame=ltrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
 
 \usepackage{multirow}
 
@@ -114,6 +115,15 @@ toc          %show listings as entries in table of contents
 
 % đóng khung
 \usepackage{boxedminipage}
+
+\newenvironment{concept}[1][\textwidth]{
+   \begin{center}
+   \begin{minipage}[t]{#1}
+   \raggedright
+}{
+  \end{minipage}
+   \end{center}
+}
 
 \begin{document} %Bắt đầu văn bản
 

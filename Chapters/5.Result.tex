@@ -1,4 +1,17 @@
+
+\begin{concept}[15cm]
+\textit{Nội dung chương này sẽ tập trung trình bày và phân tích, so sánh với các công cụ khác về kết quả mà đề tài đã đạt được sau khi tiến hành thực hiện công việc, kết quả tổng thể mà bộ xử lý đã được đóng góp để hỗ trợ cho hệ thống BE-PUM.}
+\end{concept}
+
 \section{Thí nghiệm và đánh giá kết quả}
+
+Sau quá trình thực hiện công việc xây dựng và mở rộng cho hệ thống BE-PUM, toàn bộ phần hiện thực cộng thêm đã được đem ra chạy thí nghiệm trên một tập các malware và không phải malware để đánh giá được khả năng, sức mạnh cũng như những đóng góp mà công việc của luận văn này đã mang lại. \\
+
+Để có được cái nhìn khách quan về BE-PUM, kết quả thí nghiệm sẽ được đem ra so sánh với hai công cụ rất nổi tiếng khác, đó là: \textit{JakStab} và \textit{IDA Pro}.\\
+
+Cả hai công cụ này đều chạy trên phương pháp phân tích tĩnh, nên các trường hợp xử lý phức tạp như \textit{nhảy động} hoặc \textit{tự sửa đổi nội dung mã} sẽ khiến bộ công cụ này thất bại. Nhưng mặt tích cực của phương pháp phân tích tĩnh này là về thời gian xử lý, BE-PUM đánh đổi tiêu tốn nhiều thời gian thực thi \textit{(được tính bằng mili giây - ms)} hơn nhiều so với đối thủ để hi vọng tìm được nhiều nút và cạnh hơn. Nhìn vào Bảng \ref{table:virusExp}, ta có thể nhận ra ngay được điều đó từ những dòng đầu. \\
+
+Tổng thể kết quả ta có tỷ số giữa số cạnh cùng số nút trong các công cụ JakStab, IDA Pro, và BE-PUM là 1.05, 2.05, và 1.24. Ta thấy được công cụ IDA Pro đã tìm được rất nhiều đường đi trong các tập tin làm ví dụ vì công cụ này hỗ trợ hầu hết các câu lệnh Ntrong khi BE-PUM thì vẫn đang được xây dựng thêm qua công việc của luận văn này. Nhưng có thể đó chỉ là những nhánh không bao giờ được chạy do hạn chế của phân tích tĩnh, không giống như BE-PUM có thể tính toán được giá trị và bỏ đi những nhánh không bao giờ được nhảy tới.
 
 \begin{small}
 \setlength\tabcolsep{3pt}
@@ -7,9 +20,9 @@
 
 \begin{longtable}{|l|l|l|l|l|l|l|l|l|l|l|}
 \hline
-	\multicolumn{1}{|c}{\multirow{2}{*}{\textbf{Example}}} & \multicolumn{1}{|c}{\multirow{2}{*}{\textbf{\specialcell{Size\\KB}}}} & 
+	\multicolumn{1}{|c}{\multirow{2}{*}{\textbf{Tập tin thực thi}}} & \multicolumn{1}{|c}{\multirow{2}{*}{\textbf{\specialcell{Kích cỡ\\KB}}}} & 
 	\multicolumn{3}{|c}{\textbf{JakStab}} & \multicolumn{3}{|c}{\textbf{IDA Pro}} & \multicolumn{3}{|c|}{\textbf{BE-PUM}} \\ \cline{3-11} 
-                                   \textbf{} & \textbf{}    & \textbf{Nodes}    & \textbf{Edges}    & \textbf{Time}   & \textbf{Nodes}   & \textbf{Edges}   & \textbf{Time} & \textbf{Nodes}   & \textbf{Edges}   & \textbf{Time}   \\ \hline
+                                   \textbf{} & \textbf{}    & \textbf{Nút}    & \textbf{Cạnh}    & \textbf{Thời gian}   & \textbf{Nút}   & \textbf{Cạnh}   & \textbf{Thời gian} & \textbf{Nút}   & \textbf{Cạnh}   & \textbf{Thời gian}   \\ \hline
                                      
 Virus.Artelad.2173	& 23 & 134 & 154 & 10 & 159	& 162	& 1133				& 1610	& 1611	& 236468 \\ \hline
 Email-Worm.LoveLetter.b	&	60	&	1027	&	1026	&	297	&	984	&	1011	&	10	&	7558	&	7602	&	1073984	\\ \hline
@@ -82,7 +95,7 @@ nddeapir.exe	& 4& 164	& 179 &	500 &	187 & 	215 & 	24 & 180 &	196 &	223297 \\ \hl
 %calc.exe	& 114 & 121	& 134 & 28 &	400 &	421 & 	0.0245 & 355 &	373 &	117 \\ \hline
 %fixmapi.exe	& 3& 32	& 35  &	42 &	36  & 	45  & 	0.0071 & 43  &	45  &	26 \\ \hline
 
-\caption {Một số kết quả của thí nghiệm sinh mô hình}\label{tab:virusExp}
+\caption {Một số kết quả của thí nghiệm sinh mô hình}\label{table:virusExp}
 \end{longtable}
 %}
 \end{small}
@@ -129,7 +142,7 @@ nddeapir.exe	& 4& 164	& 179 &	500 &	187 & 	215 & 	24 & 180 &	196 &	223297 \\ \hl
 
 Quá trình xây dựng có sự chọn lọc và ưu tiên cho các Windows API được dùng phổ biến trước tiên. Với rất nhiều Windows API của dịch vụ nền được các phần mềm độc hại cho máy tính sử dụng (được chứa bên trong tập tin kernel32.dll), đây là bộ thư viện đang được ưu tiên hỗ trợ hàng đầu cho hệ thống BE-PUM. Kế tiếp đó là các bộ thư viện giao diện người dùng (được chứa bên trong tập tin user32.dll), dịch vụ nâng cao (được chứa bên trong tập tin advapi32.dll) và cuối cùng là Windows Shell (được chứa bên trong tập tin shell32.dll).\\
 
-Tính đến thời điểm của bài báo cáo này, đã có tất cả khoảng 400 Windows API được xây dựng và hỗ trợ cho hệ thống BE-PUM.
+Tính đến thời điểm của bài báo cáo này, đã có tất cả khoảng 400 Windows API được xây dựng và hỗ trợ cho hệ thống BE-PUM. Chi tiết về các tên hàm Windows API đã có trong BE-PUM được liệt kê trong Bảng \ref{table:tblWapiResult} sau đây.
 
 
 \begin{longtable}[H]{ | m{3.5cm} | m{10cm} | }
@@ -149,7 +162,13 @@ gdi32.dll &
 AddFontResource, AnimatePalette, CreateCompatibleDC, CreatePalette, DeleteObject, DPtoLP, GdiFlush, GdiGetBatchLimit, GetBkColor, GetDeviceCaps, GetStockObject, SetBkColor, SetTextAlign, StrokeAndFillPath, StrokePath \\
 \hline
 kernel32.dll &
-AreFileApisANSI, CloseHandle, CompareFileTime, CompareString, CopyFile, CreateDirectory, CreateEvent, CreateFile, CreateFileMapping, CreateMutex, CreateProcess, CreateRemoteThread, CreateThread, CreateToolhelp32Snapshot, DecodePointer, DeleteCriticalSection, DeleteFile, DeviceIoControl, DisableThreadLibraryCalls, DuplicateHandle, EncodePointer, EnterCriticalSection, EnumDateFormats, ExitProcess, ExitThread, FileTimeToSystemTime, FindAtom, FindClose, FindFirstFile, FindNextFile, FindResource, FlsAlloc, FlsGetValue, FlsSetValue, FlushInstructionCache, FormatMessage, FreeEnvironmentStrings, FreeLibrary, GetAclInformation, GetACP, GetAtomName, GetCommandLine, GetComputerName, GetConsoleCP, GetConsoleMode, GetCPInfo, GetCPInfoEx, GetCurrentDirectory, GetCurrentProcess, GetCurrentProcessId, GetCurrentThread, GetCurrentThreadId, GetDateFormat, GetDiskFreeSpace, GetDiskFreeSpaceEx, GetDriveType, GetEnvironmentStrings, GetEnvironmentVariable, GetExitCodeProcess, GetFileAttributes, GetFileSize, GetFileTime, GetFileType, GetFullPathName, GetLargestConsoleWindowSize, GetLastError, GetLocaleInfo, GetLocalTime, GetLogicalDrives, GetLogicalDriveStrings, GetModuleFileName, GetModuleHandle, GetModuleHandleEx, GetNativeSystemInfo, GetOEMCP, GetPriorityClass, GetProcAddress, GetProcessHeap, GetProcessId, GetProcessVersion, GetShortPathName, GetStartupInfo, GetStdHandle, GetStringTypeA, GetStringTypeW, GetSystemDefaultLCID, GetSystemDefaultUILanguage, GetSystemDirectory, GetSystemInfo, GetSystemTime, GetSystemTimeAsFileTime, GetTempFileName, GetTempPath, GetThreadLocale, GetThreadPriority, GetTickCount, GetUserDefaultLangID, GetUserDefaultLCID, GetVersion, GetVersionEx, GetVolumeInformation, GetWindowsDirectory, GlobalAlloc, GlobalFindAtom, GlobalFree, GlobalGetAtomName, GlobalLock, GlobalMemoryStatus, HeapAlloc, HeapCreate, HeapDestroy, HeapFree, HeapReAlloc, HeapSize, InitializeCriticalSection, InitializeCriticalSectionAndSpinCount, InterlockedDecrement, InterlockedExchange, InterlockedIncrement, IsBadReadPtr, IsBadWritePtr, IsDBCSLeadByte, IsDebuggerPresent, IsProcessorFeaturePresent, IsValidCodePage, IsWow64Process, LCMapString, LeaveCriticalSection, LoadLibrary, LoadLibraryEx, LoadResource, LocalAlloc, LocalFree, LocalLock, LocalReAlloc, LockResource, lstrcat, lstrcmp, lstrcmpi, lstrcpy, lstrcpyn, lstrlen, MapViewOfFile, MoveFile, MoveFileEx, MulDiv, MultiByteToWideChar, OpenEvent, OpenFile, OpenFileMapping, OpenMutex, OpenProcess, OpenThread, OutputDebugString, Process32First, Process32Next, QueryPerformanceCounter, QueryPerformanceFrequency, ReadFile, ReadProcessMemory, RegisterWowExec, ReleaseMutex, RemoveDirectory, ResumeThread, RtlUnwind, RtlZeroMemory, SearchPath, SetConsoleCtrlHandler, SetCurrentDirectory, SetEndOfFile, SetErrorMode, SetEvent, SetFileAttributes, SetFilePointer, SetFileTime, SetHandleCount, SetLastError, SetPriorityClass, SetThreadLocale, SetThreadPriority, SetTimer, SetUnhandledExceptionFilter, SizeofResource, Sleep, SuspendThread, SystemTimeToFileTime, TerminateProcess, TerminateThread, Thread32First, Thread32Next, TlsAlloc, TlsFree, TlsGetValue, TlsSetValue, UnhandledExceptionFilter, UnmapViewOfFile, VirtualAlloc, VirtualAllocEx, VirtualFree, VirtualProtect, VirtualProtectEx, VirtualQuery, WaitForSingleObject, WaitNamedPipe, WideCharToMultiByte, WinExec, WriteFile, WritePrivateProfileString, WriteProcessMemory, wsprintf, \_lclose, \_lcreat, \_llseek, \_lopen \\
+AreFileApisANSI, CloseHandle, CompareFileTime, CompareString, CopyFile, CreateDirectory, CreateEvent, CreateFile, CreateFileMapping, CreateMutex, CreateProcess, CreateRemoteThread, CreateThread, CreateToolhelp32Snapshot, DecodePointer, DeleteCriticalSection, DeleteFile, DeviceIoControl, DisableThreadLibraryCalls, DuplicateHandle, EncodePointer, EnterCriticalSection, EnumDateFormats, ExitProcess, ExitThread, FileTimeToSystemTime, FindAtom, FindClose, FindFirstFile, FindNextFile, FindResource, FlsAlloc, FlsGetValue, FlsSetValue, FlushInstructionCache, FormatMessage, FreeEnvironmentStrings, FreeLibrary, GetAclInformation, GetACP, GetAtomName, GetCommandLine, GetComputerName, GetConsoleCP, GetConsoleMode, GetCPInfo, GetCPInfoEx, GetCurrentDirectory, GetCurrentProcess, GetCurrentProcessId, GetCurrentThread, GetCurrentThreadId, GetDateFormat, GetDiskFreeSpace, GetDiskFreeSpaceEx, GetDriveType, GetEnvironmentStrings, GetEnvironmentVariable, GetExitCodeProcess, GetFileAttributes, GetFileSize, GetFileTime, GetFileType \\
+
+\hline
+kernel32.dll & GetFullPathName, GetLargestConsoleWindowSize, GetLastError, GetLocaleInfo, GetLocalTime, GetLogicalDrives, GetLogicalDriveStrings, GetModuleFileName, GetModuleHandle, GetModuleHandleEx, GetNativeSystemInfo, GetOEMCP, GetPriorityClass, GetProcAddress, GetProcessHeap, GetProcessId, GetProcessVersion, GetShortPathName, GetStartupInfo, GetStdHandle, GetStringTypeA, GetStringTypeW, GetSystemDefaultLCID, GetSystemDefaultUILanguage, GetSystemDirectory, GetSystemInfo, GetSystemTime, GetSystemTimeAsFileTime, GetTempFileName, GetTempPath, GetThreadLocale, GetThreadPriority, GetTickCount, GetUserDefaultLangID, GetUserDefaultLCID, GetVersion, GetVersionEx, GetVolumeInformation, GetWindowsDirectory, GlobalAlloc, GlobalFindAtom, GlobalFree, GlobalGetAtomName, GlobalLock, GlobalMemoryStatus, HeapAlloc, HeapCreate, HeapDestroy, HeapFree, HeapReAlloc, HeapSize, InitializeCriticalSection, InitializeCriticalSectionAndSpinCount, InterlockedDecrement, InterlockedExchange, InterlockedIncrement, IsBadReadPtr, IsBadWritePtr, IsDBCSLeadByte, IsDebuggerPresent, IsProcessorFeaturePresent, IsValidCodePage, IsWow64Process, LCMapString, LeaveCriticalSection, LoadLibrary, LoadLibraryEx, LoadResource, LocalAlloc, LocalFree, LocalLock, LocalReAlloc  \\
+
+\hline
+kernel32.dll & LockResource, lstrcat, lstrcmp, lstrcmpi, lstrcpy, lstrcpyn, lstrlen, MapViewOfFile, MoveFile, MoveFileEx, MulDiv, MultiByteToWideChar, OpenEvent, OpenFile, OpenFileMapping, OpenMutex, OpenProcess, OpenThread, OutputDebugString, Process32First, Process32Next, QueryPerformanceCounter, QueryPerformanceFrequency, ReadFile, ReadProcessMemory, RegisterWowExec, ReleaseMutex, RemoveDirectory, ResumeThread, RtlUnwind, RtlZeroMemory, SearchPath, SetConsoleCtrlHandler, SetCurrentDirectory, SetEndOfFile, SetErrorMode, SetEvent, SetFileAttributes, SetFilePointer, SetFileTime, SetHandleCount, SetLastError, SetPriorityClass, SetThreadLocale, SetThreadPriority, SetTimer, SetUnhandledExceptionFilter, SizeofResource, Sleep, SuspendThread, SystemTimeToFileTime, TerminateProcess, TerminateThread, Thread32First, Thread32Next, TlsAlloc, TlsFree, TlsGetValue, TlsSetValue, UnhandledExceptionFilter, UnmapViewOfFile, VirtualAlloc, VirtualAllocEx, VirtualFree, VirtualProtect, VirtualProtectEx, VirtualQuery, WaitForSingleObject, WaitNamedPipe, WideCharToMultiByte, WinExec, WriteFile, WritePrivateProfileString, WriteProcessMemory, wsprintf, \_lclose, \_lcreat, \_llseek, \_lopen \\
 \hline
 mscoree.dll &
 \_CorExeMain \\
@@ -183,4 +202,5 @@ WSACleanup, WSAStartup \\
 
 \hline
 \caption{Thống kê các Windows API đã được xây dựng}
+\label{table:tblWapiResult}
 \end{longtable}

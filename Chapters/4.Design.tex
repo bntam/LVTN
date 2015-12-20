@@ -1,3 +1,8 @@
+
+\begin{concept}[15cm]
+\textit{Mỗi chương trình bất kỳ đều cần một thiết kế tốt để giúp cho việc xây dựng dễ dàng và quy chuẩn hơn. Mục này sẽ trình bày cách mà bộ xử lý Windows API đã được hiện thực để tương tai sau này có thể dễ dàng sửa chữa, bảo trì và bổ sung thêm vào kiến trúc đó. Để hiểu rõ cấu chương trình mô phỏng câu lệnh assembly, sơ đồ class trình bày trong chương này thể hiện được mối quan hệ giữa các class, cấu trúc của chương trình BE-PUM được phát triển dựa trên dự án JakStab, giới thiệu các class quan trọng của chương trình BE-PUM.}
+\end{concept}
+
 \section{Các câu lệnh hợp ngữ}
 	\subsection{Sơ đồ chương trình BE-PUM}
 		BE-PUM được xây dựng chủ yếu trên mã nguồn của JakStab do đó hình ~\ref{fig:SoDoClass} thể hiện phần BE-PUM đang được phát triền. Dưới dây là sơ đồ class chương trình:
@@ -284,7 +289,7 @@ Gói ngoài cùng của bộ xử lý \textit{(winapi)} sẽ nắm:
 
 	\item Lớp \textit{XMLGenerator}: có chức năng sinh ra tự động tập tin cấu trúc XML từ tổ chức như trên của bộ xử lý Windows API, mô tả ánh xạ giữa tên của hàm Windows API và tên đầy đủ của lớp sẽ đảm nhận việc xử lý hàm Windows API đó, kèm theo là nó thuộc tập tin thư viện nào. Ví dụ như sau:\\
 
-
+\begin{small}
 \lstset{language=HTML}
 \begin{lstlisting}
 <APIMap>
@@ -298,6 +303,7 @@ className="winapi.kernel32.functions.CloseHandle"/>
 	</DLL>
 </APIMap>
 \end{lstlisting}
+\end{small}
 
 	\item Tập tin \textit{APIMap.xml}: là nội dung do lớp \textit{XMLGenerator} sinh ra.
 \end{itemize}
