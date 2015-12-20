@@ -110,7 +110,7 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 \item IF(Interrupt Flag cờ ngắt): cờ được bật khi có thông báo cho phép ngắt xảy ra.
 \item DF(Direction Flag cờ hướng): cờ được bật và sử dụng khi thao tác với mảng và chuỗi, sử dụng để giảm chỉ số tự động thi thao tác.
 \end{itemize}	
-
+		
 		\subsubsection{Câu lệnh assembly}
 		Một câu lệnh assembly có cú pháp đầy đủ như sau: 
 		 \begin{center}		 
@@ -1078,7 +1078,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	
 	Các giá trị số thực không xác định là một QNaN được mã hóa và lưu giữ bởi câu lệnh dấu chấm động để đáp ứng với một dấu chấm động không hợp lệ tác ngoại lệ được đánh dấu (xem bảng~\ref{tb:InvalidAr} ).	
 	\newpage
-		\begin{longtable}{|l|l|l|l|l|l|}
+		\begin{longtable}{|l|l|l|l|l|m{2.5cm}|}
 			\hline
 				\multicolumn{2}{|l|}{Loại} & Bit dấu & Bit số mũ & \multicolumn{2}{l|}{Phần định trị} \\
 				\cline{5-6}
@@ -1087,13 +1087,11 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				 & +$\mathbb{\infty}$ & 0 & 11..11 & 1 & 00..00 \\
 				\cline{2-6}
 				  & & 0 & 11..10 & 1 & 11..11 \\
-				  & +Normals & . & .& . & . \\
-				  & & . & . & . & . \\
+				  & +Normals & . & .& . & . \\				 
 				 Số dương & & 0 & 00..01 & 1 & 00..00 \\
 				 	\cline{2-6}
 				  & & 0 & 00..00 & 0 & 11..11 \\
-				  & +Denormals& . & .& . & . \\
-				  & & . & . & . & . \\
+				  & +Denormals& . & .& . & . \\				
 				  & & 0 & 00..00 & 0 & 00..01 \\
 				  \cline{2-6}
 				  & +0 & 0& 00..00 & 0 & 00..00 \\
@@ -1101,13 +1099,11 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				  & -0 & 1 & 00..00 & 0 & 00..00 \\
 				\cline{2-6}
 				  & & 1 & 00..00 & 0 & 00..01 \\
-				  & -Denormals& . & .& . & . \\
-				 Số âm & & . & . & . & . \\
+				  Số âm& -Denormals& . & .& . & . \\				  
 				  & & 1 & 00..00 & 0 & 11..11 \\
 				\cline{2-6}
 				  & & 1 & 00..01 & 1 & 00..00 \\
-				  & -Normals & . & .& . & . \\
-				  & & . & . & . & . \\
+				  & -Normals & . & .& . & . \\				 
 				  & & 1 & 11..10 & 1 & 11..11 \\
 				 \cline{2-6}
 				  & -$\mathbb{\infty}$ & 1 & 11..11 & 1 & 00..00 \\
@@ -1125,7 +1121,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\label{tb:MaHoaSoThuc}
 		\end{longtable}	
 	
-
+\newpage
 	LƯU Ý:
 	\begin{itemize}
 		\item[1] Bit nguyên được ngụ ý và không được lưu trữ cho các định dạng single-real và double-real.
@@ -1296,9 +1292,9 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 			\item Lưu trữ các giá trị trong thanh ghi ST (0)  từ bộ nhớ theo định dạng số thực, số nguyên, hoặc gói BCD.
 			\item  Di chuyển các giá trị giữa các thanh ghi trong các thanh ghi dữ liệu FPU.
 		\end{itemize}		
-		\begin{longtable}{|l|m{4cm}|l|m{3cm}|l|m{3cm}|}
+		\begin{longtable}{|l|m{4cm}|l|m{3cm}|l|m{2.5cm}|}
 			\hline
-				\multicolumn{2}{|l|}{Số thực} & \multicolumn{2}{l|}{Số thực} & \multicolumn{2}{l|}{Gói số nguyên}\\
+				\multicolumn{2}{|l|}{Số thực} & \multicolumn{2}{l|}{Số nguyên} & \multicolumn{2}{l|}{Gói số nguyên}\\
 			\hline
 			\hline
 				FLD & Nạp số thực &  FILD & Nạp số nguyên &  FBLD & Nạp gói số nguyên  \\
@@ -1441,10 +1437,10 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 				\caption{Thiết lập cờ điều kiện FPU theo phép so sánh số thực}
 				\label{tb:SettingFPU}
 		\end{longtable}	
+				
+		Câu lệnh FICOM và FICOMP cũng thực hiện giống như các hướng dẫn FCOM và FCOMP, ngoại trừ các toán hạng nguồn là một giá trị số nguyên trong bộ nhớ. Giá trị số nguyên được tự động chuyển đổi thành định dạng extened-real trước khi so sánh. Câu lệnh FICOMP thực hiện pop stack thanh ghi dữ liệu FPU sau khi thực hiện hoạt động so sánh xong.
 		
-		Câu lệnh FICOM và FICOMP cũng thực hiện giống như các hướng dẫn FCOM và FCOMP, ngoại trừ các toán hạng nguồn là một giá trị số nguyên trong bộ nhớ. Giá trị số nguyên được tự động chuyển đổi thành định dạng extened-real trước khi so sánh. Câu lệnh FICOMP thực hiện pop stack thanh ghi dữ liệu FPU sau khi thực hiện hoạt động so sánh xong.\\
-		
-		Câu lệnh FTST thực hiện các hoạt động tương tự như câu lệnh FCOM, ngoại trừ các giá trị trong thanh ghi ST (0) luôn luôn được so sánh với giá trị 0.0.
+		Câu lệnh FTST thực hiện các hoạt động tương tự như câu lệnh FCOM, ngoại trừ các giá trị trong thanh ghi ST (0) luôn luôn được so sánh với giá trị 0.0.\\
 		
 		Câu lệnh FCOMI và FCOMIP là câu lệnh mới trong bộ xử lý Intel Pro Pentium. Câu lệnh thực hiện phép so sánh tương tự như hướng dẫn FCOM và FCOMP, ngoại trừ việc câu lệnh thiết lập các cờ trạng thái (ZF, PF và CF) trong thanh ghi EFLAGS để chỉ ra kết quả của phép so sánh (xem Bảng ~\ref{tb:EFLAGS} ) thay vì các cờ điều kiện FPU. Câu lệnh FCOMI và FCOMIP cho phép lệnh rẽ nhánh điều kiện (JCC) được thực hiện trực tiếp từ kết quả so sánh.
 		\begin{longtable}{|l|l|l|l|}

@@ -7,12 +7,59 @@
 	\subsection{So sánh với BE-PUM trong quá khứ}
 Để thấy được tiến triển của công việc sau quá trình phát triển thêm cho hệ thống BE-PUM, ta sẽ tiến hành chạy thí nghiệm trên một tập 15 malwares ngẫu nhiên với hai phiên bản cũ (trước khi thực hiện công việc) và mới (sau khi thực hiện công việc). Kết quả cần thu thập đó là thời gian thực thi (tính bằng mili giây -- ms), số nút và số cạnh trong đồ thị được sinh ra. Sau đó, ta sẽ tiến hành nhìn nhận và so sánh sự khác biệt giữa trước và sau này.\\
 
-Nhìn vào sự so sánh ở Bảng (\ref{}), ta dễ dàng nhận thấy được số lượng nút và cạnh được BE-PUM dò tìm đã tăng lên một cách rất đáng kể. Đó là nhờ sự hỗ trợ thêm rất nhiều câu lệnh hợp ngữ và Windows API để BE-PUM có thể tính toán và tìm được đường đi trong nội dung của tập tin thực thi. Để dễ dàng thấy được sự chênh lệch này, ta có thể nhìn vào hai biểu đồ ở Hình \ref{fig:exp_comparition_nodes} và Hình \ref{fig:exp_comparition_edges} sau đây.
+\newpage
+\begin{small}
+\setlength\tabcolsep{7pt}
+\centering
+	\begin{longtable}{| l | l | l | l | l | l | l | l |}
+\hline
+	Số thứ tự &  Tên file thực thi  & \multicolumn{3}{c|}{BE-BUM(cũ)} & \multicolumn{3}{c|}{BE-PUM(mới)} \\
+	\cline{3-8}
+	& & Nút & Cạnh & Thời gian & Nút & Cạnh & Thời gian \\
+	  \hline
+       \hline
+       		1 & Virus.Win32.Arrow.a &58609	&81	&84&	361000&	7674	& 7691 \\		
+		\hline
+			2 &Virus.Win32.Bolzano.2122 &	54656	&30&	30	&416891&	42&	42		\\	
+		\hline	
+			3	&Virus.Win32.Canbis.a	&485	&102&	102	&16344&	2459	&2575 \\
+		\hline
+			4	&Virus.Win32.Champ	&7750	&701	&712&	4125&	672	&691\\
+		\hline
+			5 &Virus.Win32.Damm.1537.a	&203&	26&	26	&3261219&	9214&	9214\\
+		\hline		
+			6	&Virus.Win32.Delf.e	&66266&	401&	415&	1447094&	67131	& 67495\\
+		\hline
+			7	&Virus.Win32.Doser.4535&	2610&	145	&145&	361188&	9882	 &9917\\
+		\hline
+			8	&Virus.Win32.Enerlam.f	&485&	27&	26&	361578&	10483	&10482\\
+		\hline
+			 9 & Virus.Win32.Eva.g	&359	&9	&9	&361187	&10350	&10350\\
+		\hline
+			10	&Virus.Win32.Fighter.a	&187&	10	&9&	361313&	10462	&10461\\
+		\hline
+			11	&Virus.Win32.Giri.4919&	9266&	256	&267&	362094&	10136&	10175\\
+		\hline
+			12	&Virus.Win32.Halen.2252	&26750	&166&	174&	16156	&226&	227\\
+		\hline
+			13	&Virus.Win32.HLLO.Ant.e&	2484	&122&	119	&362985&	10465&	10464\\
+		\hline
+			14	&Virus.Win32.HLLP.Flatei.f	&25	&3	&2	&361235	&7725	&7724\\
+		\hline
+			15 &	Virus.Win32.HLLW.Billrus.h &	875&	86&	87	&361250&	9415&	9414\\
+        
+        \hline                  
+        	\caption{Bảng so sánh BE-PUM}
+        	\label{tb:SoSanhBEPUM}          
+       \end{longtable}	
+	\end{small}
+	
+	Nhìn vào sự so sánh ở Bảng (\ref{tb:SoSanhBEPUM}), ta dễ dàng nhận thấy được số lượng nút và cạnh được BE-PUM dò tìm đã tăng lên một cách rất đáng kể. Đó là nhờ sự hỗ trợ thêm rất nhiều câu lệnh hợp ngữ và Windows API để BE-PUM có thể tính toán và tìm được đường đi trong nội dung của tập tin thực thi. Để dễ dàng thấy được sự chênh lệch này, ta có thể nhìn vào hai biểu đồ ở Hình \ref{fig:exp_comparition_nodes} và Hình \ref{fig:exp_comparition_edges} sau đây.
 
-
+\newpage
 \begin{figure}[htp]
 	\begin{center}
-		\includegraphics[scale=0.6]{exp_comparition_nodes.png}
+		\includegraphics[scale=0.33]{exp_comparition_nodes.png}
 	\end{center}
 	\caption{Biểu đồ thể hiện số nút của tập thí nghiệm trên hai phiên bản BE-PUM}
 	\label{fig:exp_comparition_nodes}
@@ -20,7 +67,7 @@ Nhìn vào sự so sánh ở Bảng (\ref{}), ta dễ dàng nhận thấy đư�
 
 \begin{figure}[htp]
 	\begin{center}
-		\includegraphics[scale=0.6]{exp_comparition_edges.png}
+		\includegraphics[scale=0.33]{exp_comparition_edges.png}
 	\end{center}
 	\caption{Biểu đồ thể hiện số cạnh của tập thí nghiệm trên hai phiên bản BE-PUM}
 	\label{fig:exp_comparition_edges}
@@ -28,6 +75,7 @@ Nhìn vào sự so sánh ở Bảng (\ref{}), ta dễ dàng nhận thấy đư�
 
 Bên cạnh việc số lượng các cạnh và nút trong đồ thị tăng lên thì thời gian thực thi cũng tăng lên rất nhiều, do BE-PUM đã phải tính toán nhiều hơn để cho ra được các kết quả đó. Việc này cần được nghiên cứu và giải quyết thêm về sau, khi mà số lượng các thứ BE-PUM hỗ trợ ngày càng bùng nổ.
 
+\newpage
 	\subsection {Kết quả sau cùng}
 
 Sau quá trình thực hiện công việc xây dựng và mở rộng cho hệ thống BE-PUM, toàn bộ phần hiện thực cộng thêm đã được đem ra chạy thí nghiệm trên một tập các malware và không phải malware để đánh giá được khả năng, sức mạnh cũng như những đóng góp mà công việc của luận văn này đã mang lại. \\
@@ -38,6 +86,7 @@ Cả hai công cụ này đều chạy trên phương pháp phân tích tĩnh, n
 
 Tổng thể kết quả ta có tỷ số giữa số cạnh cùng số nút trong các công cụ JakStab, IDA Pro, và BE-PUM là 1.05, 2.05, và 1.24. Ta thấy được công cụ IDA Pro đã tìm được rất nhiều đường đi trong các tập tin làm ví dụ vì công cụ này hỗ trợ hầu hết các câu lệnh Ntrong khi BE-PUM thì vẫn đang được xây dựng thêm qua công việc của luận văn này. Nhưng có thể đó chỉ là những nhánh không bao giờ được chạy do hạn chế của phân tích tĩnh, không giống như BE-PUM có thể tính toán được giá trị và bỏ đi những nhánh không bao giờ được nhảy tới.
 
+\newpage
 \begin{small}
 \setlength\tabcolsep{3pt}
 \centering
@@ -59,7 +108,7 @@ Email-Worm.Coronex.a	&	12	&	26	&	27	&	500	&	148	&	157	&	204	&	308	&	339	&	1000 \
 Trojan-PSW.QQRob.16.d	&	25	&	89	&	100	&	766	&	17	&	15	&	382	&	91	&	105	&	953	\\ \hline
 %Virus.Aidlot	&	8	&	81	&	81	&	281	&	64	&	62	&	119	&	105	&	108	&	70344	\\ \hline
 Virus.Aztec	&	8	&	104	&	111	&	1973	&	223	&	215	&	495	&	300	&	313	&	44384	\\ \hline
-Virus.Belial.a	&	4	&	41	&	42	&	407	&	118	&	116	&	198	&	128	&	134	&	985	\\ \hline
+%Virus.Belial.a	&	4	&	41	&	42	&	407	&	118	&	116	&	198	&	128	&	134	&	985	\\ \hline
 %Virus.Belial.b	&	4	&	43	&	44	&	406	&	118	&	116	&	197	&	139	&	146	&	906	\\ \hline
 %Virus.Belial.d	&	4	&	6	&	5	&	328	&	147	&	150	&	158	&	163	&	170	&	1062	\\ \hline
 Virus.Benny.3219.a	&	8	&	138	&	153	&	890	&	599	&	603	&	415	&	149	&	164	&	2438	\\ \hline
@@ -144,9 +193,9 @@ nddeapir.exe	& 4& 164	& 179 &	500 &	187 & 	215 & 	24 & 180 &	196 &	223297 \\ \hl
 			& Lệnh nhảy & JUMP\\
 		\cline{2-3}
 			& Lệnh sao chép& MOV, XCHG, MOVZ, MOVSB, MOVSW, MOSX, MOVZB, MOVZW, CMOVA, CMOVB, CMOVBE, CMOVC, CMOVE, CMOVP, CMOVPE, CMOVG, CMOVL, CMOVNA, CMOVNAE, CMOVNBE, CMOVNE, CMOVNG, CMOVNGE, CMOVNL, CMOVNLE, CMOVNO, CMOVNS, CMOVNZ, CMOVPO, CMOVZ \\
-		\cline{2-3}
+		\cline{1-3}
 			& Lênh trả giá trị& RET\\
-			\cline{2-3}
+			\hline
 			& Lênh điều khiển&CMP, INT, AAA, AAD, AAM, ASS, BSF, BSWAP, BT, BTC, BRT, BTS, CBW, CDQ, CLC, CLD, CLI, CLTD, CMC, OUT, POP, POPA, POPF, PUSH, PUSHA, PUSHF, RDTSC, SAHF, SCAS, SETA, SETAE, SETB, SETBE, SETC, SETE, SETG, SETGE, SETL, SETNA, SETNAE, SETNB, SETNBE, SETNC, SETNE, SETNG, SETNGE, SETNL, SETNLE, SETNO, SETNP, SETNS, SETO, SETP, SETPE, SETPO, SETS, SETZ, LODS, MOVS, NEG, NOP, SHLD, SHRD, STC, STOS, TEST, XLAT, CBW, CWDE, CMPS, CMPXCHG, CMPXCHG8B, CPUID, CWD, CWDE, CWT, DAA, DAS, ENTER, IN INT1, INT3, LAHF, LEA, LEAVE \\
 		\hline
 			Bộ xử lý số thực & Lệnh toán học &FADD, FADDP, FIADD, FSUB, FSUBP, FSUBR, FSUBRP, FISUB, FISUBR, FMUL, FMULP, FIMUL, FDIV, FDIVP, FIDIV, FDIVR, FDIVRP, FIDIVR, FABS, FCHS, FSQRT, FPREM, FPREM1, FRNDINT, FXTRACT, FSIN, FCOS, FSINCOS, FPTAN, FPATAN, FYL2X, FYL2XP1, F2XM1, FSCALE \\
@@ -156,7 +205,7 @@ nddeapir.exe	& 4& 164	& 179 &	500 &	187 & 	215 & 	24 & 180 &	196 &	223297 \\ \hl
 			& Lệnh nạp giá trị& FLDZ, FLD1, FLDPI, FLDL2T, FLDL2E, FLDLG2, FLDLN2\\
 			\cline{2-3}
 			& Lệnh sao lưu &FLD, FST, FSTP, FXCH, FCMOVcc, FCMOVB, FCMOVNB, FCMOVE, FCMOVNE, FCMOVBE, FCMOVNBE, FCMOVU, FCMOVNU. \\
-			\cline{2-3}
+			\hline
 			& Lệnh điều khiển & FINIT, FNINIT, FLDCW, FSTCW, FNSTCW, FSTSW, FNSTSW, FCLEX, FNCLEX, FLDENV, FNSTENV, FRSTOR, FSAVE, FNSAVE, FINCSTP\\
 		\hline
 		\caption{Thống kê các câu lệnh assembly đã được hiện thực}

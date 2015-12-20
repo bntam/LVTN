@@ -3,6 +3,7 @@
 \textit{Mỗi chương trình bất kỳ đều cần một thiết kế tốt để giúp cho việc xây dựng dễ dàng và quy chuẩn hơn. Mục này sẽ trình bày cách mà bộ xử lý Windows API đã được hiện thực để tương tai sau này có thể dễ dàng sửa chữa, bảo trì và bổ sung thêm vào kiến trúc đó. Để hiểu rõ cấu chương trình mô phỏng câu lệnh assembly, sơ đồ class trình bày trong chương này thể hiện được mối quan hệ giữa các class, cấu trúc của chương trình BE-PUM được phát triển dựa trên dự án JakStab, giới thiệu các class quan trọng của chương trình BE-PUM.}
 \end{concept}
 
+\newpage
 \section{Các câu lệnh hợp ngữ}
 	\subsection{Sơ đồ chương trình BE-PUM}
 		BE-PUM được xây dựng chủ yếu trên mã nguồn của JakStab do đó hình ~\ref{fig:SoDoClass} thể hiện phần BE-PUM đang được phát triền. \\
@@ -36,9 +37,9 @@
 			\end{figure}
 		\end{center}			
 		
-		Để thể hiện các biến môi trường các class Register, Flag, Stack, FPUStatusWord, FPURegister, FPUControlWord,  Be-Pum xây dựng các class Environment để hỗ trợ trong việc truy xuất, thao tác.
+		\newpage
+		Để thể hiện các biến môi trường các class Register, Flag, Stack, FPUStatusWord, FPURegister, FPUControlWord,  Be-Pum xây dựng các class Environment để hỗ trợ trong việc truy xuất, thao tác.	
 	
-	\newpage
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
