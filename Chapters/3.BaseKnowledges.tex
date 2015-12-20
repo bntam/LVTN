@@ -1046,7 +1046,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		\newpage
 		\subsection*{Số thực}
 		Ba loại dữ liệu số thực của FPU (single-real, double-real, và extended-real) tương ứng với chính xác đơn, đôi chính xác, và định chính xác mở rộng trong các định dạng chuẩn IEEE. Định dạng chính xác mở rộng là định dạng được sử dụng bởi các thanh ghi dữ liệu trong FPU. Bảng~\ref{tb:DLFPU} đưa ra độ chính xác và phạm vi của các kiểu dữ liệu và hình~\ref{fig:DinhDangLoaiDL} đưa ra các định dạng. Đối với các định dạng single-real và double-real, chỉ có một phần phân số của phần định trị được mã hóa. Số nguyên được giả định là 1 cho tất cả các số trừ 0 và số denormalized hữu hạn. Đối với các định dạng extended-real, các số nguyên được chứa trong bit 63. Ở đây, các số nguyên được thiết lập thành 1 cho số normalized, infinities, và NaNs, và 0 cho số không và số denormalized. 		
-		\begin{longtable}{|l|l|p{2cm}|l|l|}
+		\begin{longtable}{|l|l|p{1.5cm}|l|l|}
 		 \hline
 		 	Kiểu dữ liệu & Độ dài & Chính xác (Bits) & \multicolumn{2}{l|}{Phạm vi giá trị}\\
 		 	\cline{4-5}
@@ -1062,7 +1062,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 			Short integer &32 &31 &$ -2^{31} $ tới  $ 2^{31} $  -1 & –2.14 x $10 ^{9 } $ tới 2.14 x $10 ^{9} $\\
 			Long integer &64 &63  &$ -2^{63} $ tới  $ 2^{63} $ -1  & -9.22 $ 10^{18} $ tới 9.22  $10 ^{18} $\\
 		 \hline		
-		  Gói số nguyên & 80 & 18(cớ số 10) &Không phù hợp & (-$10^{18}$ + 1) tới $(10^{18}$– 1)  \\
+		  Gói số nguyên & 80 & 18 (cơ số 10) &Không phù hợp & (-$10^{18}$ + 1) tới $(10^{18}$– 1)  \\
 		 \hline			
 		 		\caption{Độ dài, độ chính xác và phạm vị kiểu của từng dữ liệu}
 				 \label{tb:DLFPU}

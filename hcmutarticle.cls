@@ -66,7 +66,7 @@
 \def\ackname{Lời cảm ơn.}
 \def\andname{và}
 \def\lastandname{\unskip, và}
-\def\appendixname{Phụ lục}
+%\def\appendixname{Phụ lục}
 \def\refname{Tài liệu tham khảo}
 \def\bibname{Tài liệu tham khảo}
 \def\chaptername{Chương}
