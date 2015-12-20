@@ -1133,7 +1133,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	\end{itemize}
 
 		\subsection*{ Số nguyên được mã hóa nhị phân}
-	Có ba loại số nguyên (word, short và long) có định dạng giống hệt nhau, ngoại trừ chiều dài. Bảng~\ref{tb:DLFPU} cho độ chính xác và giới hạn của các kiểu dữ liệu và hình~\ref{fig:DinhDangLoaiDL} đưa ra các định dạng. Bảng~\ref{tb:MaHoaSoNguyen} đưa ra bảng mã của ba loại nguyên dạng nhị phân.
+	Có ba loại số nguyên (word, short và long) có định dạng giống hệt nhau, ngoại trừ chiều dài. Bảng~\ref{tb:DLFPU} cho độ chính xác và giới hạn của các kiểu dữ liệu và hình~\ref{fig:DinhDangLoaiDL} đưa ra các định dạng. Bảng~\ref{tb:MaHoaNhiPhan} đưa ra bảng mã của ba loại nguyên dạng nhị phân.
 		\begin{longtable}{|l|l|l|l|}
 			\hline
 				\multicolumn{2}{|l|}{Lớp dữ liệu} & Bit dấu & Độ lớn \\
@@ -1158,10 +1158,11 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\multicolumn{2}{l}{} & Word Integer & $\leftarrow$ 15 bits $\to $ \\
 				\multicolumn{2}{l}{} & Short Integer & $\leftarrow$ 31 bits $\to $ \\
 				\multicolumn{2}{l}{} & Long Integer & $\leftarrow$ 63 bits $\to $ \\
-				\caption{Mã hóa nhị phân số nguyên}
-				\label{tb:MaHoaSoNguyen}
+				\caption{Mã hóa nhị phân số nhị phân}
+				\label{tb:MaHoaNhiPhan}
 		\end{longtable}	
 
+	\newpage
 	Hầu hết các bit phần định trị của mỗi định dạng là bit dấu (0 là số dương và 1 số âm). Giá trị âm được biểu diễn trong chuẩn bù hau. Số 0 được biểu diễn với tất cả các bit (kể cả bit dấu) thiết lập là bit 0. Lưu ý rằng kiểu dữ liệu word-integer của FPU là giống với kiểu dữ liệu word-integer được sử dụng trong bộ xử lý số nguyên và các định dạng short-integer là giống kiểu dữ liệu doubleword-integer.\\
 	
 	Giá trị word-integer được lưu trữ trong 2 byte liên tiếp trong bộ nhớ; giá trị short-integer được lưu trữ trong 4 byte liên tiếp; và các giá trị long-integer được lưu trữ trong 8 byte liên tiếp. Khi được nạp vào thanh ghi dữ liệu của FPU, tất cả các số nguyên nhị phân là được biểu diễn theo định dạng mở rộng của số thực.\\
@@ -1176,20 +1177,20 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	
 		Nếu số nguyên không xác định được lưu trữ trong bộ nhớ và sau đó được nạp lại vào một thanh ghi dữ liệu FPU, nó được hiểu là số âm lớn nhất theo định dạng được hỗ trợ.
 		
+		\newpage
 		\subsection*{Số nguyên cơ số 10}
-		Số nguyên cơ số 10 được lưu trữ 10-byte theo định dạng gói BCD. Bảng~\ref{tb:DLFPU} cho biết độ chính xác và phạm vi của kiểu dữ liệu này và hình() hiển thị định dạng. Trong định dạng này, 9 byte đầu tiên giữ 18 số BCD, 2 số cho mỗi byte. Các chữ số phần định trị được chứa trong nửa-byte thấp từ byte 0 và chữ số nhất có ý nghĩa được chứa ở nửa byte cao từ byte 9. Phần định trị của byte10 chứa bit dấu (0 số dương và 1 số âm). (Bits 0 đến 6 trong byte 10 không quan tâm bit.) Giá trị âm của số nguyên không được lưu trữ ở dạng bù hai; chúng được phân biệt với các số nguyên thập phân dương bởi các bit dấu.\\
+		Số nguyên cơ số 10 được lưu trữ 10-byte theo định dạng gói BCD. Bảng~\ref{tb:DLFPU} cho biết độ chính xác và phạm vi của kiểu dữ liệu này và hình~\ref{fig:DinhDangLoaiDL} hiển thị định dạng. Trong định dạng này, 9 byte đầu tiên giữ 18 số BCD, 2 số cho mỗi byte. Các chữ số phần định trị được chứa trong nửa-byte thấp từ byte 0 và chữ số nhất có ý nghĩa được chứa ở nửa byte cao từ byte 9. Phần định trị của byte10 chứa bit dấu (0 số dương và 1 số âm). (Bits 0 đến 6 trong byte 10 không quan tâm bit.) Giá trị âm của số nguyên không được lưu trữ ở dạng bù hai; chúng được phân biệt với các số nguyên thập phân dương bởi các bit dấu.\\
 		
-		Bảng () biểu diễn mã hóa giá trị có thể có trong kiểu dữ liệu số nguyên thập phân.\\
+		Bảng~\ref{tb:MaHoaBCD} biểu diễn mã hóa giá trị có thể có trong kiểu dữ liệu số nguyên thập phân.\\
 	
 		Các định dạng số nguyên thập phân chỉ tồn tại trong bộ nhớ. Khi một số nguyên thập phân được nạp trong một thanh ghi dữ liệu trong FPU, nó sẽ tự động chuyển đổi sang định dạng số thực mở rộng. Tất cả các số nguyên thập phân biểu diễn ở định dạng số thực mở rộng.\\
 		
 		Việc đóng gói mã hóa sô không xác định số được lưu trữ theo câu lệnh FBSTP một thao tác ngoại lệ sẽ được đánh dấu. Cố gắng nạp giá trị này với câu lệnh FBLD tạo ra một kết quả không xác định.
 
 		\subsection*{Mã hóa theo định dạng Extended-real số không được hỗ trợ}
-		Các định dạng extended-real cho phép mã hóa mà không giống với bất kỳ các cách thể hiện trong Bảng (). Bảng () cho thấy các mã hóa không được hỗ trợ. Một số các mã hóa được hỗ trợ bởi bộ xử lý toán học Intel 287. Tuy nhiên, hầu hết trong các bộ xử lý không được hỗ trợ bởi các bộ xử lý toán học Intel 387, hoặc các FPU trong bộ vi xử lý Intel486, Pentium, hay bộ xử lý Pentium Pro. Những mã hóa không còn được hỗ trợ do những thay đổi trong phiên bản cuối cùng của chuẩn IEEE 754 mà loại bỏ các bảng mã.\\
+		Các định dạng extended-real cho phép mã hóa mà không giống với bất kỳ các cách thể hiện trong bảng ~\ref{tb:MaHoaSoThuc}. Bảng ~\ref{tb:MaHoaExtended} cho thấy các mã hóa không được hỗ trợ. Một số các mã hóa được hỗ trợ bởi bộ xử lý toán học Intel 287. Tuy nhiên, hầu hết trong các bộ xử lý không được hỗ trợ bởi các bộ xử lý toán học Intel 387, hoặc các FPU trong bộ vi xử lý Intel486, Pentium, hay bộ xử lý Pentium Pro. Những mã hóa không còn được hỗ trợ do những thay đổi trong phiên bản cuối cùng của chuẩn IEEE 754 mà loại bỏ các bảng mã.\\
 	
-		Các loại mã hóa trước đây gọi là pseudo-Nans, pseudo-infinities, và số un-normal không được hỗ trợ. Bộ xử lý toán học Intel 387 và FPU trong bộ vi xử lý Intel486, Pentium, và bộ xử lý  Pentium Pro tạo ra các ngoại lệ và được đánh dấu khi đang gặp phải giống như xử lý toán hạng không hơp lệ.
-		\newpage
+		Các loại mã hóa trước đây gọi là pseudo-Nans, pseudo-infinities, và số un-normal không được hỗ trợ. Bộ xử lý toán học Intel 387 và FPU trong bộ vi xử lý Intel486, Pentium, và bộ xử lý  Pentium Pro tạo ra các ngoại lệ và được đánh dấu khi đang gặp phải giống như xử lý toán hạng không hơp lệ.	
 		\begin{longtable}{|m{2cm}|l|l|l|l|l|l|l|l|}
 			\hline
 				Lớp dữ liệu & Bit dấu &  & \multicolumn{6}{l|}{Độ lớn} \\
@@ -1225,6 +1226,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		\end{longtable}
 		LƯU Ý: * UUUU có nghĩa là giá trị bit không xác định và cũng có thể chứa giá trị bất kỳ.
 
+	\newpage
 		\subsubsection{Câu lệnh FPU}				
 		Các câu lệnh dấu chấm động được hỗ trợ trong kiến truc Intel FPU có thể được nhóm lại thành sáu loại:
 		\begin{itemize}
@@ -1237,21 +1239,20 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
  			\item	Câu lệnh điều khiển FPU.
 		\end{itemize}
 
-	Số siêu việt là là số (thực hoặc phức) nhưng lại không là nghiệm của phương trình đại số nào. Ví dụ: số $\pi $ và \textit{e}. 
-	
+	Số siêu việt là là số (thực hoặc phức) nhưng lại không là nghiệm của phương trình đại số nào. Ví dụ: số $\pi $ và \textit{e}. 	
 		
 	Phần sau đây mô tả ngắn gọn các câu lệnh trong mỗi loại. 
-	\begin{longtable}{|m{2cm}|l|l|l|l|l|}
+	\begin{longtable}{|m{2cm}|m{3cm}|l|l|l|l|}
 	\hline
 		\multicolumn{2}{|l|}{Lớp dữ liệu} & Bit dấu & Bit mũ & \multicolumn{2}{l|}{Phần định trị}\\
 		\cline{5-6}
 		 \multicolumn{2}{|l|}{} & & & Bit nguyên & Phần thập phân \\
 	\hline
 	\hline
-		Số thực dương & Số vô cực &0 &  11..11 & 0 & 00..00 \\
+		& Số vô cực &0 &  11..11 & 0 & 00..00 \\
 		\cline{2-6}
 		 &  & 0 &11..10 & 0 & 11..11 \\		
-		  &Số không bình thường & . & . & . & . \\
+		 Số thực dương  &Số không bình thường & . & . & . & . \\
 		  &	&0 &00..01& 0&  00..00 \\		 
 		 \cline{2-6}
 		 & & 0 & 00..00 & 1 & 11..11\\			
@@ -1265,8 +1266,8 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		 &  &  1 &11..10 & 0 &11..01\\
 		  & Số không bình thường  & . & . & . & . \\
 		 &	& 1  &00..01 & 0 &  00..00 \\		
-		 \cline{2-6}
-		 & Số vô cực  & 1 & 11..11 & 0 & 00..00\\
+		 \cline{1-6}
+		 Số âm & Số vô cực  & 1 & 11..11 & 0 & 00..00\\
 	\hline
 		NaN&  & 1  &11..11 & 0 & 01..11 \\
 		& Signaling  & . & . & . & . \\
@@ -1309,9 +1310,6 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\caption{Câu lệnh sao lưu dữ liệu}
 				\label{tb:CauLenhSaoLuu}
 		\end{longtable}
-	
-
-
 
 		Toán hạng thường được lưu trong thanh ghi dữ liệu FPU ở định dạng extended-real (phụ thuộc vào cờ điều khiển chính xác (PC) ở thanh ghi điều khiển). Câu lệnh FLD (nạp số thực) đẩy một toán hạng thực từ bộ nhớ vào đầu stack thanh ghi dữ liệu FPU. Nếu toán hạng là ở định dạng single-real hoặc double-real, FPU sẽ tự động chuyển đổi sang định dạng extended-real. Câu lệnh này cũng có thể được sử dụng để đẩy các giá trị của một thanh ghi dữ liệu FPU lên trên đỉnh của stack thanh ghi.\\
 		
@@ -1350,13 +1348,13 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		Các câu lệnh sau đây thường được sử dụng để nạp hằng số vào đỉnh stack [ST(0)] của thanh ghi dữ liệu FPU [ST (0)]:
 		\begin{itemize}
 			\renewcommand{\labelitemi}{}
-			\item FLDZ Load +0.0
-			\item FLD1 Load +1.0
-			\item FLDPI Load $\pi$
-			\item FLDL2T Load $log_{2}10$
-			\item FLDL2E Load $log_{2}e$
-			\item FLDLG2 Load $log_{10}2$
-			\item FLDLN2 Load $log_{e}2$
+			\item FLDZ nạp +0.0
+			\item FLD1 nạp+1.0
+			\item FLDPI nạp$\pi$
+			\item FLDL2T nạp $log_{2}10$
+			\item FLDL2E nạp $log_{2}e$
+			\item FLDLG2 nạp $log_{10}2$
+			\item FLDLN2nạp $log_{e}2$
 		\end{itemize}					
 
 		Các giá trị không đổi biểu diễn theo định dạng extended-real độ chính xác (64 bit) và chính xác đến gần 19 chữ số thập phân. Chúng được lưu trữ theo một định dạng chính xác hơn định dạng extended-real. Khi nạp hằng số, FPU làm tròn số theo cờ làm tròn RC (điều khiển làm tròn) từ thanh ghi điều khiển FPU. 
@@ -1365,28 +1363,27 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 		Các câu lệnh xử lý dấu chấm động sau đây thực hiện các phép tính cơ bản trên trường số thực. Khi áp dụng, các câu lệnh phù hợp với tiêu chuẩn IEEE 754:
 		\begin{itemize}
 			\renewcommand{\labelitemi}{}
-			\item	 ADD/FADDP Add real
-			\item	FIADD Add integer to real
-			\item	FSUB/FSUBP Subtract real
-			\item	FISUB Subtract integer from real
-			\item	FSUBR/FSUBRP Reverse subtract real
-			\item	FISUBR Reverse subtract real from integer
-			\item	FMUL/FMULP Multiply real
-			\item	FIMUL Multiply integer by real
-			\item	FDIV/FDIVP Divide real
-			\item	FIDIV Divide real by integer
-			\item	FDIVR/FDIVRP Reverse divide
-			\item	FIDIVR Reverse divide integer by real
-			\item	FABS Absolute value
-			\item	FCHS Change sign
-			\item	FSQRT Square root
-			\item	FPREM Partial remainder
-			\item	FPREM1 IEEE partial remainder
-			\item	FRNDINT Round to integral value
-			\item	FXTRACT Extract exponent and significand
-		\end{itemize}
-		
-		\newpage
+			\item	 ADD/FADDP Cộng số thực
+			\item	FIADD Cộng số nguyên
+			\item	FSUB/FSUBP Trừ số thực
+			\item	FISUB Trừ số nguyên
+			\item	FSUBR/FSUBRP Đảo ngược toán hạng trừ số thực
+			\item	FISUBR Đảo ngược toán hạng trừ số nguyên
+			\item	FMUL/FMULP Phân số thực
+			\item	FIMUL Nhân số nguyên
+			\item	FDIV/FDIVP Chia số thực
+			\item	FIDIV Chia số nguyên
+			\item	FDIVR/FDIVRP Đảo ngược toán hạng chí số thực
+			\item	FIDIVR Đảo ngược toán hạng chia số nguyên
+			\item	FABS Trị tuyệt đối giá trị
+			\item	FCHS Thay đổi bit dấu
+			\item	FSQRT Căn bậc hai
+			\item	FPREM Lấy dư
+			\item	FPREM1 IEEE Lấy dư chuẩn IEEE
+			\item	FRNDINT Làm tròn số thực
+			\item	FXTRACT Lấy phần nguyên và phần định trị
+		\end{itemize}		
+	
 	Các câu lệnh cộng, trừ, nhân và chia thực hiện trên các loại toán hạng sau đây:
 		\begin{itemize}
 			\item[•]	Hai giá trị thanh ghi dữ liệu FPU.
@@ -1410,13 +1407,13 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 		Các câu lệnh sau đây so sánh và phân loại giá trị số thực:
 		\begin{itemize}
 			\renewcommand{\labelitemi}{}
-			\item	FCOM/FCOMP/FCOMPP Compare real and set FPU condition code flags.
-			\item	FUCOM/FUCOMP/FUCOMPP Unordered compare real and set FPU condition code flags.
-			\item	FICOM/FICOMP Compare integer and set FPU condition code flags.
-			\item	FCOMI/FCOMIP Compare real and set EFLAGS status flags.
-			\item	FUCOMI/FUCOMIP Unordered compare real and set EFLAGS status flags.
-			\item	FTST Test (compare real with 0.0).
-			\item	FXAM Examine.
+			\item	FCOM/FCOMP/FCOMPP So sánh số thực và thiết lập cờ điều kiện trong thanh ghi trạng thái FPU.
+			\item	FUCOM/FUCOMP/FUCOMPP  So sánh không thứ tự số thực và thiết lập cờ điều kiện trong thanh ghi trạng thái FPU.
+			\item	FICOM/FICOMP  So sánh số nguyên và thiết lập cờ điều kiện trong thanh ghi trạng thái FPU.
+			\item	FCOMI/FCOMIP  So sánh số thực và thiết lập cờ trong thanh ghi trạng thái EFLAGS.
+			\item	FUCOMI/FUCOMIP So sánh  không thứ tự số thực và thiết lập cờ trong thanh ghi trạng thái EFLAGS.
+			\item	FTST Kiểm tra (so số thực với 0.0)
+			\item	FXAM Xem xét, xử lý ngoại lệ
 		\end{itemize}
 
 		So sánh các giá trị số thực sự khác với so sánh các số nguyên bởi vì giá trị thực có bốn (chứ không phải là ba) các mối quan hệ lẫn nhau: nhỏ hơn, bằng, lớn hơn, và không có thứ tự.\\
@@ -1471,13 +1468,13 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 		
 		Các hướng dẫn FXAM xác định việc phân loại các giá trị thực sự trong ST (0) đăng ký (có nghĩa là, cho dù giá trị là số không, một số denormal, một số hữu hạn bình thường, $\mathbb{\infty}$ , một NaN, hoặc một định dạng được hỗ trợ) hoặc đăng ký là trống rỗng. Nó đặt FPU mã điều kiện lá cờ để chỉ ra sự phân loại (xem "FXAM-Kiểm tra" trong Chương 3, Instruction Set tham khảo, trong tay các nhà phát triển của Intel Kiến trúc phần mềm, Volume 2). Nó cũng đặt cờ C1 để chỉ ra các dấu hiệu của giá trị.
 		
+		\newpage
 			\subsection{Phân nhánh theo mã điều kiện FPU}
 		Bộ xử lý không cung cấp bất kỳ câu lệnh nào đề kiểm soát dòng chảy của chương trình mà các nhánh rẽ được thiết lập từ lá cờ mã điều kiện (C0, C2, và C3) trong thanh ghi trạng thái FPU. Để phân nhánh dựa vào các cờ trạng thái, thanh ghi trạng thái FPU trước tiên phải được sao lưu vào thanh ghi AX bộ xử lý số nguyên. Câu lệnh FSTSW AX (lưu trạng thái) được sử dụng cho mục đích này. Khi mã cờ đã được sao lưu trong thanh ghi AX, câu lệnh Test được sử dụng để kiểm soát rẽ nhánh có điều kiện như sau:
 		\begin{itemize}
 				\item[1] 	Kiểm tra kết quả không có thứ tự. Sử dụng câu lệnh TEST để so sánh nội dung của thanh ghi AX với hằng số 0400H (xem Bảng ~\ref{tb:CLTest} ). Thao tác này sẽ xóa cờ ZF trong thanh ghi EFLAGS nếu mã cờ điều kiện đánh dấu kết quả là không có thứ tự; ngược lại cờ ZF sẽ được thiết lập. Câu lệnh JNZ sau đó được sử dụng để chuyển giao điều khiển (nếu cần thiết) để câu lệnh xử lý các toán hạng có thứ tự.								
 				\item[2]	Câu lệnh kiểm tra so sánh kết quả. Sử dụng các hằng số được đưa ra trong Bảng ~\ref{tb:CLTest} câu lệnh TEST để kiểm tra cho một số nhỏ hơn, bằng hoặc lớn hơn so với kết quả, sau đó sử dụng lệnh rẽ nhánh có điều kiện tương ứng để chuyển điều khiển chương trình tới đoạn mã thích hợp. 
-		\end{itemize}
-			\newpage
+		\end{itemize}	
 				\begin{longtable}{|l|l|l|}
 					\hline
 							Điều kiện & Hằng số & Câu lệnh rẽ nhánh \\
@@ -1503,11 +1500,11 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 		Các câu lệnh sau đây thực hiện bốn hàm lượng giác thường gặp:
 		\begin{itemize}
 				\renewcommand{\labelitemi}{}
-				\item	FSIN Sine
-				\item	FCOS Cosine
-				\item	FSINCOS Sine and cosine
-				\item	FPTAN Tangent
-				\item	FPATAN Arctangent
+				\item	FSIN Tính sin
+				\item	FCOS Tính cos
+				\item	FSINCOS Tính sin và cos
+				\item	FPTAN Tính tan
+				\item	FPATAN Tính agctan
 		\end{itemize}
 
 		Toán hạng của câu lệnh là một hoặc hai thanh ghi đầu của stack thanh ghi FPUvà trả kết quả của mình vào stack. Các toán hạng nguồn phải định dạng góc là radian.\\
@@ -1529,7 +1526,7 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 		f = C90FDAA2 2168C234 C
 		
 		
-		(Giới hạn của phần định trị ở trên là 32 bit).
+		(Giới hạn của phần định trị ở trên là 32 bit). \\
 		
 		
 		Giá trị  $\pi$ có 66-bit phần phân số, mà trong đó sẽ được thêm 2 bit vào trong phần định trị của một giá trị extended-real. (66 bits không phải là một số chia hết cho 4 để biểu diễn các chữ số thập lục phân, hai số 0 được thêm vào các giá trị để có thể được biểu diễn ở dạng thập lục phân. Như thế, con số ít nhất-đáng thập lục phân (C) là 1100B, khi hai bit cao nhất đại diện cho bit 67 và 68 của phần định trị.).\\
@@ -1562,9 +1559,9 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 		Bit thấp  $\pi$ = 3DE0B461 1A600000
 		
 		
-		(Lưu ý rằng trong các định dạng double-real IEEE, số mũ (1023) và các phần phân số đã được chuẩn hóa.)
+		(Lưu ý rằng trong các định dạng double-real IEEE, số mũ (1023) và các phần phân số đã được chuẩn hóa.) \\
 		
-		Giá trị  $\pi$  cũng có thể được biểu diễn bằng định dạng extended-real.
+		Giá trị  $\pi$  cũng có thể được biểu diễn bằng định dạng extended-real. \\
 
 
 		Khi sử dụng giá trị  $\pi$ từ hai phần trong một thuật toán, việc tính toán được thực hiện trên từng phần, với các kết quả riêng. Khi tất cả các tính toán đầy đủ, hai kết quả được ghép với nhau để tạo thành kết quả cuối cùng.\\
@@ -1575,10 +1572,10 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 		Các câu lệnh sau đây cung cấp phép toán khác nhau logarit, số mũ, và tỉ lệ:
 		\begin{itemize}
 			\renewcommand{\labelitemi}{}
-			\item		FYL2X Compute log $(y \times log_{2}x$)
-			\item		FYL2XP1 Compute$ log_{e} (y \times log_{2}(x + 1))$
-			\item		F2XM1 Compute exponential (2x – 1)
-			\item		FSCALE Scale
+			\item		FYL2X Tính log $(y \times log_{2}x$)
+			\item		FYL2XP1 Tính $ log_{e} (y \times log_{2}(x + 1))$
+			\item		F2XM1 Tính hàm mũ  (2x – 1)
+			\item		FSCALE Tính tỉ lệ
 		\end{itemize}
 
 	Câu lệnh FYL2X và FYL2XP1 thực hiện hai phép tính logarit khác nhau. Câu lệnh FYL2X tính log của$ (y \times log_{2}x$) Thao tác này cho phép tính toán sử dụng các phương trình sau đây:
@@ -1600,20 +1597,20 @@ Các câu lệnh pop của phép cộng, trừ, nhân và chia pop stack thanh g
 		Các câu lệnh sau đây kiểm soát trạng thái và phương thức hoạt động của FPU. Đồng thời cũng cho phép xem trạng thái của FPU được kiểm tra:
 		\begin{itemize}
 			\renewcommand{\labelitemi}{}
-			\item		FINIT/FNINITInitialize FPU
-			\item		FLDCWLoad FPU control word
-			\item		FSTCW/FNSTCWStore FPU control word
-			\item		FSTSW/FNSTSWStore FPU status word
-			\item		 FCLEX/FNCLEXClear FPU exception flags
-			\item		FLDENVLoad FPU environment
-			\item		FSTENV/FNSTENVStore FPU environment
-			\item		FRSTORRestore FPU state
-			\item		FSAVE/FNSAVESave FPU state
-			\item		FINCSTPIncrement FPU register stack pointer
-			\item		FDECSTP giảm con trỏ stack trong stack thanh ghi FPU
-			\item		FFREE làm rỗng các thanh ghi dữ liệu FPU
+			\item		FINIT/FNINIT Khởi tạo các giá trị trong FPU
+			\item		FLDCW Nạp thanh ghi điều khiển FPU
+			\item		FSTCW/FNSTCW Lưu thanh ghi điều khiển FPU
+			\item		FSTSW/FNSTSW Lưu thanh ghi trạng thái FPU
+			\item		 FCLEX/FNCLEX Thiết lập lại các cờ xử lý ngoại lệ
+			\item		FLDENV Nạp biến môi trường FPU
+			\item		FSTENV/FNSTENV Lưu các biến môi trường FPU
+			\item		FRSTOR Khôi phục lại các biến môi trường
+			\item		FSAVE/FNSAVE Lưu trạng thái FPU
+			\item		FINCSTP Tăng con trỏ stack thanh ghi dữ liệu FPU lên 1
+			\item		FDECSTP Giảm con trỏ stack trong stack thanh ghi FPU
+			\item		FFREE Làm rỗng các thanh ghi dữ liệu FPU
 			\item		FNOP Không thao tác
-			\item		WAIT / FWAIT kiểm tra và xử lý các trường hợp ngoại lệ khi được đánh dấu.
+			\item		WAIT / FWAIT Kiểm tra và xử lý các trường hợp ngoại lệ khi được đánh dấu.
 		\end{itemize}
 
 		Câu lệnh FINIT / FNINIT khởi tạo các thanh ghi FPU giá trị mặc định.\\
@@ -1675,7 +1672,7 @@ Các thuật ngữ của " \# " biểu tượng theo một hoặc hai chữ cái
 		FPU có thể phát hiện một loạt các phép tính số học không hợp lệ mà có thể đã được mã hóa trong một chương trình. Các thao tác này thường chỉ ra lỗi lập trình, chẳng hạn như chia $\mathbb{\infty}$ cho $\mathbb{\infty}$. Bảng ~\ref{tb:InvalidAr}  liệt kê các hoạt động số học không hợp lệ mà các FPU phát hiện. Các thao tác không hợp lệ quy định trong chuẩn IEEE 854.\\
 		
 	Khi các FPU phát hiện một toán hạng số học không hợp lệ, cờ IE (bit 0) trong thanh ghi trạng thái FPU thiết lập là 1. Nếu thao tác không hợp được đeo đánh dấu, các FPU sau đó trả về một giá trị không xác định được gán vào cho toán hạng đích hoặc gán mã điều kiện dấu chấm động, thể hiện trong Bảng ~\ref{tb:InvalidAr} . Nếu thao tác không hợp lệ không được đánh dấu, một phần mềm xử lý ngoại lệ sẽ được gọi và top-of-stack pointer (TOP), toán hạng nguồn vẫn không thay đổi.
-		\begin{longtable}{|m{7cm}|m{7cm}|}
+		\begin{longtable}{|m{8cm}|m{8cm}|}
 			\hline
 				Điều kiện & Kết quả trả về\\
 			\hline
@@ -1695,7 +1692,7 @@ Các thuật ngữ của " \# " biểu tượng theo một hoặc hai chữ cái
 			\hline
 				Phần dư của câu lệnh FPREM, FPREM1: số chia là 0 hoặc số bị chia là  $\mathbb{\infty}  $. &Toán hạng đích được gán là giá trị không xác định và cờ điều kiện C2 được thiết lập 0. \\
 			\hline
-				Câu lệnh  FCOS, FPTAN, FSIN, FSINCOS: toán nguồn là $\mathbb{\infty}  $. & oán hạng đích được gán là giá trị không xác định và cờ điều kiện C2 được thiết lập 0. \\
+				Câu lệnh  FCOS, FPTAN, FSIN, FSINCOS: toán nguồn là $\mathbb{\infty}  $. & Toán hạng đích được gán là giá trị không xác định và cờ điều kiện C2 được thiết lập 0. \\
 			\hline
 			FSQRT: toán hạng là số âm (trừ FSQRT (-0) = -0);
 			FYL2X: toán hạng là số âm (trừ FYL2X (-0) = -$\mathbb{\infty}  $);
@@ -1714,7 +1711,7 @@ Các thuật ngữ của " \# " biểu tượng theo một hoặc hai chữ cái
 	\subsubsection*{Chia một số cho số 0(\#Z)}
 		FPU xảy ra ngoại lệ khi một giá trị dấu chấm động chi cho số 0 khi bất cứ câu lệnh nào cố gắng chia một số hữu hạn khác không toán hạng cho 0. Cờ (ZE) cho trường hợp ngoại lệ này là bit 2 của thanh ghi trạng thái FPU, và ZM  bit 2 của thanh ghi điều khiển FPU được thiết lập giá trị. Các câu lệnh FDIV, FDIVP, FDIVR, FDIVRP, FIDIV, và FIDIVR và các câu lệnh khác mà thực hiện phân chia nội bộ (FYL2X và FXTRACT) có thể được đánh dấu cho trường hợp ngoại lệ chia cho số 0. \\
 		
-		Khi một ngoại lệ chia cho số 0 xảy ra và các cờ ngoại lệ được đánh dấu, FPU bật cờ ZE và trả về các giá trị thể hiện trong Bảng ~\ref{tb:ChiaCho0}. Nếu ngoại lệ chia cho số 0 không được đánh dấu, cờ ZE được bật, một phần mềm xử lý ngoại lệ sẽ được gọi con trỏ topof-stack (TOP), toán hạng nguồn vẫn không thay đổi.
+		Khi một ngoại lệ chia cho số 0 xảy ra và các cờ ngoại lệ được đánh dấu, FPU bật cờ ZE và trả về các giá trị thể hiện trong Bảng ~\ref{tb:ChiaCho0}. Nếu ngoại lệ chia cho số 0 không được đánh dấu, cờ ZE được bật, một phần mềm xử lý ngoại lệ sẽ được gọi con trỏ top-of-stack (TOP), toán hạng nguồn vẫn không thay đổi.
 		\begin{longtable}{|m{6cm}|m{8cm}|}
 				\hline
 					Điều kiện & Kết quả trả về \\
@@ -1729,7 +1726,7 @@ Các thuật ngữ của " \# " biểu tượng theo một hoặc hai chữ cái
 					\caption{Điều kiện xảy ra ngoại lệ chia cho số 0 và kết quả trả về}					
 					\label{tb:ChiaCho0}
 		\end{longtable}		
-		\newpage
+		
 		\subsubsection*{Toán hạng là số denormal (\#D)}
 		FPU báo hiệu ngoại lệ toán hạng là số denormal dựa vào điều kiện sau đây:
 			\begin{itemize}
@@ -1751,6 +1748,7 @@ Khi ngoại lệ toán hạng là số denormal xảy ra và các bit xử lý n
 	Cờ (OE) cho các ngoại lệ số tràn trên ở bit 3 của thanh ghi trạng thái FPU, và cờ OM bit thứ 3 của thanh ghi điều khiển FPU.\\
 	
 	Khi một ngoại lệ tràn trên số học xảy ra và đánh dấu các cờ xử lý ngoại lệ cho trường hợp này, các FPU bật OE và trả về các giá trị thể hiện trong Bảng ~\ref{tb:NumberOver}. Giá trị trả lại phụ thuộc vào định dạng làm tròn hiện tại của FPU.
+		\newpage
 		\begin{longtable}{|l|l|l|}
 			\hline
 				Phương thức làm tròn & Dấu của kết quả   &  Kết quả đã được làm tròn \\
@@ -1771,7 +1769,7 @@ Khi ngoại lệ toán hạng là số denormal xảy ra và các bit xử lý n
 				\caption{Kết quả khi trán trên số học xảy ra}
 				\label{tb:NumberOver}
 		\end{longtable}
-		\newpage
+		
 		Các thao tác mà FPU khi xảy ra tràn trên số học và cờ xử lý tràn trên số học không đánh dâu, phụ thuộc vào các câu lệnh mà kết quả được lưu trong bộ nhớ hoặc trong các stack thanh ghi dữ liệu.\\
 		
 		Nếu toán hạng đích là một bộ nhớ, cờ OE được bật và phần mềm xử lý ngoại lệ được gọi top-of-stack pointer (TOP), toán hạng nguồn, đích không thay đổi.\\
@@ -1779,14 +1777,15 @@ Khi ngoại lệ toán hạng là số denormal xảy ra và các bit xử lý n
 		Nếu toán hạng đích là thanh ghi trong stack, số mũ của kết quả làm tròn được chia cho $2^{24576}$ và kết quả được lưu giữ cùng với phần định trị trong toán hạng đích. Cờ điều kiện bit C1 trong thanh ghit trạng thái FPU (gọi là trong tình huống này "làm tròn lên") được thiết lập nếu phần định trị được làm tròn lên và xóa nếu kết quả đã làm tròn. Sau khi kết quả được lưu trữ, cờ OE được bật và phần mềm xử lý ngoại lệ được gọi.\\
 		
 	Khi sử dụng câu lệnh FSCALE, tràn trên có thể xảy ra, mà kết quả là quá lớn để được biểu diễn, ngay cả với một số mũ được điều chỉnh. Ở đây, nếu tràn trên xảy ra một lần nữa, kết quả là một $\mathbb{\infty}$ (vô cùng) được lưu vào trong toán hạng đích.	
+	
 		\subsection*{Tràn dưới số học (\#U)}
-		FPU xảy ra ngoại lệ tràn dưới số học (\#U) bất cứ khi nào kết quả làm tròn của các câu lệnh là một số "rất nhỏ" (có nghĩa là số nhỏ so với bình thường, giá trị hữu hạn nhỏ nhất có thể mà sẽ phù hợp với các định dạng số thực của toán hạng đích ). Ví dụ, nếu định dạng toán hạng đích là extended-real (80 bit), tràn dưới xảy ra khi kết quả được làm tròn xuống trong khoảng giới hạn $-1.0 \times 2^{-16.382}$ tới $1,0 \times 2^{16.382}$. Giống như tràn trên số học, tràn dưới số học có thể xảy ra trên các phép tính mà kết quả được lưu trữ trong thanh ghi dữ liệu FPU. Ngoại lệ này cũng có thể xảy ra khi thực hiện thao tác lưu (câu lệnh FST,FSTP),  một giá trị trong thanh ghi dữ liệu được lưu trữ vào trong bộ nhớ ở định dạng single-real hoặc double-real. Giới hạn tràn dưới của định dạng single-real là$-1.0 \times 2^{-126}$ tới $1,0 \times 2^{126}$; giới hạn tràn dưới của định double-real là $-1.0 \times 2^{-1022}$ tới $1,0 \times 2^{1022}$. (Ngoại lệ tràn dưới số học không có thể xảy ra khi lưu trữ các giá trị trong một định dạng số nguyên hoặc BCD.)\\
+		FPU xảy ra ngoại lệ tràn dưới số học (\#U) bất cứ khi nào kết quả làm tròn của các câu lệnh là một số "rất nhỏ" (có nghĩa là số nhỏ so với bình thường, giá trị hữu hạn nhỏ nhất có thể mà sẽ phù hợp với các định dạng số thực của toán hạng đích ). Ví dụ, nếu định dạng toán hạng đích là extended-real (80 bit), tràn dưới xảy ra khi kết quả được làm tròn xuống trong khoảng giới hạn $-1.0 \times 2^{-16.382}$ tới $1,0 \times 2^{16.382}$. Giống như tràn trên số học, tràn dưới số học có thể xảy ra trên các phép tính mà kết quả được lưu trữ trong thanh ghi dữ liệu FPU. Ngoại lệ này cũng có thể xảy ra khi thực hiện thao tác lưu (câu lệnh FST,FSTP),  một giá trị trong thanh ghi dữ liệu được lưu trữ vào trong bộ nhớ ở định dạng single-real hoặc double-real. Giới hạn tràn dưới của định dạng single-real là$-1.0 \times 2^{-126}$ tới $1,0 \times 2^{126}$; giới hạn tràn dưới của định double-real là $-1.0 \times 2^{-1022}$ tới $1,0 \times 2^{1022}$. (Ngoại lệ tràn dưới số học không có thể xảy ra khi lưu trữ các giá trị trong một định dạng số nguyên hoặc BCD).\\
 		
 		Cờ (UE) xử lý ngoại lệ tràn dưới số học ở bit 4 của thanh ghi trạng thái FPU, và bit UM ở bit 4 của thanh ghi điều khiển FPU được thiết lập.\\
 		
 		Khi một ngoại lệ tràn dưới số học xảy ra và các bit xử lý ngoại lệ này được đánh dấu, kết quà là số denormalizes. Nếu kết quả số denormalized là chính xác, FPU lưu kết quả trong toán hạng đích, mà không cần thiết lập các cờ UE. Nếu kết quả số denormal không chính xác, FPU bật UE, sau đó đi vào để xử lý các điều kiện ngoại lệ kết quả không chính xác.\\
 		
-		 Điều quan trọng cần lưu ý là nếu trán dưới sô học được đánh dấu, cờ ngoại lệ tràn dưới số học được bật kết quả số denormalized là không chính xác. Nếu kết quả số denormalized là chính xác, không có cờ nào được thiết lập và không có ngoại lệ xảy ra.\\
+		 Điều quan trọng cần lưu ý là nếu trán dưới sô học được đánh dấu, cờ ngoại lệ tràn dưới số học được bật kết quả số denormalized là không chính xác. Nếu kết quả số denormalized là chính xác, không có cờ nào được thiết lập và không có ngoại lệ xảy ra.
 		 
 		Các thao tác mà FPU khi xảy ra tràn dưới số học và cờ xử lý tràn dưới số học không được đánh dấu, phụ thuộc các câu lệnh để lưu trữ các kết quả trong bộ nhớ hoặc trong stack thanh ghi dữ liệu.\\
 		

@@ -5,26 +5,27 @@
 
 \section{Các câu lệnh hợp ngữ}
 	\subsection{Sơ đồ chương trình BE-PUM}
-		BE-PUM được xây dựng chủ yếu trên mã nguồn của JakStab do đó hình ~\ref{fig:SoDoClass} thể hiện phần BE-PUM đang được phát triền. Dưới dây là sơ đồ class chương trình:
+		BE-PUM được xây dựng chủ yếu trên mã nguồn của JakStab do đó hình ~\ref{fig:SoDoClass} thể hiện phần BE-PUM đang được phát triền. \\
+
+		Sơ đồ thể hiện mối liên hệ giữa các class với nhau. Trong sơ đồ không thể hiện các biến của class, các hàm của class, mục đích của sơ đồ thể hiện mối liên kết giữa các class với nhau. Class \textit{Program} là một class được phát triển từ dự án JakStab, BE-PUM kế thừa và phát triền lên. Class chính của BE-PUM là class \textit{Main}, nơi gọi chương trình cần phân tích. Class \textit{Main} sẽ gọi class \textit{OTFModelGeneration} để tạo ra sơ đồ CFG(control flow graph: sơ đồ điều khiển) với mỗi đỉnh là một câu lệnh assembly được dịch từ mã nhị phân của chương trình cần phân tích. Mỗi câu lệnh assembly có các biến môi trường khác nhau. Class \textit{Environment} có nhiệm vụ thể hiện môi trường làm việc của từng câu lệnh. Biến môi trường có các thành phần khác nhau như \textit{Register, Flag, Stack, Memory}cũng được hiện thực bằng các class tương ứng.
+		
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
-					\includegraphics[scale=0.5]{SoDoClass.png}
+					\includegraphics[scale=0.7]{SoDoClass.png}
 				\end{center}
 				\caption{Sơ đồ class chương trình BE-PUM}	
 					\label{fig:SoDoClass}		
 			\end{figure}
-		\end{center}			
-			
-		Sơ đồ thể hiện mối liên hệ giữa các class với nhau. Trong sơ đồ không thể hiện các biến của class, các hàm của class, mục đích của sơ đồ thể hiện mối liên kết giữa các class với nhau. Class \textit{Program} là một class được phát triển từ dự án JakStab, BE-PUM kế thừa và phát triền lên. Class chính của BE-PUM là class \textit{Main}, nơi gọi chương trình cần phân tích. Class \textit{Main} sẽ gọi class \textit{OTFModelGeneration} để tạo ra sơ đồ CFG(control flow graph: sơ đồ điều khiển) với mỗi đỉnh là một câu lệnh assembly được dịch từ mã nhị phân của chương trình cần phân tích. Mỗi câu lệnh assembly có các biến môi trường khác nhau. Class \textit{Environment} có nhiệm vụ thể hiện môi trường làm việc của từng câu lệnh. Biến môi trường có các thành phần khác nhau như \textit{Register, Flag, Stack, Memory}cũng được hiện thực bằng các class tương ứng.\\
+		\end{center}					
 		
 		Class  \textit{X86TransitionRule} có nhiệm vụ hiện thực mô phỏng các câu lệnh assembly. Để hiện thực mô phỏng các câu lệnh khác nhau, class \textit{X86TranstitionRule} được hỗ trợ thêm các class khác sẽ được trình bày trong phần "phân tích class mô phỏng câu lệnh Assembly". Class\textit{X86TranstitionRule} cũng đảm nhiệm việc tiến hành phân tích từng câu lệnh assembly, trong quá trình phân tích sẽ  co API (Microsoft Windows application programming interface) tham gia, vấn đề về API sẽ được đề cập đến phần "Window API".
 		
+		\newpage
 	\subsection{Phân tích class mô phỏng câu lệnh Assembly}
-	Hình ~\ref{fig:SoDoClassAss}	mô tả lược đồ lớp (class)  chính dùng đề mô phỏng câu lệnh assembly. Class quan trong \textit{X86TransitionRule} và\textit{Simulation Assembly} dùng để mô phỏng thao tác thực hiện của các câu lệnh assembly. Ngoài ra còn có class Environment mô phỏng các biến sẽ bị thay đổi khi câu lệnh assembly được thực thi. Các class \textit{FPUStatusWord, FPURegister, FPUControlWord} mô phỏng lại các biến môi trường mà các câu lệnh assembly xử lý FPU (Floatting-Point Unit) sử dụng. Class \textit{Register, Flag, Stack, Memory} mô phỏng lại các câu lệnh assembly thao tác trên số nguyên.
+	Hình ~\ref{fig:SoDoClassAss}	mô tả lược đồ lớp (class)  chính dùng đề mô phỏng câu lệnh assembly. Class quan trong \textit{X86TransitionRule} và\textit{Simulation Assembly} dùng để mô phỏng thao tác thực hiện của các câu lệnh assembly. Ngoài ra còn có class Environment mô phỏng các biến sẽ bị thay đổi khi câu lệnh assembly được thực thi. Các class \textit{FPUStatusWord, FPURegister, FPUControlWord} mô phỏng lại các biến môi trường mà các câu lệnh assembly xử lý FPU (Floatting-Point Unit) sử dụng. Class \textit{Register, Flag, Stack, Memory} mô phỏng lại các câu lệnh assembly thao tác trên số nguyên.\\
 	
-	Trong phần này sẽ phân tích môi trường cần để câu lệnh assembly xử lý số nguyên thực hiện và môi trường FPU xử lý số thực. Câu lệnh xử lý số nguyên và số thực tuy cùng mục đích thực hiện nhưng khi thao tác và thực hiện câu lệnh, các biến môi trường được sử dụng khác nhau. Nên việc thao tác, phân tách các biến môi trường sao cho phù hợp với hai nhóm xử lý số nguyên.
-	
+	Trong phần này sẽ phân tích môi trường cần để câu lệnh assembly xử lý số nguyên thực hiện và môi trường FPU xử lý số thực. Câu lệnh xử lý số nguyên và số thực tuy cùng mục đích thực hiện nhưng khi thao tác và thực hiện câu lệnh, các biến môi trường được sử dụng khác nhau. Nên việc thao tác, phân tách các biến môi trường sao cho phù hợp với hai nhóm xử lý số nguyên.	
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
@@ -37,6 +38,7 @@
 		
 		Để thể hiện các biến môi trường các class Register, Flag, Stack, FPUStatusWord, FPURegister, FPUControlWord,  Be-Pum xây dựng các class Environment để hỗ trợ trong việc truy xuất, thao tác.
 	
+	\newpage
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
@@ -65,7 +67,7 @@
 		
 		\newpage
 	\subsection*{Môi trường xử lý số nguyên}
-	Class Environmet liên kết với class Stack, hình () thể hiện class Stack.
+	Class Environmet liên kết với class Stack, hình~\ref{fig:ClassStack} thể hiện class Stack.
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
@@ -79,7 +81,7 @@
 	Class Stack gồm các hàm hỗ trợ thao tác trên stack của chương trinh. Hàm push() và pop() là hai hàm quan trọng có nhiệm vụ thao tác cơ bản trên stack là đưa vào ngăn xếp và lấy ngăn xếp ra. Ngoài ra còn có các hàm length() thể hiện kích thước stack, equals() để so sánh hai stack với nhau, việc này hỗ trợ rất nhiều trong qua trình phân tích hay so trùng được sử dụng trong các kỹ thuật phân tích virus. Ngoài ra còn có các hàm để hỗ trợ thao tác toán học như add() để cộng thêm một số, sub() để nhân với một số,…
 			
 		\newpage
-		Class Register được hiện thực như các thanh ghi Register trong hợp ngữ assembly. Hình () thể hiện class Register:
+		Class Register được hiện thực như các thanh ghi Register trong hợp ngữ assembly. Hình~\ref{fig:ClassRegister} thể hiện class Register:
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
@@ -93,7 +95,7 @@
 	Class Register gồm các biến được thể hiện là các thanh ghi Register được sử dụng trong hợp ngữ assembly. Các biến này sẽ lưu giá trị của thanh ghi trong quá trình thực thi chương trình cần phân tích. Mỗi giá trị của biến có thể bị thay đổi khi thực hiện phân tích từng câu lệnh assembly của chương trình cần phân tích. Class Resgister xây dựng các hàm hỗ trợ thao tác trên thanh ghi như getRegiterValue() có nhiệm vụ lấy giá trị của thanh ghi nào đó, setRegisterValue() có nhiệm vụ gán lại giá trị của một thanh ghi. Ngoài ra, class Register còn hiện thực một số hàm hỗ trợ thao tác toán học trên thanh ghi như: add() có nhiệm vụ cộng thêm một giá trị nào đó vào thanh ghi, and() có nhiệm vụ như thực hiện phép and (đại số Boole),.. những hàm này giúp hỗ trợ nhanh trong việc hiện thực câu lệnh sau này.
 	
 		\newpage
-	Class Memory được hiện thực như là các thao tác trên một bộ nhớ được sử dụng trong hợp ngữ assembly. Hình () thể hiện class Memory: 
+	Class Memory được hiện thực như là các thao tác trên một bộ nhớ được sử dụng trong hợp ngữ assembly. Hình~\ref{fig:ClassMemory} thể hiện class Memory: 
 	
 		\begin{center}
 			\begin{figure}[htp]
@@ -108,7 +110,7 @@
 	Class Memory gồm các hàm được hiện thực để hỗ trợ trong việc thao tác với địa chỉ bộ nhớ. Mỗi hàm được hiện thực có nhiệm vụ khác nhau nhưng cùng một mục đích là phân tích câu lệnh assembly như hàm equals() dùng để so sánh bộ nhớ, getMemoryValue() dùng để lấy giá trị của địa chỉ bộ nhớ đó, setMemoryValue() dùng để gán lại giá trị của bộ nhớ, getByteMemoryValue() dùng để lấy giá trị Byte của địa chỉ bộ nhớ, ngoài ra còn có các hàm hỗ trợ thao tác toán học được sử dụng trên bộ nhớ như hàm addMemoryValue() dùng để cộng thêm một số vào giá trị bộ nhớ, mulMemoryValue() dùng để nhân thêm một số vào giá trị bộ nhớ, changeValue() với địa chỉ xác định dùng để thay đổi giá trị của địa chỉ bộ nhớ đó, việc thay đổi giá trị tại địa chỉ bộ nhớ giúp hỗ trợ trong quá trình phân tích, đọc hiểu mã assembly.
 	
 	\newpage
-	Class Flag được hiện thực như các Flag trong hợp ngữ assembly. Hình () thể hiện class Flag của chương trình BE-PUM:	
+	Class Flag được hiện thực như các Flag trong hợp ngữ assembly. Hình~\ref{fig:ClassFlag} thể hiện class Flag của chương trình BE-PUM:	
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
@@ -123,14 +125,14 @@ Class Flag gồm các biến được phỏng theo các biến Flag được s�
 
 
 	\newpage
-	Class X86TranstitionRule là class đặc biệt quan trọng, là nơi xử lý các câu lệnh assembly, class X86TranstitionRule được hỗ trợ bởi nhiểu class con khác để thực hiện việc phân tích mã assembly. Hình () biểu diễn class X86TranstitionRule:
+	Class X86TranstitionRule là class đặc biệt quan trọng, là nơi xử lý các câu lệnh assembly, class X86TranstitionRule được hỗ trợ bởi nhiểu class con khác để thực hiện việc phân tích mã assembly. Hình~\ref{fig:X86TransitionRule	} biểu diễn class X86TranstitionRule:
 	\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=1.0]{ClassTransitionRule.png}
 				\end{center}
 				\caption{Class X86TransitionRule	}	
-					\label{fig:ClassFlag}		
+					\label{fig:X86TransitionRule	}		
 			\end{figure}
 		\end{center}			
 		
@@ -138,42 +140,42 @@ Class Flag gồm các biến được phỏng theo các biến Flag được s�
 	
 	\newpage	
 	\subsection*{Môi trường xử lý số thực}
-	Class FPUControlWord mô phỏng thanh ghi Control Word FPU. Hình () biểu diễn các biến và hàm quan trọng trong để mô phỏng thanh ghi điều kiển FPU.	
+	Class FPUControlWord mô phỏng thanh ghi Control Word FPU. Hình ~\ref{fig:FPUControlWord} biểu diễn các biến và hàm quan trọng trong để mô phỏng thanh ghi điều kiển FPU.	
 		\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=1.0]{ClassFCW.png}
 				\end{center}
 				\caption{Class FPUControlWord	}	
-					\label{fig:ClassFlag}		
+					\label{fig:FPUControlWord}		
 			\end{figure}
 		\end{center}		
 			
 		Class FPUControlWord chứa các biến IM, DM, ZM, ... tương ứng với các bit cờ trong thanh ghi điều khiển FPU. Mỗi biến biểu diễn một bit trong thanh ghi. Hàm getValueFCW() trả giá trị hex, việc trả giá trị hex giúp so sanh, kiểm tra kết quả nhanh hơn. Ngoài ra còn các hàm hỗ trợ truy xuất, thiết lập các biến IM, DM, ZM... giúp thuận tiện trong quá trình hiện thực các câu lệnh, thay đổi giá trị trong thanh ghi điều khiển FPU. Hàm inti() thiết lập các thông số ban đầu của thanh ghi điều khiển FPU. 
 		
 		\newpage
-		Class FPUStatusWord mô phỏng thanh ghi Status Word FPU. Hình () biểu diễn các biến và hàm quan trọng trong để mô phỏng thanh ghi trạng thái FPU.	
+		Class FPUStatusWord mô phỏng thanh ghi Status Word FPU. Hình ~\ref{fig:FPUStatusWord} biểu diễn các biến và hàm quan trọng trong để mô phỏng thanh ghi trạng thái FPU.	
 	\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=1.0]{ClassFSW.png}
 				\end{center}
 				\caption{Class FPUStatusWord	}	
-					\label{fig:ClassFlag}		
+					\label{fig:FPUStatusWord}		
 			\end{figure}
 		\end{center}			
 		
 		Class FPUStatusWord mô phỏng các bit được sử dụng trong thanh ghi trạng thái FPU tương ứng với các biên B, C3, TOP, C2, .... Mỗi biến biểu diễn một bit trong thanh ghi, riêng biến TOP tương ứng với giá trị đỉnh của stack được biểu diễn bằng số nguyên. Class FPUStatusWord có các hàm hỗ trợ trong việc truy xuất và thiết lập các biển getB(), setB(),... Hàm getValueFSW() trả về giá trị hex, việc trả giá trị hex giúp kiểm tra và so sánh kết quả của từng câu lệnh assembly sau khi thực hiện xong. Hàm inti() thiết lập các thông số ban đầu cho thanh ghi trạng thái FPU.
 		
 		\newpage
-		Class FPURegister mô phỏng stack thanh ghi dữ liệu FPU. Hình () biểu diễn các biến và hàm quan trọng trong để mô phỏng stack thanh ghi dữ liệu FPU.	
+		Class FPURegister mô phỏng stack thanh ghi dữ liệu FPU. Hình~\ref{fig:FPUreg} biểu diễn các biến và hàm quan trọng trong để mô phỏng stack thanh ghi dữ liệu FPU.	
 	\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=1.0]{ClassFPUReg.png}
 				\end{center}
-				\caption{Class	}	
-					\label{fig:ClassFlag}		
+				\caption{Class stack thanh ghi dữ liệu FPU}	
+					\label{fig:FPUreg}		
 			\end{figure}
 		\end{center}			
 	
@@ -194,18 +196,18 @@ Class Flag gồm các biến được phỏng theo các biến Flag được s�
 				
 		Mỗi câu lệnh được xây dựng và build thành một file thực thưc có đuôi file là .exe. Mỗi câu lệnh thao tác trên các môi trường khác nhau có thể là môi trường số nguyên hoặc môi trường số thực. Sau khi phân loại để xác định môi trường thay đổi của câu lệnh assembly cần, bước tiếp theo xây dựng mô phỏng quá trình thực thi của câu lệnh đó. Mỗi câu lệnh có thao tác khác nhau trên môi trường thực hiện do đó kết quả cũng khác nhau. Kết quả thu được là biến môi trường sẽ bị thay đổi.\\
 		
-		Để kiểm tra kết quả đó đúng hay sai cần sử dụng thêm công cụ Onlydbg \footnote{Xem trong phần phụ lục}. Hình ~\ref{fig:SoSanhAss} thể hiện quy trình kiểm tra kết quả của một câu lệnh assmebly.
+		Để kiểm tra kết quả đó đúng hay sai cần sử dụng thêm công cụ Ollydbg \footnote{Xem trong phần Phụ lục 2}. Hình ~\ref{fig:SoSanhAss} thể hiện quy trình kiểm tra kết quả của một câu lệnh assmebly.
 			\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
 					\includegraphics[scale=1.0]{SoSanhAss.png}
 				\end{center}
-				\caption{So sánh kết quả với Onlydbg}	
+				\caption{So sánh kết quả với Ollydbg}	
 					\label{fig:SoSanhAss}		
 			\end{figure}
 		\end{center}			
 		
-		Khi một file thực thi .exe tương ứng với một câu lệnh assmebly là đầu vào cho công cụ Onlydbg. Kết quả Onlydbg cho biết sự thay đổi môi trường mà câu lệnh assembly đó thực hiện. Giả sử kết quả Onlydbg hoàn toàn chính xác và lấy kết quả đó làm chuẩn cho kết quả mà BE-PUM mô phỏng lại. Nếu kết quả BE-PUM trả về sai so với kết quả Onlđbg, sẽ hiện thực lại câu lệnh đó trong BE-BUM. Ngược lại, nếu đúng thì thực hiện tiếp các câu lệnh assembly khác
+		Khi một file thực thi .exe tương ứng với một câu lệnh assmebly là đầu vào cho công cụ Ollydbg. Kết quả Ollydbg cho biết sự thay đổi môi trường mà câu lệnh assembly đó thực hiện. Giả sử kết quả Ollydbg hoàn toàn chính xác và lấy kết quả đó làm chuẩn cho kết quả mà BE-PUM mô phỏng lại. Nếu kết quả BE-PUM trả về sai so với kết quả Ollđbg, sẽ hiện thực lại câu lệnh đó trong BE-BUM. Ngược lại, nếu đúng thì thực hiện tiếp các câu lệnh assembly khác
 		
 \newpage
 \section{Windows API} \label{sec:wapi_design}
@@ -269,26 +271,19 @@ Từ những thành phần đã trình bày ở Mục \ref{sec:main_classes} và
 	\end{figure}
 
 Gói ngoài cùng của bộ xử lý \textit{(winapi)} sẽ nắm:
-
 \begin{itemize}
 	\item Khai báo lớp trừu tượng \textit{API}: đặc tả phương thức thực thi dùng chung cho mọi Windows API;
-
 	\item Lớp \textit{APIHandle}: giao tiếp chính giữa bộ xử lý Windows API và hệ thống BE-PUM;
-
 	\item Những gói được đặt tên ứng với từng tên tập tin (không bao gồm phần mở rộng) mà bộ thư viện đó thuộc về. Mỗi gói đó sẽ chứa những thành phần như sau:
-
+	
 	\begin{itemize}
 		\item Lớp khai báo trừu tượng cho từng Windows API của bộ thư viện đó (ví dụ như lớp \textit{Kernel32API}), trong đó sẽ nạp vào tên của bộ thư viện hiện tại;
-
 		\item Lớp khai báo ánh xạ thư viện và tên hàm mà hiện bộ thư viện JNA chưa có sẵn (chỉ tồn tại trong trường hợp những Windows API mà đề tài hiện thực chưa có trong bộ thư viện JNA)
-
 		\item Một gói được đặt tên \textit{functions}: dùng để chứa mọi lớp xử lý cho từng Windows API của bộ thư viện hiện tại (ví dụ như hiện tại gói bên ngoài là \textit{kernel32}, những hàm Windows API được xây dựng bên trong sẽ là: \textit{CreateFile, CopyFile, GetLastError…}).
 	\end{itemize}
-
 	\item Gói \textit{structures}: chứa những lớp khai báo ánh xạ dữ liệu kiểu cấu trúc mà bộ thư viện JNA chưa có sẵn.
-
-	\item Lớp \textit{XMLGenerator}: có chức năng sinh ra tự động tập tin cấu trúc XML từ tổ chức như trên của bộ xử lý Windows API, mô tả ánh xạ giữa tên của hàm Windows API và tên đầy đủ của lớp sẽ đảm nhận việc xử lý hàm Windows API đó, kèm theo là nó thuộc tập tin thư viện nào. Ví dụ như sau:\\
-
+	\item Lớp \textit{XMLGenerator}: có chức năng sinh ra tự động tập tin cấu trúc XML từ tổ chức như trên của bộ xử lý Windows API, mô tả ánh xạ giữa tên của hàm Windows API và tên đầy đủ của lớp sẽ đảm nhận việc xử lý hàm Windows API đó, kèm theo là nó thuộc tập tin thư viện nào. Ví dụ như sau:
+\begin{boxedminipage}{12cm}
 \begin{small}
 \lstset{language=HTML}
 \begin{lstlisting}
@@ -304,7 +299,7 @@ className="winapi.kernel32.functions.CloseHandle"/>
 </APIMap>
 \end{lstlisting}
 \end{small}
-
+\end{boxedminipage}
 	\item Tập tin \textit{APIMap.xml}: là nội dung do lớp \textit{XMLGenerator} sinh ra.
 \end{itemize}
 
@@ -317,7 +312,7 @@ Nội dung của tập tin \textit{APIMap.xml} được sinh ra dùng để làm
 		\label{fig:wapi_6_inherited}		
 	\end{figure}
 
-
+\newpage
 Với việc tổ chức theo cấu trúc này và sinh ra tập tin đánh chỉ mục thì sẽ có được những ưu điểm sau đây:
 
 \begin{itemize}
