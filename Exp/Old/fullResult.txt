@@ -1,0 +1,144 @@
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Arrow.a
+   Runtime:                        58609ms
+   Instructions:                              80
+   Nodes:                              81
+   Edges:                              84
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Awfull.2376
+   Runtime:                         3375ms
+   Instructions:                              16
+   Nodes:                              16
+   Edges:                              16
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Bolzano.2122
+   Runtime:                        54656ms
+   Instructions:                              30
+   Nodes:                              30
+   Edges:                              30
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Canbis.a
+   Runtime:                          485ms
+   Instructions:                             100
+   Nodes:                             102
+   Edges:                             102
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Champ
+   Runtime:                         7750ms
+   Instructions:                             689
+   Nodes:                             701
+   Edges:                             712
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Damm.1537.a
+   Runtime:                          203ms
+   Instructions:                              26
+   Nodes:                              26
+   Edges:                              26
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Delf.e
+   Runtime:                        66266ms
+   Instructions:                             397
+   Nodes:                             401
+   Edges:                             415
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Doser.4535
+   Runtime:                         2610ms
+   Instructions:                             144
+   Nodes:                             145
+   Edges:                             145
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Drol.5484
+   Runtime:                         1500ms
+   Instructions:                              44
+   Nodes:                              44
+   Edges:                              44
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Enerlam.f
+   Runtime:                          485ms
+   Instructions:                              27
+   Nodes:                              27
+   Edges:                              26
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Eva.g
+   Runtime:                          359ms
+   Instructions:                               9
+   Nodes:                               9
+   Edges:                               9
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Fighter.a
+   Runtime:                          187ms
+   Instructions:                              10
+   Nodes:                              10
+   Edges:                               9
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Gattman.a
+   Runtime:                         6125ms
+   Instructions:                             387
+   Nodes:                             394
+   Edges:                             456
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Giri.4919
+   Runtime:                         9266ms
+   Instructions:                             248
+   Nodes:                             256
+   Edges:                             267
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.Halen.2252
+   Runtime:                        26750ms
+   Instructions:                             159
+   Nodes:                             166
+   Edges:                             174
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.HLLO.Ant.e
+   Runtime:                         2484ms
+   Instructions:                             121
+   Nodes:                             122
+   Edges:                             119
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.HLLP.Flatei.f
+   Runtime:                          235ms
+   Instructions:                               2
+   Nodes:                               3
+   Edges:                               2
+===============================================================================
+   Statistics for On-The-Fly Model Generation of BE-PUM
+===============================================================================
+   Filename:                     Virus.Win32.HLLW.Billrus.h
+   Runtime:                          875ms
+   Instructions:                              80
+   Nodes:                              86
+   Edges:                              87

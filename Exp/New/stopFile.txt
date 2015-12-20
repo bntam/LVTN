@@ -1,0 +1,17 @@
+Virus.Win32.Alcaul.a
+Virus.Win32.Arrow.a
+Virus.Win32.BingHe
+Virus.Win32.Butter
+Virus.Win32.Damm.1537.a
+Virus.Win32.Deemo
+Virus.Win32.Delf.e
+Virus.Win32.Doser.4535
+Virus.Win32.Enerlam.f
+Virus.Win32.Eva.g
+Virus.Win32.Evul.8192.f
+Virus.Win32.Fighter.a
+Virus.Win32.Giri.4919
+Virus.Win32.HLLO.Ant.e
+Virus.Win32.HLLP.Flatei.f
+Virus.Win32.HLLP.Xinfect.k
+Virus.Win32.HLLW.Billrus.h

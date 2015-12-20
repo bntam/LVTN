@@ -1,0 +1,64 @@
+
+Virus.Win32.Alcaul.a	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    9162	    9193	361390	x	
+
+
+Virus.Win32.Arrow.a	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    7674	    7691	361000	x	
+
+
+
+Virus.Win32.BingHe	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    8478	    8480	361187	x	
+
+Virus.Win32.Bolzano.2122	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	      42	      42	416891	x	
+
+Virus.Win32.Brof.a	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	     116	     129	6203	x	
+
+Virus.Win32.Butter	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    7861	    7901	361156	x	
+
+Virus.Win32.Canbis.a	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    2459	    2575	16344	x	
+
+Virus.Win32.Champ	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	     672	     691	4125	x	
+
+
+
+Virus.Win32.Damm.1537.a	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    9214	    9214	361219	x	
+
+
+Virus.Win32.Deemo	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    9540	    9539	361203	x	
+
+Virus.Win32.Delf.e	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	   67131	   67495	1447094	x	
+
+
+Virus.Win32.Doser.4535	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    9882	    9917	361188	x	
+
+
+
+Virus.Win32.Emotion.a	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	     116	     120	4813	x	
+
+Virus.Win32.Enerlam.f	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	   10483	   10482	361578	x	
+
+Virus.Win32.Eva.g	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	   10350	   10350	361187	x	
+
+Virus.Win32.Evul.8192.f	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	   10457	   10469	361235	x	
+
+Virus.Win32.Fighter.a	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	   10462	   10461	361313	x	
+
+
+Virus.Win32.Giri.4919	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	   10136	   10175	362094	x	
+
+Virus.Win32.Halen.2252	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	     226	     227	16156	x	
+
+Virus.Win32.Henky.720	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	      13	      13	2515	x	
+
+Virus.Win32.HLLO.Ant.e	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	   10465	   10464	362985	x	
+
+
+
+
+Virus.Win32.HLLP.Flatei.f	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    7725	    7724	361235	x	
+
+
+Virus.Win32.HLLP.Xinfect.k	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    3298	    3297	362375	x	
+
+Virus.Win32.HLLW.Billrus.h	null	 	 	 	 	 	 	 	 	 	 	 	 	 	 	NONE	    9415	    9414	361250	x	
+
+
