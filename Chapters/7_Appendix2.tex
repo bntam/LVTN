@@ -5,40 +5,150 @@
 
 \vspace{2cm}
 
-\hspace{0.5cm}\textbf{Tuần 1 (18/8/2014 - 24/8/2014)}
-\begin{itemize}
-\item{Reviewing ASM language so that i can understand virus's source code.}
-\item{Practicing with ASM language to get knowledge about registers,execution.}
-\item{Learning how to use Olly, Emu8086.}
-\end{itemize}
+\setlength\tabcolsep{10pt}
+\begin{center}
+\begin{longtable}{|c|c|p{8cm}|}
+\hline
+\textbf{STT}		& \textbf{Tuần}					& \textbf{Công việc thực hiện}	\\
+\hline
+1					& 18/8/2014 - 24/8/2014			& Nghiên cứu ngôn ngữ ASM, cách sử dụng công cụ Olly.\\
+\hline
+2					& 25/8/2014 - 31/8/2014			&  Nghiên cứu PEHeader của tập tin, cách sử dụng WinHex để đọc nội dung của tập tin và so sánh số lượng node và edge của công cụ IDA Pro.\\
+\hline
+3					& 1/9/2014 - 7/9/2014			& Nghiên cứu về mô hình memory, register, stack trên Win32. Đồng thời đọc và hiểu về CFG của hệ thống BE-PUM.\\
+\hline
+4					& 8/9/2014 - 14/9/2014			& Nghiên cứu về địa chỉ RVA, VA trong memory, hiểu về memory trong OllyDBG. Đọc mã nguồn và phân tích virus Aztec.\\
+\hline
+5					& 15/9/2014 - 21/9/2014			& Viết báo cáo về virus Aztec.\\
+\hline
+6					& 22/9/2014 - 28/9/2014			& Trình bày virus Aztec với giáo viên hướng dẫn. Tìm hiểu về Windows API và cách hiện thực trên hệ thống BE-PUM.\\
+\hline
+7					& 29/9/2014 - 5/10/2014			&  Tìm hiểu API trong thực tế với ngôn ngữ ASM.\\
+\hline
+8					& 6/10/2014 - 12/10/2014		& Đọc hiểu về kỹ thuật Self-modifying Code và cách xử lý kỹ thuật này trên hệ thống BE-PUM. Đọc và phân tích virus Sasser.\\	
+\hline
+9					& 13/10/2014 - 19/10/2014		& Đọc hiểu về kỹ thuật Strutured Exception Handling và cách xử lý kỹ thuật này trên hệ thống BE-PUM. Đọc và tiếp tục phân tích virus Sasser.\\	
+\hline
+10					& 20/10/2014 - 26/10/2014		& Đọc và tiếp tục phân tích virus Sasser. Cải tiến API trên hệ thống BE-PUM.\\	
+\hline
+11					& 27/10/2014 - 2/11/2014		& Đọc và tiếp tục phân tích virus Sasser. Đọc hiểu về hệ thống BE-PUM. Tìm hiểu về Capstone Engine.\\	
+\hline
+12					& 3/11/2014 - 9/11/2014			& Thu thập các kỹ thuật của virus Sasser với các kỹ thuật: SMC, SEH, Decryption, Import Reconstruction.\\	
+\hline
+13					& 10/11/2014 - 16/11/2014		& Đọc và tìm hiểu virus Cabanas, so sánh giữa Cabanas và Sasser.\\	
+\hline
+14					& 17/11/2014 - 23/11/2014		& Đọc và tìm hiểu virus Cabanas. Tìm hiểu công cụ packer PIN và TELOCK và các cơ chế đóng gói.\\	
+\hline
+15					& 24/11/2014 - 30/11/2014		& Chuẩn bị bài trình bày về nội dung đã nghiên cứu với GS. Mizuhito Ogawa bao gồm: Sasser, Cabasnas, BE-PUM, Windows API, Capstone, PIN.\\	
+\hline
+16					& 1/12/2014 - 7/12/2014			& Tiếp tục chuẩn bị bài trình bày. Tìm hiểu về kỹ thuật lây nhiễm Buffer Overflow của malware trên LSASS service của Windows.\\	
+\hline
+17					& 8/12/2014 - 14/12/2014		& Báo cáo với GS.Mizuhito Ogawa về nội dung đã nghiên cứu.\\	
+\hline
+18					& 15/12/2014 - 21/12/2014		& Đọc và tìm hiểu lý thuyết về Automata. Xây dựng bộ testcase cho các câu lệnh hiện thực trên hệ thống BE-PUM.\\	
+\hline
+19					& 22/12/2014 - 28/12/2014		& Đọc và tìm hiểu lý thuyết về Automata. Sửa lỗi các câu lệnh hiện thực trên hệ thống BE-PUM.\\	
+\hline
+20					& 29/12/2014 - 4/1/2015			& Phân tích Sasser và Cabanas trực tiếp trên hệ thống BE-PUM và hỗ trợ hệ thống BE-PUM với các kỹ thuật của virus.\\	
+\hline
+21					& 5/1/2015 - 11/1/2015			& Xây dựng công cụ để so sánh tự động công cụ IDA và hệ thống BE-PUM. Chuẩn bị sang JAIST vào ngày 12/01/2015.\\	
+\hline
+22					& 12/1/2015 - 18/1/2015			& Trình bày về các công việc đã nghiên cứu: Nested SEH và virus Sandman. Định hướng sẽ nghiên cứu tại JAIST.\\	
+\hline
+23					& 19/1/2015 - 25/1/2015			& Thực hành với Automata. Tiếp tục xây dựng công cụ tự động để so sánh IDA và BE-PUM.\\	
+\hline
+24					& 26/1/2015 - 1/2/2015			& Thực hành với Automata và Regular Expressions.\\
+\hline
+25					& 2/2/2015 - 8/2/2015			& Đọc và tìm hiểu về Model Checking, CTL, LTL. Thực hành trên công cụ NuSMV.\\
+\hline
+26					& 2/3/2015 - 8/3/2015			& Đọc và tìm hiểu về Pushdown System, chuẩn bị bài trình bày sau khi về từ JAIST. Thí nghiệm model checking trên NuSMV với kỹ thuật SEH của malware.\\
+\hline
+27					& 9/3/2015 - 15/3/2015			& Chạy thí nghiệm với tập malware sử dụng kỹ thuật SEH và không sử dụng kỹ thuật SEH. Tìm hiểu về packer và TELOCK packer.\\
+\hline
+28					& 16/3/2015 - 22/3/2015			& Báo cáo về kỹ thuật của packer TELOCK.\\
+\hline
+29					& 23/3/2015 - 29/3/2015			& Tổng kết các mẫu kỹ thuật SEH. Tìm hiểu về các kỹ thuật chung của packer, biểu diễn dưới dạng CTL và phân tích PECOMPACT packer.\\
+\hline
+30					& 30/3/2015 - 5/4/2015			& Phân tích PECOMPACT trên hệ thống BE-PUM. Phân tích các kỹ thuật của packer Themida và YODA. Hiện thực lớp Segment register cho công cụ model checking kết hợp hệ thống BE-PUM.\\
+\hline
+31					& 6/4/2015 - 12/4/2015			& Tiếp tục phân tích packer. Thí nghiệm công cụ model checking với các kỹ thuật của packer. Xây dựng công cụ hỗ trợ debug cho BE-PUM kết hợp OllyDBG.\\
+\hline
+32					& 13/4/2015 - 19/4/2015			& Tiếp tục phân tích packer Themida và hỗ trợ các kỹ thuật của Themida trên hệ thống BE-PUM.\\
+\hline
+33					& 20/4/2015 - 26/4/2015			& Phân tích paker PETITE. Hiện thực EXCEPTION\_RECORD và CONTEXT\_RECORD cho hệ thống BE-PUM để hỗ trợ phân tích packer PETITE.\\
+\hline
+34					& 4/5/2015 - 10/5/2015			& Phân tích paker ASPack, Fastpack. Hiện thực PEB và TIB cho hệ thống BE-PUM. Bổ sung mẫu hành vi cho kỹ thuật SEH.\\
+\hline
+35					& 11/5/2015 - 17/5/2015			& Phân tích các kỹ thuật của packer Fastpack.\\
+\hline
+36					& 18/5/2015 - 24/5/2015			& Tiếp tục hỗ trơ phân tích Fastpack. Sửa lỗi cho phần hiện thực TIB và PEB.\\
+\hline
+37					& 25/5/2015 - 31/5/2015			& Hiện thực các thanh ghi FS, CS, SS, DS, ES hỗ trợ hệ thống BE-PUM xử lý các packer.\\
+\hline
+38					& 1/6/2015 - 7/6/2015			& Phân tích các packer NPack, UPX, FSG. Tìm hiểu về các kỹ thuật Anti-reversing được sử dụng trong packer. Mô tả kỹ thuật này với CTL. Viết báo cáo cho giai đoạn thực tập tốt nghiệp.\\
+\hline
+39					& 8/6/2015 - 14/6/2015			& Chạy thí nghiệm model checking trên các packer. Hoàn tất báo cáo và chuẩn bị trình bày trước giáo viên phản biện.\\
+\hline
+40					& 15/6/2015 - 21/6/2015			& Phân tích Themida packer. Báo cáo thực tập tốt nghiệp với giáo viên phản biện.\\
+\hline
+41					& 22/6/2015 - 28/6/2015			& Tiếp tục phân tích các packer khác. Chạy thí nghiệm packer trên hệ thống BE-PUM, hỗ trợ các kỹ thuật của packer.\\
+\hline
+42					& 29/6/2015 - 5/7/2015			& Tiếp tục phân tích packer và thu thập các kỹ thuật của packer biểu diễn dưới dạng CTL.\\
+\hline
+43					& 6/7/2015 - 12/7/2015			& Viết báo cáo về các kỹ thuật anti-reversing của packer.\\
+\hline
+44					& 13/7/2015 - 19/7/2015			& Chuẩn bị trình bày với GS. Mizuhito Ogawa về các kỹ thuật của packer.\\
+\hline
+45					& 20/7/2015 - 26/7/2015			& Biểu diễn kỹ thuật anti-reversing với CTL. Hỗ trợ nhận dạng packer trên model checking và hệ thống BE-PUM qua On-the-fly.\\
+\hline
+46					& 27/7/2015 - 2/8/2015			& Bổ sung nhận dạng packer thông qua chữ ký cho hệ thống BE-PUM.\\
+\hline
+47					& 3/8/2015 - 9/8/2015			& Thí nghiệm nhận dạng packer thông qua chữ ký và model checking.\\
+\hline
+48					& 10/8/2015 - 16/8/2015			& Thí nghiệm tập virus từ LORIA. Sửa lỗi phát sinh cho quá trình nhận dạng packer On-the-fly.\\
+\hline
+49					& 17/8/2015 - 23/8/2015			& Báo cáo kết qủa thí nghiệm. Tiến hành phân tích thêm các packer khác.\\
+\hline
+50					& 24/8/2015 - 30/8/2015			& Hỗ trợ thêm nhận dạng packer thông qua On-the-fly. So sánh hệ thống BE-PUM và các công cụ METASM và HOPPER.\\
+\hline
+51					& 31/8/2015 - 6/9/2015			& Tiếp tục hỗ trợ nhận dạng packer. Tiến hành thí nghiệm trên 7 packer đã phân tích.\\
+\hline
+52					& 7/9/2015 - 13/9/2015			& Phân loại các kỹ thuật của packer.\\
+\hline
+53					& 14/9/2015 - 20/9/2015			& Phân tích packer TELOCK với các kỹ thuật mới: SEH và trap flag, Hardware breakpoints và CRC checking.\\
+\hline
+54					& 121/9/2015 - 27/9/2015		& Báo cáo packer TELOCK với giáo viên hướng dẫn. Hỗ trợ các kỹ thuật của packer TELOCK cho hệ thống BE-PUM.\\
+\hline
+55					& 28/9/2015 - 4/10/2015			& Sửa lỗi nhận dạng packer cho hệ thống BE-PUM.\\
+\hline
+56					& 5/10/2015 - 11/10/2015		& Thu thập các chữ ký của packer dưới dạng dữ liệu JSON. Bổ sung các mẫu hành vi của packer.\\
+\hline
+57					& 12/10/2015 - 18/10/2015		& Nhận dạng packer thông qua frequency của các kỹ thuật. Tìm vị trí entry point thực sự của tập tin đóng gói.\\
+\hline
+58					& 19/10/2015 - 25/10/2015		& Hiện thực nhận dạng packer thông qua frequency kỹ thuật. Chuẩn bị trình bày cho báo cáo giữa kỳ.\\
+\hline
+59					& 26/10/2015 - 1/11/2015		& Chỉnh sửa báo cáo giữa kỳ. Kiểm tra quá trình nhận dạng chữ ký của packer với 2 công cụ PEID và CFF Explorer.\\
+\hline
+60					& 2/11/2015 - 8/11/2015			& Tiếp tục bổ sung frequency của các packer PEBUNDLE và MPRESS. Bổ sung frequency cho kỹ thuật Hardware Breakpoint.\\
+\hline
+61					& 9/11/2015 - 15/11/2015		& Hỗ trợ BE-PUM phân tích bổ sung các packer khác, có 27 packer đã được BE-PUM hỗ trợ.\\
+\hline
+62					& 16/11/2015 - 22/11/2015		& Tiếp tục thí nghiệm nhận dạng packer qua chữ ký và ngữ nghĩa, cũng như qua frequency của kỹ thuật từ tập malware LORIA.\\
+\hline
+63					& 23/11/2015 - 29/11/2015		& Tiếp tục thí nghiệm nhận dạng packer.\\
+\hline
+64					& 30/11/2015 - 6/12/2015		& Chuẩn bị bài trình bày cho luận văn tốt nghiệp, cấu trúc bài luận văn. Hoàn tất bản nháp cho bài báo SEATUC.\\
+\hline
+65					& 7/12/2015 - 13/12/2015		& Hoàn thiện bài trình bày và chuẩn bị báo cáo luận văn tốt nghiệp. Tiếp tục viết bài báo SEATUC.\\
+\hline
+66					& 13/12/2015 - 20/12/2015		& Hoàn thiện báo cáo luận văn tốt nghiệp. Tiếp tục viết bài báo SEATUC.\\
+\hline
+67					& 20/12/2015 - 27/12/2015		& Chuẩn bị bài trình bày với giáo viên phản biện, hoàn thiện tiếp tục luận văn.\\
+\hline
+68					& 28/12/2015 - 3/1/2015			& Báo cáo luận văn tốt nghiệp với giáo viên phản biện.\\
+\hline
+69					& 4/1/2015 - 11/1/2015			& Báo cáo trước hội đồng luận văn tốt nghiệp.\\
+\hline
+\end{longtable}
+\end{center}
 
-\hspace{0.5cm}\textbf{Tuần 2 (25/8/2014 - 31/8/2014)}
-\begin{itemize}
-\item{Learn how to use PEHeader to check header of file.}
-\item{Learn how to use WinHex. Get knowledges about Relative Virtual Address, binary's opcode.}
-\item{Code a batch file to generate automatically a collection of Virus.}
-\item{Code a C++ program to count the number of statements which is return generated by IDA.}
-\end{itemize}
-
-\hspace{0.5cm}\textbf{Tuần 3 (1/9/2014 - 7/9/2014)}
-\begin{itemize}
-\item{Learn about Win32 memory map, system stack, user stack.}
-\item{Learn about CFG, control flow of virus, how viruses work.}
-\item{Count number of statements in source code of virus to compare it with VMCAI result.}
-\item{Compare virus official source code with CFG to check correctness of CFG. Have three viruses have to checked: Benny.3219.a; Benny.3219.b; Benny.3223, Aztec, Cabanas.}
-\end{itemize}
-
-\hspace{0.5cm}\textbf{Tuần 4 (8/9/2014 - 14/9/2014)}
-\begin{itemize}
-\item{Learn about procedure calls, system stack, user stack.}
-\item{Learn about RVA, VA and understand about memory address in OllyDBG.}
-\item{Analyze and run Aztec as well as reading paper “Aztec.cbj-2014-17.pdf” to understand Aztec's nature.}
-\item{Count total edges of virus which generated by IDA.}
-\end{itemize}
-
-\hspace{0.5cm}\textbf{Tuần 5 (15/9/2014 - 21/9/2014)}
-\begin{itemize}
-\item{Make a short report and short presentation to summarize Aztec and introduce about Aztec's nature.}
-\item{Analyze and run Aztec as well as reading paper to understand Aztec's nature.}
-\item{Learn about standard start for a virus and some virus's theories.}
-\end{itemize}

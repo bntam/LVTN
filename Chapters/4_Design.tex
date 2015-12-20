@@ -243,3 +243,75 @@ return true
 \label{fig:SMVModelChecking}
 \end{figure}
 
+\section{Mô tả các kỹ thuật packer thông qua biểu thức CTL}
+
+\hspace{0.5cm}Trong giới hạn đề tài luận văn tốt nghiệp, trong số 14 kỹ thuật của packer. Những kỹ thuật sau đã được mô tả thông qua biểu thức CTL. Tuy nhiên, ở một số kỹ thuật do hạn chế của đề tài mà vẫn chưa được biểu diễn cụ thể. Do đó đối với những kỹ thuật này, quá trình nhận dạng thông qua ngữ nghĩa sẽ được kết hợp với hệ thống BE-PUM để có thể tiến hành nhận dạng bằng giải thuật On-the-fly.\\
+
+\hspace{0.5cm}Các kỹ thuật đã được mô tả qua biểu thức CTL bao gồm: Anti-Debugging, Indirect Jump, Obfuscated Constants, SEH, Stolen Bytes, Timming Check, Two APIs. Các kỹ thuật sẽ được nhận dạng qua phương pháp On-the-fly bao gồm: Checksumming, Code Chunking, Overlapping Block, Overlapping Function, Overwritting, Packing/Unpacking, Hardware Breakpoint. Phần này sẽ tập trung giới thiệu một số mô tả của nhũng kỹ thuật dưới dạng biểu thức CTL.\\
+
+\begin{enumerate}
+\item{\textbf{Kỹ thuật SEH}
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Mô tả CTL kỹ thuật SEH},label={lst:CTLSEH},frame=single,breaklines=true]
+EF((state(pushl,IMM,NULL,NULL)|state(pushl,REG,NULL,NULL))&EF(state(pushl,s_fs$0$,NULL,NULL)&EF(state(movl,r_esp,s_fs$0$,NULL))))  
+
+EF((state(pushl,IMM,NULL,NULL)|state(pushl,REG,NULL,NULL))&EF(state(pushl,s_fs$REG$,NULL,NULL)&EF(state(movl,r_esp,s_fs$REG$,NULL))))
+
+EF((state(call,IMM,NULL,NULL)|state(call,REG,NULL,NULL))&EF(state(pushl,s_fs$0$,NULL,NULL)&EF(state(movl,r_esp,s_fs$0$,NULL))))
+
+EF((state(call,IMM,NULL,NULL)|state(call,REG,NULL,NULL))&EF(state(pushl,s_fs$REG$,NULL,NULL)&EF(state(movl,r_esp,s_fs$REG$,NULL)))) 
+\end{lstlisting}
+\end{code}
+}
+\item{\textbf{Kỹ thuật Indirect Jump}
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Mô tả CTL kỹ thuật Indirect Jump},label={lst:CTLIJ},frame=single,breaklines=true]
+EF(state(call,IMM,NULL,NULL)|state(call,REG,NULL,NULL))
+
+EF(state(jmp,IMM,NULL,NULL)|state(jmp,REG,NULL,NULL))
+
+EF(state(COND_JMP_INS,IMM,NULL,NULL)|state(COND_JMP_INS,REG,NULL,NULL))
+\end{lstlisting}
+\end{code}
+}
+\item{\textbf{Kỹ thuật Anti-debugging}
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Mô tả CTL kỹ thuật Anti-debugging},label={lst:CTLAD},frame=single,breaklines=true]
+EF(state(call,api_IsDebuggerPresent,NULL,NULL))
+\end{lstlisting}
+\end{code}
+}
+\item{\textbf{Kỹ thuật Obfuscated Constants}
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Mô tả CTL kỹ thuật Obfuscated Constants},label={lst:CTLOC},frame=single,breaklines=true]
+EF(state(OPT,IMM,NULL,NULL)|state(OPT,NULL,IMM,NULL)|state(OPT,NULL,NULL,IMM))
+\end{lstlisting}
+\end{code}
+}
+\item{\textbf{Kỹ thuật Stolen Bytes}
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Mô tả CTL kỹ thuật Stolen Bytes},label={lst:CTLSB},frame=single,breaklines=true]
+EF(state(call,api_VirtualAlloc,NULL,NULL))
+\end{lstlisting}
+\end{code}
+}
+\item{\textbf{Kỹ thuật Timming Check}
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Mô tả CTL kỹ thuật Timming Check},label={lst:CTLTC},frame=single,breaklines=true]
+EF(state(rdtsc,NULL,NULL,NULL)|state(call,api_GetTickCount,NULL,NULL))
+\end{lstlisting}
+\end{code}
+}
+\item{\textbf{Kỹ thuật Two APIs}
+\begin{code}
+\begin{lstlisting}[captionpos=b,caption={Mô tả CTL kỹ thuật Two APIs},label={lst:CTL2API},frame=single,breaklines=true]
+EF(state(call,api_LoadLibrary,NULL,NULL)&EF(state(call,api_GetProcAddress,NULL,NULL)))
+\end{lstlisting}
+\end{code}
+}
+\end{enumerate}
+
+
+
+
+
