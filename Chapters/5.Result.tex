@@ -5,6 +5,28 @@
 
 \section{Thí nghiệm và đánh giá kết quả}
 	\subsection{So sánh với BE-PUM trong quá khứ}
+Để thấy được tiến triển của công việc sau quá trình phát triển thêm cho hệ thống BE-PUM, ta sẽ tiến hành chạy thí nghiệm trên một tập 15 malwares ngẫu nhiên với hai phiên bản cũ (trước khi thực hiện công việc) và mới (sau khi thực hiện công việc). Kết quả cần thu thập đó là thời gian thực thi (tính bằng mili giây -- ms), số nút và số cạnh trong đồ thị được sinh ra. Sau đó, ta sẽ tiến hành nhìn nhận và so sánh sự khác biệt giữa trước và sau này.\\
+
+Nhìn vào sự so sánh ở Bảng (\ref{}), ta dễ dàng nhận thấy được số lượng nút và cạnh được BE-PUM dò tìm đã tăng lên một cách rất đáng kể. Đó là nhờ sự hỗ trợ thêm rất nhiều câu lệnh hợp ngữ và Windows API để BE-PUM có thể tính toán và tìm được đường đi trong nội dung của tập tin thực thi. Để dễ dàng thấy được sự chênh lệch này, ta có thể nhìn vào hai biểu đồ ở Hình \ref{fig:exp_comparition_nodes} và Hình \ref{fig:exp_comparition_edges} sau đây.
+
+
+\begin{figure}[htp]
+	\begin{center}
+		\includegraphics[scale=0.6]{exp_comparition_nodes.png}
+	\end{center}
+	\caption{Biểu đồ thể hiện số nút của tập thí nghiệm trên hai phiên bản BE-PUM}
+	\label{fig:exp_comparition_nodes}
+\end{figure}
+
+\begin{figure}[htp]
+	\begin{center}
+		\includegraphics[scale=0.6]{exp_comparition_edges.png}
+	\end{center}
+	\caption{Biểu đồ thể hiện số cạnh của tập thí nghiệm trên hai phiên bản BE-PUM}
+	\label{fig:exp_comparition_edges}
+\end{figure}
+
+Bên cạnh việc số lượng các cạnh và nút trong đồ thị tăng lên thì thời gian thực thi cũng tăng lên rất nhiều, do BE-PUM đã phải tính toán nhiều hơn để cho ra được các kết quả đó. Việc này cần được nghiên cứu và giải quyết thêm về sau, khi mà số lượng các thứ BE-PUM hỗ trợ ngày càng bùng nổ.
 
 	\subsection {Kết quả sau cùng}
 
@@ -12,7 +34,7 @@ Sau quá trình thực hiện công việc xây dựng và mở rộng cho hệ 
 
 Để có được cái nhìn khách quan về BE-PUM, kết quả thí nghiệm sẽ được đem ra so sánh với hai công cụ rất nổi tiếng khác, đó là: \textit{JakStab} và \textit{IDA Pro}.\\
 
-Cả hai công cụ này đều chạy trên phương pháp phân tích tĩnh, nên các trường hợp xử lý phức tạp như \textit{nhảy động} hoặc \textit{tự sửa đổi nội dung mã} sẽ khiến bộ công cụ này thất bại. Nhưng mặt tích cực của phương pháp phân tích tĩnh này là về thời gian xử lý, BE-PUM đánh đổi tiêu tốn nhiều thời gian thực thi \textit{(được tính bằng mili giây - ms)} hơn nhiều so với đối thủ để hi vọng tìm được nhiều nút và cạnh hơn. Nhìn vào Bảng \ref{table:virusExp}, ta có thể nhận ra ngay được điều đó từ những dòng đầu. \\
+Cả hai công cụ này đều chạy trên phương pháp phân tích tĩnh, nên các trường hợp xử lý phức tạp như \textit{nhảy động} hoặc \textit{tự sửa đổi nội dung mã} sẽ khiến bộ công cụ này thất bại. Nhưng mặt tích cực của phương pháp phân tích tĩnh này là về thời gian xử lý, BE-PUM đánh đổi tiêu tốn nhiều thời gian thực thi \textit{(được tính bằng mili giây -- ms)} hơn nhiều so với đối thủ để hi vọng tìm được nhiều nút và cạnh hơn. Nhìn vào Bảng \ref{table:virusExp}, ta có thể nhận ra ngay được điều đó từ những dòng đầu. \\
 
 Tổng thể kết quả ta có tỷ số giữa số cạnh cùng số nút trong các công cụ JakStab, IDA Pro, và BE-PUM là 1.05, 2.05, và 1.24. Ta thấy được công cụ IDA Pro đã tìm được rất nhiều đường đi trong các tập tin làm ví dụ vì công cụ này hỗ trợ hầu hết các câu lệnh Ntrong khi BE-PUM thì vẫn đang được xây dựng thêm qua công việc của luận văn này. Nhưng có thể đó chỉ là những nhánh không bao giờ được chạy do hạn chế của phân tích tĩnh, không giống như BE-PUM có thể tính toán được giá trị và bỏ đi những nhánh không bao giờ được nhảy tới.
 
