@@ -43,7 +43,7 @@ Trong BE-PUM có xây dựng một hệ thống mô tả môi trường làm vi�
 				\begin{center}
 					\includegraphics[scale=0.75]{ThanhGhi32bit.png}
 				\end{center}
-				\caption{ Các thanh ghi \protect\footnotemark}
+				\caption{ Phân tích thanh ghi \protect\footnotemark}
 				\label{fig:Flow}
 			\end{figure}
 			\footnotetext{Trích dẫn hình ảnh trong sách Assembly Language}
@@ -949,7 +949,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	
 	FPU sử dụng giá trị của thẻ để phát hiện điều kiện tràn trên và tràn dưới của stack. Stack bị tràn trên khi con trỏ TOP giảm đi (do tải dữ liệu vào một thanh ghi hoặc một phép toán được thêm vào) trỏ đến một thanh ghi có giá trị không rỗng. Stack bị tràn dưới khi con trỏ TOP tăng lên (do sao lưu dữ liêu hoặc phép toán lấy dữ liệu ra) trỏ tới một thanh ghi rỗng hoặc thanh ghi rỗng được tham chiếu là một toán hạng. Thanh ghi không rỗng được xác định trong thanh ghi thẻ có chứa nội dung biểu diễn giá trị số 0 (01b), giá trị hợp lệ là (00b), hoặc một giá trị đặc biêt (10b).\\
 	
-	Các chương trình ứng dụng hoặc xử lý ngoại lệ có thể sử dụng thông tin thẻ để kiểm tra nội dung của thanh ghi dữ liệu FPU mà không cần giải mã dữ liệu của mỗi thanh ghi dữ liệu. Để đọc thanh ghi thẻ, thanh ghi thẻ phải được lưu trong bộ nhớ sử dụng câu lệnh FSTENV/FNSTENV hoặc FSAVE/FNSAVE.  Địa chỉ của thanh ghi thẻ trong bộ nhớ sau khi lưu khi thực hiện một câu lệnh được thể hiện trong hình () đến hình (). \\
+	Các chương trình ứng dụng hoặc xử lý ngoại lệ có thể sử dụng thông tin thẻ để kiểm tra nội dung của thanh ghi dữ liệu FPU mà không cần giải mã dữ liệu của mỗi thanh ghi dữ liệu. Để đọc thanh ghi thẻ, thanh ghi thẻ phải được lưu trong bộ nhớ sử dụng câu lệnh FSTENV/FNSTENV hoặc FSAVE/FNSAVE.  Địa chỉ của thanh ghi thẻ trong bộ nhớ sau khi lưu khi thực hiện một câu lệnh được thể hiện trong hình~\ref{fig:ProtectedFPU32} đến hình~\ref{fig:ProtectedFPU16}. \\
 	
 	Phần mềm không thể trực tiếp tải hoặc sửa đổi giá trị trong thanh ghi thẻ. Câu lệnh FLDENV và FRSTOR tảu một hình ảnh của thanh ghi thẻ vào trong FPU. Tuy nhiên, FPU sử dụng giá trị thanh ghi thẻ để xác định xem các thanh thi dữ liệu là rỗng (11b) hoặc không rỗng (00b, 01b hoặc 10b). Nếu hình ảnh thanh ghi thẻ thể hiện các dữ lệu troang thanh ghi là không rỗng, FPU đọc các giá trị trong thanh ghi dữ liệu và thiết lập thanh ghi thẻ. Hành động này ngăn chẳn một chương trình thiết lập các giá trị trong thanh ghi thẻ biểu diễn không chính xác nội dung hiện tại của thanh ghi dữ liệu.
 	
@@ -972,13 +972,12 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 				\begin{center}
 					\includegraphics[scale=0.7]{OpcodeFPU.png}
 				\end{center}
-				\caption{Nội dung thanh ghi opcode FPU \protect\footnotemark}				
+				\caption{Nội dung thanh ghi opcode FPU}				
 				\label{fig:OpFPU}				
-			\end{figure}
-			\footnotetext{ Trích dẫn sach  Intel Architecture Software Developer’s Manual}
+			\end{figure}			
 		\end{center}	
 
-	Cách mà thông tin được lưu trữ trong bộ nhớ phụ thuộc vào chế độ hoạt động của bộ xử lý (chế bộ bảo vệ hoặc chế độ địa chỉ thưc) và kích thước giá trị của toán hạng (32-bit hay 16-bit). Từ hình~\ref{fig:ProtectedFPU} đến hình~\ref{fig:ProtectedFPU16}. Trong chế độ virtual-8086 hoặc SMM, địa chỉ thực thể hiện trong hình ().
+	Cách mà thông tin được lưu trữ trong bộ nhớ phụ thuộc vào chế độ hoạt động của bộ xử lý (chế bộ bảo vệ hoặc chế độ địa chỉ thưc) và kích thước giá trị của toán hạng (32-bit hay 16-bit). Từ hình~\ref{fig:ProtectedFPU32} đến hình~\ref{fig:ProtectedFPU16}. Trong chế độ virtual-8086 hoặc SMM, địa chỉ thực thể hiện trong hình~\ref{fig:ProtectedFPU16}..
 	\begin{center}
 			\begin{figure}[htp]
 				\begin{center}
@@ -1028,7 +1027,7 @@ Số denormalized biểu diễn cho điều kiện tràn số dưới, 2 số v�
 	
 		\newpage	
 		\subsubsection{Loại dữ liệu dấu chấm động và định dạng}
-		Kiến trúc Intel FPU thao tác trên bảy loại dữ liệu, chia thành ba nhóm: số thực, số nguyên, và số nguyên gói BCD . Hình~\ref{fig:DinhDangLoaiDL} cho thấy các định dạng dữ liệu cho mỗi loại dữ liệu FPU. Bảng () cho chiều dài, độ chính xác, và phạm vi bình thường gần đúng có thể được đại diện của từng loại dữ liệu FPU. Giá trị Denormal cũng được hỗ trợ trong mỗi loại thực sự, theo chuẩn của IEEE 854.\\
+		Kiến trúc Intel FPU thao tác trên bảy loại dữ liệu, chia thành ba nhóm: số thực, số nguyên, và số nguyên gói BCD . Hình~\ref{fig:DinhDangLoaiDL} cho thấy các định dạng dữ liệu cho mỗi loại dữ liệu FPU. Bảng~\ref{tb:DLFPU} cho chiều dài, độ chính xác, và phạm vi bình thường gần đúng có thể được đại diện của từng loại dữ liệu FPU. Giá trị Denormal cũng được hỗ trợ trong mỗi loại thực sự, theo chuẩn của IEEE 854.\\
 		
 	Với định dạng mở rộng 80-bit biểu diễn ngoại lệ, tất cả các loại dữ liệu chỉ tồn tại trong bộ nhớ. Khi chúng được nạp vào thanh ghi FPU dữ liệu, chúng được chuyển đổi sang định dạng mở rộng-thực và thao tác trên trong định dạng đó.
 	\begin{center}
